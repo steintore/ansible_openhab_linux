@@ -23,6 +23,7 @@
     - persistence.exec
     - persistence.rrd4j
     - persistence.logging
+    - persistence.influxdb
     - action.pushover
 
 - name: download my.openhab jar
