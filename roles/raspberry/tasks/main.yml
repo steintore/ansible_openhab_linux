@@ -1,0 +1,6 @@
+
+  - name: Delete Desktop folder
+    shell: "rm -fr {{ ansible_env.HOME }}/Desktop"
+
+  - name: Delete Desktop folder
+    shell: "rm -fr {{ ansible_env.HOME }}/python_games"

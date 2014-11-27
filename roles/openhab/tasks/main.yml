@@ -1,0 +1,89 @@
+
+- name: install openHAB runtime
+  include: install_openhab_component.yml component=runtime
+
+- name: install openHAB addons
+  include: install_openhab_component.yml component=addons
+
+- name: remove everything from the addons-folder
+  shell: "rm {{ openhab_install_dir }}/runtime/{{openhab_version}}/addons/*"
+
+- name: link bindings into runtime
+  file: >
+    state=link
+    src={{ openhab_install_dir }}/addons/{{openhab_version}}/org.openhab.{{ item }}-{{openhab_version}}.jar
+    dest={{ openhab_install_dir }}/runtime/{{openhab_version}}/addons/org.openhab.{{ item }}-{{openhab_version}}.jar
+  with_items:
+    - binding.http
+    - binding.networkhealth
+    - binding.ntp
+    - binding.rfxcom
+    - binding.samsungtv
+    - binding.samsungac
+    - persistence.exec
+    - persistence.rrd4j
+    - persistence.logging
+    - action.pushover
+
+- name: download my.openhab jar
+  get_url: >
+    url=https://my.openhab.org/downloads/org.openhab.io.myopenhab-1.4.0-SNAPSHOT.jar
+    dest={{ openhab_install_dir }}/addons/{{openhab_version}}/
+    validate_certs=no
+
+- name: link to my.openhab jar
+  file: >
+    state=link
+    src={{ openhab_install_dir }}/addons/{{openhab_version}}/org.openhab.io.myopenhab-1.4.0-SNAPSHOT.jar
+    dest={{ openhab_install_dir }}/runtime/{{openhab_version}}/addons/org.openhab.io.myopenhab-1.4.0-SNAPSHOT.jar
+
+- name: See if configurations is a directory (then we nuke it next)
+  shell: "[ -d {{ openhab_install_dir }}/runtime/{{openhab_version}}/configurations ] && echo 'Directory' || echo ''"
+  register: is_directory
+
+- name: delete example config directory
+  file: path={{ openhab_install_dir }}/runtime/{{openhab_version}}/configurations state=absent
+  when: (is_directory.stdout)
+
+- name: checkout configurations from github | clone git
+  git: repo=git://github.com/steintore/my-openhab-config.git
+       dest={{ openhab_install_dir }}/runtime/{{openhab_version}}/configurations
+
+- name: sync secret setup into config
+  template: src=configurations/openhab.cfg dest={{ openhab_install_dir }}/runtime/{{openhab_version}}/configurations/openhab.cfg
+
+- name: create openHAB static directory
+  file: >
+    state=directory
+    path={{ openhab_install_dir }}/runtime/{{openhab_version}}/webapps/static
+  
+- name: sync uuid setup into config
+  template: src=webapps/static/uuid dest={{ openhab_install_dir }}/runtime/{{openhab_version}}/webapps/static/uuid
+
+- name: sync secret setup into config
+  template: src=webapps/static/secret dest={{ openhab_install_dir }}/runtime/{{openhab_version}}/webapps/static/secret
+
+- name: copy start.sh
+  template: src=start.sh dest={{ openhab_install_dir }}/runtime/{{openhab_version}}/start.sh mode=0752
+
+- name: make sure the user is in the dialout group
+  shell: "usermod -a -G dialout pi"
+  sudo: yes
+
+- name: link openhab into home folder
+  file: >
+    state=link
+    src={{ openhab_install_dir }}/runtime/{{openhab_version}}
+    dest={{ ansible_env.HOME }}/openhab
+
+- name: copy openhab file to folder
+  template: src=../files/openhab dest=/etc/init.d/openhab
+  sudo: yes
+
+- name: give it correct access rights
+  shell: "chmod a+x /etc/init.d/openhab"
+  sudo: yes
+
+- name: Add the openhab to rc.d
+  shell: "update-rc.d openhab defaults"
+  sudo: yes
