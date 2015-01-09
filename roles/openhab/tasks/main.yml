@@ -20,11 +20,12 @@
     - binding.rfxcom
     - binding.samsungtv
     - binding.samsungac
-    - persistence.exec
     - persistence.rrd4j
     - persistence.logging
     - persistence.influxdb
     - action.pushover
+    - binding.configadmin
+    - binding.astro
 
 - name: download my.openhab jar
   get_url: >
@@ -68,7 +69,7 @@
   template: src=start.sh dest={{ openhab_install_dir }}/runtime/{{openhab_version}}/start.sh mode=0752
 
 - name: make sure the user is in the dialout group
-  shell: "usermod -a -G dialout pi"
+  shell: "usermod -a -G dialout boss"
   sudo: yes
 
 - name: link openhab into home folder
@@ -76,6 +77,11 @@
     state=link
     src={{ openhab_install_dir }}/runtime/{{openhab_version}}
     dest={{ ansible_env.HOME }}/openhab
+
+- name: create logs folder
+  file: >
+    state=directory
+    path={{ openhab_install_dir }}/runtime/{{openhab_version}}/logs
 
 - name: copy openhab file to folder
   template: src=../files/openhab dest=/etc/init.d/openhab
@@ -87,4 +93,21 @@
 
 - name: Add the openhab to rc.d
   shell: "update-rc.d openhab defaults"
+  sudo: yes
+
+- name: check current timezone
+  shell: cat /etc/timezone
+  register: current_zone
+
+- name: Set timezone variables
+  copy: content="Europe/Oslo"
+    dest=/etc/timezone
+    owner=root
+    group=root
+    mode=0644
+    backup=yes
+  sudo: yes
+
+- name: update timezone
+  command: dpkg-reconfigure --frontend noninteractive tzdata
   sudo: yes

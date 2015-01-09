@@ -1,7 +1,5 @@
 - hosts: webservers
   vars:
-    - rfxcom_tty: /dev/ttyUSB0
+    - rfxcom_tty: ttyUSB0
   roles:
-    - raspberry
     - openhab
-  remote_user: pi

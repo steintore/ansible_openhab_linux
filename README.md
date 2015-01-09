@@ -1,21 +1,28 @@
-An ansible playbook to install openHAB on a raspberry pi
-========================================================
+An ansible playbook to install openHAB on an Ubuntu box
+===========================================================
 
-This setup uses [Ansible](http://docs.ansible.com) to automate provisioning of the raspberry pi
+Based on [lurhus](https://github.com/akafred/lurhus) by akafred
 
-## Install the operating system following instructions here:
-http://www.raspberrypi.org/documentation/installation/installing-images/README.md
+This setup uses [Ansible](http://docs.ansible.com) to automate provisioning of a linux machine
+containing a full setup for [OpenHAB](http://www.openhab.org) 
 
 
-## Software being setup by this
-	* [OpenHAB] (http://github.com/openhab/openhab)
+## Bootstrap and prereqs
 
-* log in via ssh (pi/raspberry)
-* copy-ssh-key to the pi
-* run 'sudo raspi-config' to configure things, change password etc
-* clone this repository 'git clone https://github.com/steintore/ansible_openhab' locally
-* cd ansible_openhab
-* cp hosts_example hosts <- edit it to fit the IP of you raspberry pi
+1. Install ansible:
+    - Ubuntu:
+        * `sudo apt-get install -y ansible`
+2. Clone this repo from the command line (in a directory of your choice):
+   ```git clone https://github.com/steintore/ansible_openhab.git```
+3. `cd ansible_openhab` into your cloned repo.
+4. From the command line run: 
+    `ansible-playbook playbook.yml -i hosts --ask-vault-pass -vvvv --ask-sudo-pass` to install OpenHAB. 
+    Note! The repository contains file(s) encrypted using `ansible-vault` - in such files there are secrets - like binding keys etc. Without the passphrase to the encrypted files you cannot start the system - in other words you need to replace the files with your own encrypted files with your secrets - or remove the functionality.
 
-Run the playbook:
-'''ansible-playbook playbook.yml -i hosts --ask-vault-pass
+After you are up and running, open a browser and point it to [openHAB http://localhost:8080/openhab.app](http://localhost:8080/openhab.app).
+
+
+## Operations
+
+### Deploying changes
+Run the ansible command again. It will download some things all over again. I'm currently using my own github repo for the configurations as well, so i can `git pull` in the configurations folder.

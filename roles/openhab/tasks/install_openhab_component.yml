@@ -7,7 +7,7 @@
 - name: download openHAB {{component}}
   get_url: >
     url=https://github.com/openhab/openhab/releases/download/v{{openhab_version}}/distribution-{{openhab_version}}-{{component}}.zip
-    dest={{ ansible_env.HOME }}/openhab-{{component}}-v{{openhab_version}}.zip
+    dest={{ ansible_env.HOME }}/downloads/openhab-{{component}}-v{{openhab_version}}.zip
     validate_certs=no
   when: openhab_ls.stat.exists == false
 
@@ -19,7 +19,7 @@
 
 - name: unzip openHAB {{component}} download
   unarchive: >
-    src={{ ansible_env.HOME }}/openhab-{{component}}-v{{openhab_version}}.zip
+    src={{ ansible_env.HOME }}/downloads/openhab-{{component}}-v{{openhab_version}}.zip
     dest={{ openhab_install_dir }}/{{component}}/{{openhab_version}}/
     copy=no
   when: openhab_ls.stat.exists == false
