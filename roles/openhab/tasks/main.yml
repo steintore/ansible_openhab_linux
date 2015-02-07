@@ -26,6 +26,7 @@
     - action.pushover
     - binding.configadmin
     - binding.astro
+    - binding.hue
 
 - name: download my.openhab jar
   get_url: >
