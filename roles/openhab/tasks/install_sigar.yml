@@ -1,18 +1,18 @@
 - name: check if sigar is installed
-  shell: ls {{ ansible_env.HOME }}/hyperic-sigar-1.6.4-src/bindings/java/sigar-bin/lib/sigar.jar
+  shell: ls {{ ansible_env.HOME }}/downloads/hyperic-sigar-1.6.4-src/bindings/java/sigar-bin/lib/sigar.jar
   ignore_errors: yes
   register: sigar_ls
 
 - name: download sigar
   get_url: >
     url=http://sourceforge.net/projects/sigar/files/sigar/1.6/hyperic-sigar-1.6.4-src.zip
-    dest={{ ansible_env.HOME }}/hyperic-sigar-1.6.4-src.zip
+    dest={{ ansible_env.HOME }}/downloads/hyperic-sigar-1.6.4-src.zip
   when: sigar_ls.rc != 0
 
 - name: unzip sigar
   unarchive: >
-    src={{ ansible_env.HOME }}/hyperic-sigar-1.6.4-src.zip
-    dest={{ ansible_env.HOME }}
+    src={{ ansible_env.HOME }}/downloads/hyperic-sigar-1.6.4-src.zip
+    dest={{ ansible_env.HOME }}/downloads/
     copy=no
   when: sigar_ls.rc != 0
 
@@ -24,8 +24,8 @@
 - name: Build sigar library
   command: ant
   args: 
-    chdir: "{{ ansible_env.HOME }}/hyperic-sigar-1.6.4-src/bindings/java"
-    creates: "{{ ansible_env.HOME }}/hyperic-sigar-1.6.4-src/bindings/java/sigar-bin/lib/sigar.jar"
+    chdir: "{{ ansible_env.HOME }}/downloads/hyperic-sigar-1.6.4-src/bindings/java"
+    creates: "{{ ansible_env.HOME }}/downloads/hyperic-sigar-1.6.4-src/bindings/java/sigar-bin/lib/sigar.jar"
 
 - name: create openhab lib directory
   file: state=directory path={{ openhab_install_dir }}/runtime/{{openhab_version}}/lib/
@@ -33,7 +33,7 @@
 - name: link sigar library
   file: >
     state=link
-    src={{ ansible_env.HOME }}/hyperic-sigar-1.6.4-src/bindings/java/sigar-bin/lib/{{item}}
+    src={{ ansible_env.HOME }}/downloads/hyperic-sigar-1.6.4-src/bindings/java/sigar-bin/lib/{{item}}
     dest={{ openhab_install_dir }}/runtime/{{openhab_version}}/lib/{{item}}
   with_items:
     - "sigar.jar"
