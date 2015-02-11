@@ -20,6 +20,7 @@
     - binding.rfxcom
     - binding.samsungtv
     - binding.samsungac
+    - binding.systeminfo
     - persistence.rrd4j
     - persistence.logging
     - persistence.influxdb
