@@ -28,6 +28,9 @@
     - binding.astro
     - binding.hue
 
+- name: install sigar
+  include: install_sigar.yml
+
 - name: download my.openhab jar
   get_url: >
     url=https://my.openhab.org/downloads/org.openhab.io.myopenhab-1.4.0-SNAPSHOT.jar
