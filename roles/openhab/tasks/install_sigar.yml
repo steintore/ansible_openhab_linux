@@ -37,4 +37,4 @@
     dest={{ openhab_install_dir }}/runtime/{{openhab_version}}/lib/{{item}}
   with_items:
     - "sigar.jar"
-    - "libsigar-arm-linux.so"
+    - "libsigar-amd64-linux.so"

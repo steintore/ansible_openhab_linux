@@ -28,6 +28,7 @@
     - binding.configadmin
     - binding.astro
     - binding.hue
+    - binding.systeminfo
 
 - name: install sigar
   include: install_sigar.yml
