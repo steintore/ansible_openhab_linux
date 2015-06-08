@@ -1,0 +1,332 @@
+import org.openhab.core.library.types.*
+import org.openhab.core.persistence.*
+import org.openhab.model.script.actions.*
+
+var Timer timerBathroom = null
+var Timer timerBasement = null
+
+rule "send command from remote to living room light corner"
+when
+        Item remote_light_living_room_corner changed
+then
+        sendCommand(light_living_room_corner, remote_light_living_room_corner.state.toString)
+end
+
+rule "send command from remote to living room light window"
+when
+        Item remote_light_living_room_window changed
+then
+        sendCommand(light_living_room_window, remote_light_living_room_window.state.toString)
+end
+
+rule "send command from remote to basement light"
+when
+        Item remote_light_basement_power changed
+then
+        sendCommand(light_basement_power, remote_light_basement_power.state.toString)
+end
+
+rule "send command from remote to basement window light"
+when
+        Item remote_light_basement_window changed
+then
+        sendCommand(light_basement_window, remote_light_basement_window.state.toString)
+end
+
+rule "scene for lights in living room"
+when
+	Item scene_light_livingroom received command
+then
+	logInfo('org.openhab', 'scene_light_livingroom received state:' + scene_light_livingroom.state)
+	switch (receivedCommand) {
+		case 0: { // OFF
+			sendCommand(light_living_old, OFF)
+			sendCommand(light_living_room_corner, OFF)
+			sendCommand(light_living_room_window, OFF)
+			
+		}
+		case 1: { // ON
+			sendCommand(light_living_old, ON)
+			sendCommand(light_living_room_window, ON)
+			sendCommand(light_living_room_corner, ON)
+				
+		}
+		case 2: { // WATCHING A MOVIE
+			sendCommand(light_living_old, ON)
+			sendCommand(light_living_room_corner, OFF)
+			sendCommand(light_living_room_window, OFF)
+				
+		}
+	}	
+	logInfo('org.openhab', 'scene_light_livingroom update to: ' + scene_light_livingroom.state)
+end
+
+rule "Switch on living room lights"
+	when
+		Item right_double_switch received command ON	
+	then
+		sendCommand(scene_light_livingroom, 1)
+end
+
+rule "Switch off living room lights"
+	when
+		Item right_double_switch received command OFF	
+	then
+		sendCommand(scene_light_livingroom, 0)
+end
+
+rule "motion detected in the living room" 
+	when
+		Item sensor_1_motion changed
+	then
+	logInfo('org.openhab', 'Motion sensor in the living room changed to: ' + sensor_1_motion.state)
+	switch (sensor_1_motion.state as OnOffType) {
+		case ON: {
+			if (mode.state == 0) {
+				var double lux = new Double(sensor_1_luminance.state.toString())
+				if (lux <= 100) {
+					if (tv_power.state == OFF) {
+						sendCommand(scene_light_livingroom, 1)
+					} else if (tv_power.state == ON && scene_light_livingroom.state == 0) {
+						sendCommand(scene_light_livingroom, 2)
+					}			
+				}
+			}	
+		}
+		case OFF: {
+			if (tv_power.state == OFF) {
+				if(mode.state == 0 && scene_light_livingroom.state > 0)
+					sendCommand(scene_light_livingroom, 2)
+				else 
+					sendCommand(scene_light_livingroom, 0)
+			}	
+		}
+	}
+	logInfo('org.openhab', 'Motion sensor in the living room updated to: ' + sensor_1_motion.state)
+end
+
+rule "Lighting in living room has changed" 
+	when
+		Item sensor_1_luminance changed
+	then
+		if (mode.state == 0) {
+			var double lux = new Double(sensor_1_luminance.state.toString())
+			logInfo('org.openhab.rules', 'Luminance changed to: ' + lux + ' and living room light state: ' + scene_light_livingroom.state)
+			if (lux > 100 && scene_light_livingroom.state != 0) {
+				sendCommand(scene_light_livingroom, 0)
+			} else if (lux <= 100 && sensor_1_motion.state == ON && scene_light_livingroom.state == 0) {
+				sendCommand(scene_light_livingroom, 1)
+			} 
+		}
+end
+
+rule "motion detected in the bathroom" 
+	when
+		Item bathroom_motion changed
+	then
+	logInfo('org.openhab', 'Motion sensor in the bathroom changed to: ' + bathroom_motion.state)
+	switch (bathroom_motion.state as OnOffType) {
+		case ON: {
+			if (mode.state != 2) {
+				if (mode.state == 0) {
+					sendCommand(light_bathroom_dimmer, 60)
+				} else {
+					sendCommand(light_bathroom_dimmer, 15)
+				}	
+				if (timerBathroom == null) {
+					timerBathroom = createTimer(now.plusSeconds(240)) [|
+						logInfo("org.openhab", "Bathroom dimmer timer timed out, state for motion: '" + bathroom_motion.state)
+						if (bathroom_motion.state == ON) {
+							timerBathroom.reschedule(now.plusSeconds(240))
+						} else {
+							sendCommand(light_bathroom, OFF)	
+							postUpdate(light_bathroom_dimmer, 0)
+					
+							if(timerBathroom!=null) {
+								if(timerBathroom.running) {
+									timerBathroom.cancel()
+								}	
+								timerBathroom = null
+							}
+						}
+						]
+				} else {
+					timerBathroom.reschedule(now.plusSeconds(240))
+					logInfo("org.openhab", "Bathroom dimmer timer rescheduled to 240 seconds from now")
+				}
+			}
+		}
+		case OFF: {
+			if (timerBathroom == null) {
+				timerBathroom = createTimer(now.plusSeconds(120)) [|
+					logInfo("org.openhab", "Bathroom dimmer timer created by OFF-signal timed out, state for motion: '" + bathroom_motion.state)
+					if (bathroom_motion.state == ON) {
+						timerBathroom.reschedule(now.plusSeconds(120))
+					} else {
+						sendCommand(light_bathroom, OFF)	
+						postUpdate(light_bathroom_dimmer, 0)
+				
+						if(timerBathroom!=null) {
+							if(timerBathroom.running) {
+								timerBathroom.cancel()
+							}	
+							timerBathroom = null
+						}
+					}
+					]
+			}
+		}
+	}
+end
+
+rule "light dimmer received an update"
+	when
+		Item light_bathroom_dimmer received update
+	then
+		var Number percent = 0
+		if(light_bathroom_dimmer.state instanceof DecimalType) percent = light_bathroom_dimmer.state as DecimalType
+		logInfo('org.openhab',"Bathroom dimmer received UPDATE: '" + light_basement_dimmer.state + "' converted it to percentages: '" + percent + "'")
+end
+ 
+rule "light dimmer changed"
+	when
+		Item light_bathroom_dimmer received command
+	then
+		var Number percent = 0
+		if(light_bathroom_dimmer.state instanceof DecimalType) percent = light_bathroom_dimmer.state as DecimalType
+		
+		logInfo('org.openhab',"Bathroom dimmer received command: '" + light_basement_dimmer.state + "' converted it to percentages: '" + percent + "'")
+		
+		if (percent > 100) percent = 100
+		if (percent < 0) percent = 0
+		
+		if(percent == 0 && light_bathroom.state == ON) postUpdate(light_bathroom, OFF)
+		else if (percent > 0 && light_bathroom.state == OFF) postUpdate(light_bathroom, ON)
+		
+		//logInfo('org.openhab', 'Dimming from OpenHab, changed to ' + light_bathroom_dimmer.state)
+		var String htp = "http://{{zwave_ip}}:8083/ZAutomation/api/v1/devices/ZWayVDev_zway_14-0-38/command/exact?level=" + percent.toString
+		
+		sendHttpGetRequest(htp)
+		logInfo('org.openhab', 'Bathroom dimmer sent request: ' + htp)
+end
+
+rule "light in hall 1st floor"
+	when
+		Item scene_light_hall received command
+	then
+	switch (receivedCommand) {
+		case 0:  { //OFF 
+			sendCommand(light_hall_1, 0)
+			sendCommand(light_hall_2, 0)
+			sendCommand(light_hall_3, 0)
+			sendCommand(light_hall_4, 0)
+		}
+		case 1: { //ON
+			sendCommand(light_hall_1, 100)
+			sendCommand(light_hall_2, 100)
+			sendCommand(light_hall_3, 100)
+			sendCommand(light_hall_4, 100)
+		}
+		case 2: { //NIGHT MODE
+			sendCommand(light_hall_1, 0)
+			sendCommand(light_hall_2, 30)
+			sendCommand(light_hall_3, 30)
+			sendCommand(light_hall_4, 0)
+		}
+	}
+end
+
+rule "lights in hall changed from other source"
+	when
+		Item light_hall_1 received update or
+		Item light_hall_2 received update or
+		Item light_hall_3 received update or
+		Item light_hall_4 received update
+	then
+	if (light_hall_1.state == 0 && light_hall_2.state == 0 && light_hall_3.state == 0 && light_hall_4.state == 0) {
+		postUpdate(scene_light_hall, 0)
+	} else if (light_hall_1.state == 100 && light_hall_2.state == 100 && light_hall_3.state == 100 && light_hall_4.state == 100) {
+		postUpdate(scene_light_hall, 1)
+	} else {
+		postUpdate(scene_light_hall, 2)
+	}
+end
+
+rule "light in basement hall"
+	when
+		Item scene_light_basement received command
+	then
+	switch (receivedCommand) {
+		case 0:  { //OFF 
+			sendCommand(light_basement_1, 0)
+			sendCommand(light_basement_2, 0)
+			sendCommand(light_basement_3, 0)
+			sendCommand(light_basement_4, 0)
+		}
+		case 1: { //ON
+			sendCommand(light_basement_1, 100)
+			sendCommand(light_basement_2, 100)
+			sendCommand(light_basement_3, 100)
+			sendCommand(light_basement_4, 100)
+		}
+		case 2: { //NIGHT MODE
+			sendCommand(light_basement_1, 30)
+			sendCommand(light_basement_2, 30)
+			sendCommand(light_basement_3, 30)
+			sendCommand(light_basement_4, 30)
+		}
+	}
+end
+
+rule "lights in basement hall changed from other source"
+	when
+		Item light_basement_1 received update or
+		Item light_basement_2 received update or
+		Item light_basement_3 received update or
+		Item light_basement_4 received update
+	then
+	if (light_basement_1.state == 0 && light_basement_2.state == 0 && light_basement_3.state == 0 && light_basement_4.state == 0) {
+		postUpdate(scene_light_basement, 0)
+	} else if (light_basement_1.state == 100 && light_basement_2.state == 100 && light_basement_3.state == 100 && light_basement_4.state == 100) {
+		postUpdate(scene_light_basement, 1)
+	} else {
+		postUpdate(scene_light_basement, 2)
+	}
+end
+
+rule "Motion detector in basement wants ut to turn on the lights"
+	when
+	 	Item motion_detector_basement changed
+	then
+		switch (motion_detector_basement.state as OnOffType) {
+		case ON: {
+			if (timerBasement == null) {
+				timerBasement = createTimer(now.plusSeconds(900)) [|
+					logInfo("org.openhab", "Basement light timer created by OFF-signal timed out, state for motion: '" + motion_detector_basement.state)
+					sendCommand(motion_detector_basement, OFF)
+				
+					if(timerBathroom!=null) {
+						if(timerBasement.running) {
+							timerBasement.cancel()
+						}	
+						timerBasement = null
+					}
+					]
+			} else
+				timerBasement.reschedule(now.plusSeconds(900))
+			sendCommand(scene_light_basement, 1) // ON
+			if (mode.state != 0) {
+				pushover('Bevegelse i kjelleren...')
+			}
+		}
+		case OFF: {
+			sendCommand(scene_light_basement, 0) // OFF
+			if(timerBathroom!=null) {
+				if(timerBasement.running) {
+					timerBasement.cancel()
+				}	
+				timerBasement = null
+			}
+		}
+	}
+end

@@ -1,0 +1,34 @@
+import org.openhab.core.library.types.*
+import org.openhab.core.persistence.*
+import org.openhab.model.script.actions.*
+import java.util.*
+
+rule "If the room is too cold and we are home, then heat it up, but only if it is less than 10 degrees outside"
+	when
+		Time cron "0 0/20 * * * ?" 
+	then
+		var double tempOffice = new Double(OfficeTemperature.state.toString())
+		var double tempOutdoor = new Double(OutdoorTemperature.state.toString())
+		var double tempBasement = new Double(BasementTemperature.state.toString())
+		
+		if (tempOutdoor < 10) {
+			if (gang_panelovn.state == OFF && mode.state == 0) {
+				if (tempOffice < 20) {
+					sendCommand(gang_panelovn, ON)
+					sendCommand(kontor_panelovn, ON)	
+				}
+			}
+			if (tempBasement < 18 && BasementTemperature.maximumSince(now.minusMinutes(21)).state >= 18) {
+				pushover('Kjellertemp er nå: ' + tempBasement + " - den har gått fra " + BasementTemperature.maximumSince(now.minusMinutes(21)).state + " de siste 20 minuttene")
+			}	
+		}		
+end
+
+rule "When the error code from the AC changes, please let me know"
+	when
+		Item ac_error changed
+	then
+	pushover("AC Error changed to: " + ac_error.state.toString())
+end
+
+
