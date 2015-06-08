@@ -53,12 +53,33 @@
   file: path={{ openhab_install_dir }}/runtime/{{openhab_version}}/configurations state=absent
   when: (is_directory.stdout)
 
-- name: checkout configurations from github | clone git
-  git: repo=git://github.com/steintore/my-openhab-config.git
-       dest={{ openhab_install_dir }}/runtime/{{openhab_version}}/configurations
+- name: sync setup into config
+  template: dest={{ ansible_env.HOME }}/configurations/{{item}} src=configurations/{{item}}
+  with_items:
+        - openhab.cfg
+        - users.cfg
+        - logback.xml
+        - logback_debug.xml
+        - items/huset.items
+        - items/systeminfo.items
+        - persistence/rrd4j.persist
+        - persistence/influxdb.persist
+        - persistence/logging.persist
+        - rules/garage.rules
+        - rules/heating.rules
+        - rules/lights.rules
+        - rules/proximity.rules
+        - rules/security.rules
+        - rules/status.rules
+        - scripts/pushMessages.script
+        - sitemaps/huset.sitemap
 
-- name: sync secret setup into config
-  template: src=configurations/openhab.cfg dest={{ openhab_install_dir }}/runtime/{{openhab_version}}/configurations/openhab.cfg
+- name: sync setup into config
+  copy: dest={{ ansible_env.HOME }}/configurations/{{item}} src=configurations/templates/{{item}}
+  with_fileglob:
+        - ../templates/configurations/transform/*.map
+        - ../templates/configurations/transform/*.js
+        - ../templates/configurations/transform/*.xsl
 
 - name: create openHAB static directory
   file: >
@@ -84,10 +105,17 @@
     src={{ openhab_install_dir }}/runtime/{{openhab_version}}
     dest={{ ansible_env.HOME }}/openhab
 
-- name: create logs folder
+- name: create logs folder if it does not exist
   file: >
     state=directory
-    path={{ openhab_install_dir }}/runtime/{{openhab_version}}/logs
+    path={{ openhab_install_dir }}/logs
+    
+
+- name: link logs folder
+  file: >
+    state=link
+    src={{ openhab_install_dir }}/logs
+    dest={{ openhab_install_dir }}/runtime/{{openhab_version}}/logs
 
 - name: copy openhab file to folder
   template: src=../files/openhab dest=/etc/init.d/openhab
