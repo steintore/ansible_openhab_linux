@@ -58,6 +58,31 @@
     state=directory
     path={{ openhab_install_dir }}/runtime/{{openhab_version}}/configurations
 
+- name: create openHAB configurations/items directory
+  file: >
+    state=directory
+    path={{ openhab_install_dir }}/runtime/{{openhab_version}}/configurations/items
+
+- name: create openHAB configurations/persistence directory
+  file: >
+    state=directory
+    path={{ openhab_install_dir }}/runtime/{{openhab_version}}/configurations/persistence
+
+- name: create openHAB configurations/rules directory
+  file: >
+    state=directory
+    path={{ openhab_install_dir }}/runtime/{{openhab_version}}/configurations/rules
+
+- name: create openHAB configurations/scripts directory
+  file: >
+    state=directory
+    path={{ openhab_install_dir }}/runtime/{{openhab_version}}/configurations/scripts
+
+- name: create openHAB configurations/sitemaps directory
+  file: >
+    state=directory
+    path={{ openhab_install_dir }}/runtime/{{openhab_version}}/configurations/sitemaps
+
 - name: sync setup into config
   template: dest={{ openhab_install_dir }}/runtime/{{openhab_version}}/configurations/{{item}} src=../templates/configurations/{{item}}
   with_items:
