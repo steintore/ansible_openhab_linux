@@ -8,11 +8,6 @@
 - name: remove everything from the addons-folder
   shell: "rm {{ openhab_install_dir }}/runtime/{{openhab_version}}/addons/*"
 
-- name: create openHAB configurations directory
-  file: >
-    state=directory
-    path={{ openhab_install_dir }}/runtime/{{openhab_version}}/configurations
-
 - name: link bindings into runtime
   file: >
     state=link
@@ -57,6 +52,11 @@
 - name: delete example config directory
   file: path={{ openhab_install_dir }}/runtime/{{openhab_version}}/configurations state=absent
   when: (is_directory.stdout)
+
+- name: create openHAB configurations directory
+  file: >
+    state=directory
+    path={{ openhab_install_dir }}/runtime/{{openhab_version}}/configurations
 
 - name: sync setup into config
   template: dest={{ openhab_install_dir }}/runtime/{{openhab_version}}/configurations/{{item}} src=../templates/configurations/{{item}}
