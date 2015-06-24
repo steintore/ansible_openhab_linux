@@ -43,7 +43,7 @@ Switch Mobile_Stein_Wlan 	"Steins iPhone Wlan" 	<present>		(proximity) {nh="{{st
 Switch Mobile_Anette_Wlan	"Anettes iPhone Wlan" 	<present> 		(proximity) {nh="{{anette_ip}}"}
 Switch time_capsule_lan 	"Time capsule"			<present>		(proximity) {nh="{{time_capsule_ip}}"}
 Switch router_wlan			"Router"				<present>		(proximity) {nh="{{router_ip}}"}
-Switch boss_lan				"Boss server"       	<present>       (proximity) {nh="{{boss_ip"}
+Switch boss_lan				"Boss server"       	<present>       (proximity) {nh="{{boss_ip}}"}
 Switch nas_lan				"NAS"					<present>		(proximity) {nh="{{nas_ip}}"}
 Switch roomba_lan			"Roomba"				<present>		(proximity) {nh="{{zwave_ip}}"}
 
