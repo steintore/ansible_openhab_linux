@@ -54,7 +54,7 @@
   when: (is_directory.stdout)
 
 - name: sync setup into config
-  template: dest={{ ansible_env.HOME }}/configurations/{{item}} src=configurations/{{item}}
+  template: dest={{ openhab_install_dir }}/runtime/{{openhab_version}}/configurations/{{item}} src=../templates/configurations/{{item}}
   with_items:
         - openhab.cfg
         - users.cfg
