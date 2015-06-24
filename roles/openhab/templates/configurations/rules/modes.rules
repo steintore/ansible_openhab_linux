@@ -11,8 +11,10 @@ rule "A change of mode"
 	when
 		Item mode received command
 	then
+	logInfo('org.openhab', 'mode received state:' + mode.state)
 	switch (receivedCommand) {
 		case 0: { // HOME
+			logInfo('org.openhab', 'HOME MODE')
 			restoreStates(stored_states)
 			if (new Double(OutdoorTemperature.state.toString()) < 10 && ac_power.state == OFF) {
 				sendCommand(ac_power, ON)
@@ -44,6 +46,7 @@ rule "A change of mode"
 		}
 		
 		case 1: { // NIGHT
+			logInfo('org.openhab', 'NIGHT MODE')
 			stored_states = storeStates(night_group)
 			if (sensor_1_motion.state == OFF)
 				sendCommand(scene_light_livingroom, 0)
@@ -66,6 +69,7 @@ rule "A change of mode"
 		}
 		
 		case 2: { //AWAY
+			logInfo('org.openhab', 'AWAY MODE')
 			var t = ""
 			if (OutdoorTemperature.state instanceof DecimalType) {
 				t  = "Du dro kl: " + now.getHourOfDay + ":" + now.getMinuteOfHour + ", nå er det " + OutdoorTemperature.state.format("%.1f") + " °C ute."

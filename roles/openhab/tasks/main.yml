@@ -42,8 +42,8 @@
 - name: link to my.openhab jar
   file: >
     state=link
-    src={{ openhab_install_dir }}/addons/{{openhab_version}}/org.openhab.io.myopenhab-1.7.0-SNAPSHOT.jar
-    dest={{ openhab_install_dir }}/runtime/{{openhab_version}}/addons/org.openhab.io.myopenhab-1.7.0-SNAPSHOT.jar
+    src={{ openhab_install_dir }}/addons/{{openhab_version}}/org.openhab.io.myopenhab-1.7.0.jar
+    dest={{ openhab_install_dir }}/runtime/{{openhab_version}}/addons/org.openhab.io.myopenhab-1.7.0.jar
 
 - name: See if configurations is a directory (then we nuke it next)
   shell: "[ -d {{ openhab_install_dir }}/runtime/{{openhab_version}}/configurations ] && echo 'Directory' || echo ''"
@@ -106,6 +106,7 @@
         - rules/proximity.rules
         - rules/security.rules
         - rules/status.rules
+        - rules/modes.rules
         - scripts/pushMessages.script
         - sitemaps/huset.sitemap
 
@@ -115,11 +116,9 @@
     path={{ openhab_install_dir }}/runtime/{{openhab_version}}/configurations/transform
 
 - name: sync transform setup into config
-  copy: dest={{ openhab_install_dir }}/runtime/{{openhab_version}}/configurations/transform/{{item}} src=../templates/configurations/transform/{{item}}
+  copy: dest={{ openhab_install_dir }}/runtime/{{openhab_version}}/configurations/{{item}} src=../templates/configurations/{{item}}
   with_fileglob:
-        - "*.map"
-        - "*.js"
-        - "*.xsl"
+        - transform/*
 
 - name: create openHAB static directory
   file: >
