@@ -5,6 +5,9 @@ import org.openhab.model.script.actions.*
 var Timer garageDoorOpenLeaf = null
 var Timer garageDoorOpenMondeo = null
 
+var Timer garageDoorOpen1Timed = null
+var Timer garageDoorOpen2Timed = null
+
 rule "Send a message if garage door LEAF has been open for 15 minutes"
 	when
 		Item garage_door_1 changed to ON	
@@ -96,4 +99,116 @@ rule "Send a message after 7 minutes if garage door is open and nobody is home"
         if (garage_door_2.state == Undefined || garage_door_2.state == Uninitialized) {
         	sendCommand(garage_door_2, OFF)
         }	
+end
+
+rule "scene for garage door 1"
+when
+	Item scene_garage_1 received command
+then
+	logInfo('org.openhab', 'garage door 1 received state:' + scene_garage_1.state)
+	switch (receivedCommand) {
+		case 0: { // CLOSE
+			if (garage_door_1.state == ON) {
+				sendCommand(garage_door_1_relay, ON)
+				Thread::sleep(500)
+				sendCommand(garage_door_1_relay, OFF)
+			} else {
+				pushover("Garage door 1 is already closed")
+			}
+		}
+		case 1: { // OPEN
+			if (garage_door_1.state == ON) {
+				sendCommand(garage_door_1_relay, ON)
+				Thread::sleep(500)
+				sendCommand(garage_door_1_relay, OFF)
+			} else {
+				pushover("Garage door 1 is already open")
+			}	
+		}
+		case 2: { // OPEN FOR 10 MINUTES
+			if (garage_door_1.state == ON) {
+				sendCommand(garage_door_1_relay, ON)
+				Thread::sleep(500)
+				sendCommand(garage_door_1_relay, OFF)
+				garageDoorOpen1Timed = createTimer(now.plusSeconds(600)) [|
+					if (garage_door_1.state == OFF) {
+						if(garageDoorOpen1Timed != null) {
+							if(garageDoorOpen1Timed.running) {
+								garageDoorOpen1Timed.cancel()
+							}
+						garageDoorOpen1Timed = null
+						}
+						pushover("Cancelling timer, door 1 is already closed")	
+					} else { // SHOULD WE CHECK FOR MOTION?
+						sendCommand(scene_garage_1, 0) // CLOSE
+						if(garageDoorOpen1Timed != null) {
+							if(garageDoorOpen1Timed.running) {
+								garageDoorOpen1Timed.cancel()
+							}
+						garageDoorOpen1Timed = null
+						}
+					}			
+				]
+			} else {
+				pushover("Garage door 1 is already open")
+			}	
+		}
+	}	
+	logInfo('org.openhab', 'scene_garage_1 updated to: ' + scene_garage_1.state)
+end
+
+rule "scene for garage door 2"
+when
+	Item scene_garage_2 received command
+then
+	logInfo('org.openhab', 'garage door 2 received state:' + scene_garage_1.state)
+	switch (receivedCommand) {
+		case 0: { // CLOSE
+			if (garage_door_2.state == ON) {
+				sendCommand(garage_door_2_relay, ON)
+				Thread::sleep(500)
+				sendCommand(garage_door_2_relay, OFF)
+			} else {
+				pushover("Garage door 2 is already closed")
+			}
+		}
+		case 1: { // OPEN
+			if (garage_door_2.state == ON) {
+				sendCommand(garage_door_2_relay, ON)
+				Thread::sleep(500)
+				sendCommand(garage_door_2_relay, OFF)
+			} else {
+				pushover("Garage door 2 is already open")
+			}	
+		}
+		case 2: { // OPEN FOR 10 MINUTES
+			if (garage_door_2.state == ON) {
+				sendCommand(garage_door_2_relay, ON)
+				Thread::sleep(500)
+				sendCommand(garage_door_2_relay, OFF)
+				garageDoorOpen2Timed = createTimer(now.plusSeconds(600)) [|
+					if (garage_door_2.state == OFF) {
+						if(garageDoorOpen2Timed != null) {
+							if(garageDoorOpen2Timed.running) {
+								garageDoorOpen2Timed.cancel()
+							}
+						garageDoorOpen2Timed = null
+						}
+						pushover("Cancelling timer, door 2 is already closed")	
+					} else { // SHOULD WE CHECK FOR MOTION?
+						sendCommand(scene_garage_2, 0) // CLOSE
+						if(garageDoorOpen2Timed != null) {
+							if(garageDoorOpen2Timed.running) {
+								garageDoorOpen2Timed.cancel()
+							}
+						garageDoorOpen2Timed = null
+						}
+					}			
+				]
+			} else {
+				pushover("Garage door 2 is already open")
+			}	
+		}
+	}	
+	logInfo('org.openhab', 'scene_garage_2 updated to: ' + scene_garage_1.state)
 end

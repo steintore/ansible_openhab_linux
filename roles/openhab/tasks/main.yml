@@ -100,6 +100,7 @@
         - persistence/rrd4j.persist
         - persistence/influxdb.persist
         - persistence/logging.persist
+        - persistence/myopenhab.persist
         - rules/garage.rules
         - rules/heating.rules
         - rules/lights.rules

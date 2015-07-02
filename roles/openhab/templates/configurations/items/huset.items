@@ -45,7 +45,8 @@ Switch time_capsule_lan 	"Time capsule"			<present>		(proximity) {nh="{{time_cap
 Switch router_wlan			"Router"				<present>		(proximity) {nh="{{router_ip}}"}
 Switch boss_lan				"Boss server"       	<present>       (proximity) {nh="{{boss_ip}}"}
 Switch nas_lan				"NAS"					<present>		(proximity) {nh="{{nas_ip}}"}
-Switch roomba_lan			"Roomba"				<present>		(proximity) {nh="{{zwave_ip}}"}
+Switch roomba_lan			"Z-Wave"				<present>		(proximity) {nh="{{zwave_ip}}"}
+Switch garage_pi			"GaragePi"				<present>		(proximity) {nh="{{garagepi_ip}}"}
 
 /* Temperature */
 Group Temperature_Chart (Weather)
@@ -84,6 +85,12 @@ Switch garage_door_2    		"Garasjedør MONDEO [MAP(no.map):%s]"    <garagedoor> 
 Switch message_received 		"Garasjedørmelding er mottatt"			<garagedoor>	(gOutdoor)
 Number garage_door_1_battery 	"Leaf [%s %%]"							<battery>		(gBattery, BatteryLevel_10)	{http="<[zwave:600000:JS(getGarageDoorLeafBattery.js)]"}
 Number garage_door_2_battery 	"Mondeo [%s %%]"						<battery>		(gBattery, BatteryLevel_10)	{http="<[zwave:600000:JS(getGarageDoorMondeoBattery.js)]"}
+Switch garage_door_1_relay 		"Releet Leaf" 																		{http=">[ON:POST:{{garagepi_leaf_url}}function/OUT] >[OFF:POST:{{garagepi_leaf_url}}function/IN"}
+Switch garage_door_2_relay 		"Releet Mondeo" 																	{http=">[ON:POST:{{garagepi_mondeo_url}}function/OUT] >[OFF:POST:{{garagepi_mondeo_url}}function/IN"}
+Switch garagepi_motion 			"Bevegelse GPI"
+Switch garagecam_motion 		"Bevegelse CAM"
+Number scene_garage_1			"Garasjedør LEAF"
+Number scene_garage_2			"Garasjedør MONDEO"
 
 /* Switch */
 Switch left_double_switch 	"Venstre knapp" <network> (gGF) { rfxcom="<11971074.11:Command" }
