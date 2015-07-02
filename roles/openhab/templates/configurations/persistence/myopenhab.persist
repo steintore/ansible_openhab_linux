@@ -1,0 +1,6 @@
+strategies {
+	default = everyChange
+}
+Items {
+	* : strategy = everyChange
+}
