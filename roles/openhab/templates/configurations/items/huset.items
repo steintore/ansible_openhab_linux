@@ -85,8 +85,8 @@ Switch garage_door_2    		"Garasjedør MONDEO [MAP(no.map):%s]"    <garagedoor> 
 Switch message_received 		"Garasjedørmelding er mottatt"			<garagedoor>	(gOutdoor)
 Number garage_door_1_battery 	"Leaf [%s %%]"							<battery>		(gBattery, BatteryLevel_10)	{http="<[zwave:600000:JS(getGarageDoorLeafBattery.js)]"}
 Number garage_door_2_battery 	"Mondeo [%s %%]"						<battery>		(gBattery, BatteryLevel_10)	{http="<[zwave:600000:JS(getGarageDoorMondeoBattery.js)]"}
-Switch garage_door_1_relay 		"Releet Leaf" 																		{http=">[ON:POST:{{garagepi_leaf_url}}function/OUT] >[OFF:POST:{{garagepi_leaf_url}}function/IN"}
-Switch garage_door_2_relay 		"Releet Mondeo" 																	{http=">[ON:POST:{{garagepi_mondeo_url}}function/OUT] >[OFF:POST:{{garagepi_mondeo_url}}function/IN"}
+Switch garage_door_1_relay 		"Releet Leaf" 																		{http=">[ON:POST:{{garagepi_leaf_url}}function/OUT] >[OFF:POST:{{garagepi_leaf_url}}function/IN]"}
+Switch garage_door_2_relay 		"Releet Mondeo" 																	{http=">[ON:POST:{{garagepi_mondeo_url}}function/OUT] >[OFF:POST:{{garagepi_mondeo_url}}function/IN]"}
 Switch garagepi_motion 			"Bevegelse GPI"
 Switch garagecam_motion 		"Bevegelse CAM"
 Number scene_garage_1			"Garasjedør LEAF"
