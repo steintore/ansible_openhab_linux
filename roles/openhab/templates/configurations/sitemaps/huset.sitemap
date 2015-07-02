@@ -73,9 +73,9 @@ sitemap huset label="Huset"
     		}
     		Frame label="Garasjen" {
 				Text item=garage_door_1
-				Switch item=scene_garage_1 mappings=[0="Lukke", 1="Åpne", 2="10 min"]
+				Switch item=scene_garage_1 mappings=[0="Lukk", 1="Åpne", 2="10"]
 				Text item=garage_door_2
-				Switch item=scene_garage_2 mappings=[0="Lukke", 1="Åpne", 2="10 min"]
+				Switch item=scene_garage_2 mappings=[0="Lukk", 1="Åpne", 2="10"]
 				Switch item=message_received mappings=[ON="Ja"] icon="network" visibility=[garage_door_1==ON, garage_door_2==ON]
 				Text label="Livestream" {
 					Image url="http://{{garage_camera_ip}}/image/jpeg.cgi"

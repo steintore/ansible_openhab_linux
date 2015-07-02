@@ -89,8 +89,8 @@ Switch garage_door_1_relay 		"Releet Leaf" 																		{http=">[ON:POST:{{
 Switch garage_door_2_relay 		"Releet Mondeo" 																	{http=">[ON:POST:{{garagepi_mondeo_url}}function/OUT] >[OFF:POST:{{garagepi_mondeo_url}}function/IN]"}
 Switch garagepi_motion 			"Bevegelse GPI"
 Switch garagecam_motion 		"Bevegelse CAM"
-Number scene_garage_1			"Garasjedør LEAF"
-Number scene_garage_2			"Garasjedør MONDEO"
+Number scene_garage_1			"LEAF"
+Number scene_garage_2			"MONDEO"
 
 /* Switch */
 Switch left_double_switch 	"Venstre knapp" <network> (gGF) { rfxcom="<11971074.11:Command" }

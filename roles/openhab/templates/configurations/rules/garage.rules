@@ -14,6 +14,7 @@ rule "Send a message if garage door LEAF has been open for 15 minutes"
 	then
 		logInfo("org.openhab.rules","LEAF Garage door opened")
 		sendCommand(message_received, OFF)
+		postUpdate(scene_garage_1, 1)
 		garageDoorOpenLeaf = createTimer(now.plusSeconds(900)) [|
 			if (garage_door_1.state == OFF) {
 				if(garageDoorOpenLeaf != null) {
@@ -39,6 +40,7 @@ rule "Send a message if garage door MONDEO has been open for 15 minutes"
 	then
 		logInfo("org.openhab.rules","MONDEO Garage door opened")
 		sendCommand(message_received, OFF)
+		postUpdate(scene_garage_2, 1)
 		garageDoorOpenMondeo = createTimer(now.plusSeconds(900)) [|
 			if (garage_door_2.state == OFF) {
 				if(garageDoorOpenMondeo != null) {
@@ -66,6 +68,7 @@ rule "Reset timer if someone closes the garage door, and both is closed"
 		logInfo("org.openhab.rules", "Garage door closed")
 		sendCommand(message_received, OFF)
 		if (garage_door_1.state == OFF) {
+			postUpdate(scene_garage_1, 0)
 			if(garageDoorOpenLeaf!=null) {
 				garageDoorOpenLeaf.cancel
 				garageDoorOpenLeaf = null
@@ -75,6 +78,7 @@ rule "Reset timer if someone closes the garage door, and both is closed"
 		}
 		 
 		if (garage_door_2.state == OFF) {
+			postUpdate(scene_garage_2, 0)
 			if(garageDoorOpenMondeo != null) {
 				garageDoorOpenMondeo.cancel()
 				garageDoorOpenMondeo = null
@@ -117,7 +121,7 @@ then
 			}
 		}
 		case 1: { // OPEN
-			if (garage_door_1.state == ON) {
+			if (garage_door_1.state == OFF) {
 				sendCommand(garage_door_1_relay, ON)
 				Thread::sleep(500)
 				sendCommand(garage_door_1_relay, OFF)
@@ -126,7 +130,7 @@ then
 			}	
 		}
 		case 2: { // OPEN FOR 10 MINUTES
-			if (garage_door_1.state == ON) {
+			if (garage_door_1.state == OFF) {
 				sendCommand(garage_door_1_relay, ON)
 				Thread::sleep(500)
 				sendCommand(garage_door_1_relay, OFF)
@@ -173,7 +177,7 @@ then
 			}
 		}
 		case 1: { // OPEN
-			if (garage_door_2.state == ON) {
+			if (garage_door_2.state == OFF) {
 				sendCommand(garage_door_2_relay, ON)
 				Thread::sleep(500)
 				sendCommand(garage_door_2_relay, OFF)
@@ -182,7 +186,7 @@ then
 			}	
 		}
 		case 2: { // OPEN FOR 10 MINUTES
-			if (garage_door_2.state == ON) {
+			if (garage_door_2.state == OFF) {
 				sendCommand(garage_door_2_relay, ON)
 				Thread::sleep(500)
 				sendCommand(garage_door_2_relay, OFF)
