@@ -74,6 +74,7 @@ rule "Reset timer if someone closes the garage door, and both is closed"
 				garageDoorOpenLeaf = null
 			}
 		} else {
+			postUpdate(scene_garage_1, 1)
 			garageDoorOpenLeaf.reschedule(now.plusSeconds(1200))
 		}
 		 
@@ -84,6 +85,7 @@ rule "Reset timer if someone closes the garage door, and both is closed"
 				garageDoorOpenMondeo = null
 			}
 		} else {
+			postUpdate(scene_garage_2, 1)
 			garageDoorOpenMondeo.reschedule(now.plusSeconds(1200))
 		}	
 end
@@ -99,9 +101,11 @@ rule "Send a message after 7 minutes if garage door is open and nobody is home"
 		}
 		if (garage_door_1.state == Undefined || garage_door_1.state == Uninitialized) {
         	sendCommand(garage_door_1, OFF)
+        	postUpdate(scene_garage_1, 0)
         }
         if (garage_door_2.state == Undefined || garage_door_2.state == Uninitialized) {
         	sendCommand(garage_door_2, OFF)
+        	postUpdate(scene_garage_2, 0)
         }	
 end
 
@@ -165,7 +169,7 @@ rule "scene for garage door 2"
 when
 	Item scene_garage_2 received command
 then
-	logInfo('org.openhab', 'garage door 2 received state:' + scene_garage_1.state)
+	logInfo('org.openhab', 'garage door 2 received state:' + scene_garage_2.state)
 	switch (receivedCommand) {
 		case 0: { // CLOSE
 			if (garage_door_2.state == ON) {
