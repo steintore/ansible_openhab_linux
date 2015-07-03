@@ -24,7 +24,7 @@ rule "Send a message if garage door LEAF has been open for 15 minutes"
 					garageDoorOpenLeaf = null
 				}	
 			} else {
-				var t = "Leafs garasjeport er ikke lukket"
+				var t = "Leafs garasjeport er ikke lukket, se det <a href=\"{{garagepi_screenshot_url}}\">her</a>"
 				logInfo("org.openhab.rules", t)
 				if (message_received.state == OFF) { 
 					postUpdate(push_message_text, t)
@@ -50,7 +50,7 @@ rule "Send a message if garage door MONDEO has been open for 15 minutes"
 					garageDoorOpenMondeo = null
 				}	
 			} else {
-				var t = "Mondeos garasjeport er ikke lukket"
+				var t = "Mondeos garasjeport er ikke lukket, se det <a href=\"{{garagepi_screenshot_url}}\">her</a>"
 				logInfo("org.openhab.rules", t)
 				if (message_received.state == OFF) { 
 					postUpdate(push_message_text, t)
@@ -96,7 +96,7 @@ rule "Send a message after 7 minutes if garage door is open and nobody is home"
 	then
 		if (mode.state == 2 && (garage_door_1.state == ON || garage_door_2.state == ON)) {
 			if (message_received.state == OFF && !garage_door_1.changedSince(now.minusMinutes(8)) && !garage_door_2.changedSince(now.minusMinutes(8))) {
-				postUpdate(push_message_text, "Tydeligvis ingen hjemme, men garasjeporten er åpen!")
+				postUpdate(push_message_text, "Tydeligvis ingen hjemme, men garasjeporten er <a href=\"{{garagepi_screenshot_url}}\">ÅPEN</a>")
 			}
 		}
 		if (garage_door_1.state == Undefined || garage_door_1.state == Uninitialized) {
@@ -218,5 +218,13 @@ then
 			}	
 		}
 	}	
-	logInfo('org.openhab', 'scene_garage_2 updated to: ' + scene_garage_1.state)
+	logInfo('org.openhab', 'scene_garage_2 updated to: ' + scene_garage_2.state)
+end
+
+rule "motion in the garage"
+when
+	Item garagepi_motion changed to ON
+then
+	pushover("Motion in the garage, see still-image <a href=\"{{garagepi_screenshot_url}}\">here</a>")
+	postUpdate(garagepi_motion, OFF)
 end
