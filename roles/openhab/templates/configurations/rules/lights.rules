@@ -301,11 +301,11 @@ rule "Motion detector in basement wants to turn on the lights"
 		switch (motion_detector_basement.state as OnOffType) {
 		case ON: {
 			if (timerBasement == null) {
-				timerBasement = createTimer(now.plusSeconds(900)) [|
+				timerBasement = createTimer(now.plusSeconds(600)) [|
 					logInfo("org.openhab", "Basement light timer created by OFF-signal timed out, state for motion: '" + motion_detector_basement.state)
 					sendCommand(motion_detector_basement, OFF)
 				
-					if(timerBathroom!=null) {
+					if(timerBasement!=null) {
 						if(timerBasement.running) {
 							timerBasement.cancel()
 						}	
@@ -313,18 +313,18 @@ rule "Motion detector in basement wants to turn on the lights"
 					}
 					]
 			} else
-				timerBasement.reschedule(now.plusSeconds(900))
-			if (mode.state == 0)
+				timerBasement.reschedule(now.plusSeconds(600))
+			if (mode.state == 0) // HOME
 				sendCommand(scene_light_basement, 1) // ON
-			else if (mode.state == 1)
+			else if (mode.state == 1) // NIGHT MODE
 				sendCommand(scene_light_basement, 2) // NIGHT MODE
-			else {
+			else { //AWAY
 				pushover('Bevegelse i kjelleren...')
 			}
 		}
 		case OFF: {
 			sendCommand(scene_light_basement, 0) // OFF
-			if(timerBathroom!=null) {
+			if(timerBasement!=null) {
 				if(timerBasement.running) {
 					timerBasement.cancel()
 				}	

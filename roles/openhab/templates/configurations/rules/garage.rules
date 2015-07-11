@@ -225,6 +225,6 @@ rule "motion in the garage"
 when
 	Item garagepi_motion changed to ON
 then
-	pushover("Motion in the garage, see still-image <a href=\"{{garagepi_screenshot_url}}\">here</a>")
+	pushover("Motion in the garage", 0 , "{{garagepi_screenshot_url}}")
 	postUpdate(garagepi_motion, OFF)
 end
