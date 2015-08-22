@@ -31,4 +31,89 @@ rule "When the error code from the AC changes, please let me know"
 	pushover("AC Error changed to: " + ac_error.state.toString())
 end
 
+rule "AC scenes"
+	when
+		Item ac_scene  received command
+then
+	logInfo('org.openhab', 'AC received state:' + ac_scene.state)
+	switch (receivedCommand) {
+		case 0: { // OFF
+			if (ac_power.state == ON)
+				sendCommand(ac_power, OFF)
+		}
+		case 1: { // HEATING
+			if (ac_power.state == OFF)
+				sendCommand(ac_power, ON)
+				
+			// Set to Off if tv is off, otherwise to QUIET
+			if (tv_power.state == OFF && ac_mode.state != 0)
+				sendCommand(ac_mode, 0)
+			else if (tv_power.state == ON && ac_mode.state != 1)
+				sendCommand(ac_mode, 1) // QUIET
+			
+			// Set to heating if not already set
+			if (ac_op_mode.state != 4)
+				sendCommand(ac_op_mode, 4)
+				
+			// set direction
+			if (ac_direction.state != 0)
+				sendCommand(ac_direction, 0)
+			
+			// windlevel	
+			if (ac_windlevel.state != 0)
+				sendCommand(ac_windlevel, 0)
+
+			// correct temperature
+			if (ac_set_temp.state != ac_heat_temp.state)
+				sendCommand(ac_set_temp, ac_heat_temp.state.toString)				
+		}
+		case 2: { // COOLING
+			if (ac_power.state == OFF)
+				sendCommand(ac_power, ON)
+				
+			// Set to Off if tv is off, otherwise to QUIET
+			if (tv_power.state == OFF && ac_mode.state != 0)
+				sendCommand(ac_mode, 0)
+			else if (tv_power.state == ON && ac_mode.state != 1)
+				sendCommand(ac_mode, 1) // QUIET
+			
+			// Set to cooling if not already set
+			if (ac_op_mode.state != 1)
+				sendCommand(ac_op_mode, 1)
+				
+			// set direction
+			if (ac_direction.state != 0)
+				sendCommand(ac_direction, 0)
+			
+			// windlevel	
+			if (ac_windlevel.state != 0)
+				sendCommand(ac_windlevel, 0)
+
+			// correct temperature
+			if (ac_set_temp.state != ac_cool_temp.state)
+				sendCommand(ac_set_temp, ac_cool_temp.state.toString)	
+		}
+		case 3: { // AIR
+			if (ac_power.state == OFF)
+				sendCommand(ac_power, ON)
+			sendCommand(ac_mode, 5) 
+			
+			// Set to wind if not already set
+			if (ac_op_mode.state != 3)
+				sendCommand(ac_op_mode, 3)
+				
+			// set direction
+			if (ac_direction.state != 2)
+				sendCommand(ac_direction, 2)
+			
+			// windlevel	
+			if (ac_windlevel.state != 4)
+				sendCommand(ac_windlevel, 4)
+
+			// correct temperature
+			if (ac_set_temp.state != ac_cool_temp.state)
+				sendCommand(ac_set_temp, ac_cool_temp.state.toString)
+		}
+	}	
+end
 

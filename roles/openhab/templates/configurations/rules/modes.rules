@@ -16,8 +16,8 @@ rule "A change of mode"
 		case 0: { // HOME
 			logInfo('org.openhab', 'HOME MODE')
 			restoreStates(stored_states)
-			if (new Double(OutdoorTemperature.state.toString()) < 10 && ac_power.state == OFF) {
-				sendCommand(ac_power, ON)
+			if (new Double(OutdoorTemperature.state.toString()) < 10) {
+				sendCommand(ac_scene, 1)
 			}
 			
 			if (previous_mode.state == 2) {

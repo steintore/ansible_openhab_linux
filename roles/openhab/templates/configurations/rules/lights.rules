@@ -204,7 +204,7 @@ rule "light dimmer changed"
 		else if (percent > 0 && light_bathroom.state == OFF) postUpdate(light_bathroom, ON)
 		
 		//logInfo('org.openhab', 'Dimming from OpenHab, changed to ' + light_bathroom_dimmer.state)
-		var String htp = "http://{{zwave_ip}}:8083/ZAutomation/api/v1/devices/ZWayVDev_zway_14-0-38/command/exact?level=" + percent.toString
+		var String htp = "http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B14%%5D.commandClasses%%5B38%%5D.Set(" + percent.toString + ")"
 		
 		sendHttpGetRequest(htp)
 		logInfo('org.openhab', 'Bathroom dimmer sent request: ' + htp)
