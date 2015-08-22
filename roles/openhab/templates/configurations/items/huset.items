@@ -18,8 +18,8 @@ Group:Number:MIN	BatteryLevel_100	"Batteri [(%d)] %"	<battery>		(All)
 
 /* Heating */
 Group:Switch:OR(ON, OFF) 			Heating 		"All varme [(%d)]" 				<heating> 				(All)
-Switch kontor_panelovn  "Panelovn kontor"	<heating>   (gFirstFloor, Heating, away_group)	{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B5%%5D.Basic:10000:JS(getBasicOnOffState.js)] >[ON:GET:http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B5%%5D.Basic.Set(1)] >[OFF:GET:http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B5%%5D.Basic.Set(0)]"}
-Switch gang_panelovn 	"Panelovn gang" 	<heating> 	(gFirstFloor, Heating, away_group)	{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B10%%5D.Basic:10000:JS(getBasicOnOffState.js)] >[ON:GET:http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B10%%5D.Basic.Set(1)] >[OFF:GET:http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B10%%5D.Basic.Set(0)]"}
+Switch kontor_panelovn  "Panelovn kontor"	<heating>   (gFirstFloor, Heating, away_group)	{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B5%%5D.commandClasses%%5B37%%5D:10000:JS(getBasicOnOffState.js)] >[ON:GET:http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B5%%5D.commandClasses%%5B37%%5D.Set(1)] >[OFF:GET:http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B5%%5D.commandClasses%%5B37%%5D.Set(0)]"}
+Switch gang_panelovn 	"Panelovn gang" 	<heating> 	(gFirstFloor, Heating, away_group)	{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B10%%5D.commandClasses%%5B37%%5D:10000:JS(getBasicOnOffState.js)] >[ON:GET:http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B10%%5D.commandClasses%%5B37%%5D.Set(1)] >[OFF:GET:http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B10%%5D.commandClasses%%5B37%%5D.Set(0)]"}
 
 /* Energy/Power measuring */
 Group:Number:SUM					Power			"Nå: [%.1f W]"			<energy>				(All)
@@ -70,12 +70,12 @@ DateTime LivingRoomTemperature_LastUpdate	"Last Update [%1$ta %1$tR]"			<clock>
 /* Home appliances */
 Group HomeAppliances (Appliance)
 Number power_freezer	"Strøm fryser	[%.1f W]" 				<energy> 	(gBasement, Power, Power_Chart) 						{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B6%%5D.commandClasses%%5B49%%5D.data%%5B4%%5D:60000:JS(getPowerValue.js)]"}
-Switch freezer		  	"Fryser"								<kitchen>   (gBasement, Control, HomeAppliances)					{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B6%%5D.Basic:10000:JS(getBasicOnOffState.js)] >[ON:GET:http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B6%%5D.Basic.Set(1)] >[OFF:GET:http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B6%%5D.Basic.Set(0)]"}
+Switch freezer		  	"Fryser"								<kitchen>   (gBasement, Control, HomeAppliances)					{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B6%%5D.commandClasses%%5B37%%5D:10000:JS(getBasicOnOffState.js)] >[ON:GET:http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B6%%5D.commandClasses%%5B37%%5D.Set(1)] >[OFF:GET:http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B6%%5D.commandClasses%%5B37%%5D.Set(0)]"}
 Number energy_freezer 	"Fryser totalforbruk: [%.2f KWh]" 		<energy> 	(Energy, gBasement)										{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B6%%5D.commandClasses%%5B50%%5D.data%%5B0%%5D:60000:JS(getPowerValue.js)]"}
 Number power_dryer		"Strøm tørketrommel	[%.1f W]" 			<energy> 	(gBasement, Power, Power_Chart) 						{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B4%%5D.commandClasses%%5B49%%5D.data%%5B4%%5D:60000:JS(getPowerValue.js)]"}
-Switch dryer			"Tørketrommel"										(gBasement, HomeAppliances, night_group, away_group) 	{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B4%%5D.Basic:10000:JS(getBasicOnOffState.js)] >[ON:GET:http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B4%%5D.Basic.Set(1)] >[OFF:GET:http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B4%%5D.Basic.Set(0)]"}
+Switch dryer			"Tørketrommel"										(gBasement, HomeAppliances, night_group, away_group) 	{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B4%%5D.commandClasses%%5B37%%5D:10000:JS(getBasicOnOffState.js)] >[ON:GET:http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B4%%5D.commandClasses%%5B37%%5D.Set(1)] >[OFF:GET:http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B4%%5D.commandClasses%%5B37%%5D.Set(0)]"}
 Number energy_dryer 	"Tørketrommel totalforbruk: [%.2f KWh]"	<energy> 	(Energy, gBasement)										{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B4%%5D.commandClasses%%5B50%%5D.data%%5B0%%5D:60000:JS(getPowerValue.js)]"}
-Switch fridge_basement  "Kjøleskap kjeller" 					<kitchebn>  (gBasement, Control, HomeAppliances)					{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B2%%5D.Basic:10000:JS(getBasicOnOffState.js)] >[ON:GET:http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B2%%5D.Basic.Set(1)] >[OFF:GET:http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B2%%5D.Basic.Set(0)]"}
+Switch fridge_basement  "Kjøleskap kjeller" 					<kitchebn>  (gBasement, Control, HomeAppliances)					{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B2%%5D.commandClasses%%5B37%%5D:10000:JS(getBasicOnOffState.js)] >[ON:GET:http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B2%%5D.commandClasses%%5B37%%5D.Set(1)] >[OFF:GET:http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B2%%5D.commandClasses%%5B37%%5D.Set(0)]"}
 Number power_fridge		"Strøm kjøleskap [%.1f W]" 				<energy> 	(gBasement, Power, Power_Chart) 						{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B2%%5D.commandClasses%%5B49%%5D.data%%5B4%%5D:60000:JS(getPowerValue.js)]"}
 Number energy_fridge 	"Kjøleskap totalforbruk: [%.2f KWh]"	<energy> 	(Energy, gBasement)										{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B2%%5D.commandClasses%%5B50%%5D.data%%5B0%%5D:60000:JS(getPowerValue.js)]"}
 
@@ -83,8 +83,8 @@ Number energy_fridge 	"Kjøleskap totalforbruk: [%.2f KWh]"	<energy> 	(Energy, g
 Switch garage_door_1    		"Garasjedør LEAF [MAP(no.map):%s]"		<garagedoor>  	(gOutdoor)						{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B7%%5D.commandClasses%%5B48%%5D.data%%5B1%%5D:60000:JS(getLevelValue.js)]"}
 Switch garage_door_2    		"Garasjedør MONDEO [MAP(no.map):%s]"    <garagedoor>  	(gOutdoor)						{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B8%%5D.commandClasses%%5B48%%5D.data%%5B1%%5D:60000:JS(getLevelValue.js)]"}
 Switch message_received 		"Garasjedørmelding er mottatt"			<garagedoor>	(gOutdoor)
-Number garage_door_1_battery 	"Leaf [%s %%]"							<battery>		(gBattery, BatteryLevel_100)	{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B7%%5D.commandClasses%%5B128%%5D.data%%5B1%%5D:60000:JS(getLastValue.js)]"}
-Number garage_door_2_battery 	"Mondeo [%s %%]"						<battery>		(gBattery, BatteryLevel_100)	{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B8%%5D.commandClasses%%5B128%%5D.data%%5B1%%5D:60000:JS(getLastValue.js)]"}
+Number garage_door_1_battery 	"Leaf [%s %%]"							<battery>		(gBattery, BatteryLevel_100)	{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B7%%5D.commandClasses%%5B128%%5D.data:60000:JS(getLastValue.js)]"}
+Number garage_door_2_battery 	"Mondeo [%s %%]"						<battery>		(gBattery, BatteryLevel_100)	{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B8%%5D.commandClasses%%5B128%%5D.data:60000:JS(getLastValue.js)]"}
 Switch garage_door_1_relay 		"Releet Leaf" 																			{http=">[ON:POST:{{garagepi_leaf_url}}function/OUT] >[OFF:POST:{{garagepi_leaf_url}}function/IN]"}
 Switch garage_door_2_relay 		"Releet Mondeo" 																		{http=">[ON:POST:{{garagepi_mondeo_url}}function/OUT] >[OFF:POST:{{garagepi_mondeo_url}}function/IN]"}
 Switch garagepi_motion 			"Bevegelse GPI"
@@ -111,7 +111,7 @@ Switch light_living_room_corner "Stue hjørnet"		<light> (gGF,gLight, Living_Roo
 Switch remote_light_living_room_corner 															{rfxcom="<12339014.1:Command"}
 Switch light_living_room_window "Stue hvit vindu" 	<light> (gGF,gLight, Living_Room_Lights) 	{rfxcom=">12339014.2:LIGHTING2.AC:Command"}
 Switch remote_light_living_room_window 															{rfxcom="<12339014.2:Command"}
-Switch light_living_old "Gamlelyset" 				<light> (gGF, gLight, Living_Room_Lights)  	{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B13%%5D.Basic:10000:JS(getBasicOnOffState.js)] >[ON:GET:http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B13%%5D.Basic.Set(1)] >[OFF:GET:http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B13%%5D.Basic.Set(1)]"}
+Switch light_living_old "Gamlelyset" 				<light> (gGF, gLight, Living_Room_Lights)  	{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B13%%5D.commandClasses%%5B37%%5D:10000:JS(getBasicOnOffState.js)] >[ON:GET:http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B13%%5D.commandClasses%%5B37%%5D.Set(1)] >[OFF:GET:http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B13%%5D.commandClasses%%5B37%%5D.Set(0)]"}
 Number scene_light_livingroom "Lys" 				<sofa>
 
 Switch light_basement_power 		"Av/På"						<light> (gBasement, gLight) 	{rfxcom=">12339014.0:LIGHTING2.AC:Command"}
@@ -199,8 +199,8 @@ DateTime ac_lastUpdate "Last update [%1$ta %1$tR]"	<clock>         (AC)
 Group Motion <office>
 Number sensor_1_temp 		"Temperature [%.1f °C]" 			<temperature> 	(Motion, gGF) 							{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B12%%5D.commandClasses%%5B49%%5D.data%%5B1%%5D:60000:JS(getValValue.js)]"}
 Number sensor_1_luminance 	"Luminance    [%.0f Lux]" 							(Motion) 								{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B12%%5D.commandClasses%%5B49%%5D.data%%5B3%%5D:60000:JS(getValValue.js)]"}
-Switch sensor_1_motion 		"Stuesensor [MAP(motion.map):%s]" 	<present>		(Motion) 								{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B12%%5D.commandClasses%%5B48%%5D.data%%5B1%%5D:60000:JS(getLeveValue.js)]"}
-Number sensor_1_battery 	"Bev.sensor, stue [%s %%]"			<energy>		(Motion, gBattery, BatteryLevel_100)	{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B12%%5D.commandClasses%%5B128%%5D.data%%5B1%%5D:60000:JS(getLastValue.js)]"}
+Switch sensor_1_motion 		"Stuesensor [MAP(motion.map):%s]" 	<present>		(Motion) 								{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B12%%5D.commandClasses%%5B48%%5D.data%%5B1%%5D:60000:JS(getLevelValue.js)]"}
+Number sensor_1_battery 	"Bev.sensor, stue [%s %%]"			<energy>		(Motion, gBattery, BatteryLevel_100)	{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B12%%5D.commandClasses%%5B128%%5D.data:60000:JS(getLastValue.js)]"}
 Number sensor_1_lu 			"[%.0f]" 							<clock>		 											{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B12%%5D.commandClasses%%5B48%%5D.data%%5B1%%5D.level:60000:JS(getLastUpdate.js)]"}
 DateTime sensor_1_update 	"Last update [%1$ta %1$tR]" 		<clock>			(Motion)
 
@@ -213,8 +213,8 @@ Switch light_bathroom		 "Lys"							<light>			(gLight, gFirstFloor) 					{http="
 Number light_bathroom_dimmer "Dimmer [%s]" 					<light> 												{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B14%%5D.commandClasses%%5B38%%5D.data:60000:JS(getLevelValue.js)]"}
 Number bathroom_temp 		 "Temp [%.1f °C]" 				<temperature> 	(Motion) 								{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B15%%5D.commandClasses%%5B49%%5D.data%%5B1%%5D:60000:JS(getValValue.js)]"}
 Number bathroom_lux 		 "Lys    [%.0f Lux]" 							(Motion) 								{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B15%%5D.commandClasses%%5B49%%5D.data%%5B3%%5D:60000:JS(getValValue.js)]"}
-Switch bathroom_motion 		 "Sensor [MAP(motion.map):%s]" 	<present>		(Motion) 								{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B15%%5D.commandClasses%%5B48%%5D.data%%5B1%%5D:60000:JS(getLeveValue.js)]"}
-Number bathroom_battery 	 "Bev.sensor [%s %%]"			<battery>		(Motion, gBattery, BatteryLevel_100)	{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B15%%5D.commandClasses%%5B128%%5D.data%%5B1%%5D:60000:JS(getLastValue.js)]"}
+Switch bathroom_motion 		 "Sensor [MAP(motion.map):%s]" 	<present>		(Motion) 								{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B15%%5D.commandClasses%%5B48%%5D.data%%5B1%%5D:60000:JS(getLevelValue.js)]"}
+Number bathroom_battery 	 "Bev.sensor [%s %%]"			<battery>		(Motion, gBattery, BatteryLevel_100)	{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B15%%5D.commandClasses%%5B128%%5D.data:60000:JS(getLastValue.js)]"}
 
 /* Roomba */
 //String roomba_test <sofa> {tcp="<[{{roomba_ip}}:9001:'REGEX((.*))']"} // for a String Item that captures some state of a remote device that connects to openHAB
