@@ -11,7 +11,7 @@ sitemap huset label="Huset"
 				Switch item=scene_light_livingroom mappings=[0="Av", 1="På", 2="Film"]
 			}
 			Frame label="Varmepumpe"{
-				Switch item=scene_ac mappings=[0="Av", 1="Varm", 2="Kjøl", 3="Luft"]
+				Switch item=ac_scene mappings=[0="Av", 1="Varm", 2="Kjøl", 3="Luft"]
 				Setpoint item=ac_set_temp minValue=16 maxValue=28 step=1 icon="temperature" visibility=[ac_power==ON]
 				Setpoint item=ac_night_temp minValue=16 maxValue=28 step=1 icon="temperature"
 				Setpoint item=ac_heat_temp minValue=16 maxValue=28 step=1 icon="temperature"
