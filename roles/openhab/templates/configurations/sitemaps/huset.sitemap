@@ -1,5 +1,12 @@
 sitemap huset label="Huset"
 {
+	Frame label="Quick" {
+		Switch item=mode mappings=[0="Hjemme", 3="Kveld", 1="Natt", 2="Borte"]
+		Switch item=ac_scene mappings=[0="Av", 1="Varm", 2="Kjøl", 3="Luft"]
+		Switch item=scene_garage_1 mappings=[0="Lukk", 1="Åpne", 2="10"]
+		Switch item=scene_garage_2 mappings=[0="Lukk", 1="Åpne", 2="10"]
+	}
+	
     Frame label="Huset" {
     	Text item=LivingRoomTemperature label="Første etasje [%.1f °C]" icon="groundfloor" valuecolor=[LivingRoomTemperature_LastUpdate=="Uninitialized"="lightgray",LivingRoomTemperature_LastUpdate>90="lightgray",>25="orange",>15="green",>5="orange",<=5="blue"]  {
     		Frame {
@@ -74,9 +81,7 @@ sitemap huset label="Huset"
 				Text item=OutdoorTemperature_LastUpdate visibility=[OutdoorTemperature_LastUpdate>30] valuecolor=[OutdoorTemperature_LastUpdate>120="orange", OutdoorTemperature_LastUpdate>300="red"]
     		}
     		Frame label="Garasjen" {
-				Text item=garage_door_1
 				Switch item=scene_garage_1 mappings=[0="Lukk", 1="Åpne", 2="10"]
-				Text item=garage_door_2
 				Switch item=scene_garage_2 mappings=[0="Lukk", 1="Åpne", 2="10"]
 				Switch item=message_received mappings=[ON="Ja"] icon="network" visibility=[garage_door_1==ON, garage_door_2==ON]
 				Text label="Livestream" {
@@ -113,7 +118,7 @@ sitemap huset label="Huset"
 
 	Frame label="Tilstedeværelse" {
 		Text label="Moduser" icon="present" {
-			Switch item=mode mappings=[0="Hjemme", 1="Natt", 2="Borte"]
+			Switch item=mode mappings=[0="Hjemme", 3="Kveld", 1="Natt", 2="Borte"]
 			
 			Group item=proximity label="Nettverkshelse [(%d)]" icon="present"
 			Group item=Home label="Hjemme [(%d)]" icon="present"

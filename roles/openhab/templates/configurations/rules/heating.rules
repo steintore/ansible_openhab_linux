@@ -117,3 +117,19 @@ then
 	}	
 end
 
+rule "AC changed from remote"
+	when
+		Item ac_power changed or
+		Item ac_op_mode changed
+	then
+	if (ac_power.state == OFF) {
+		postUpdate(ac_scene, 0) //OFF
+	} else if (ac_op_mode.state == 1) {
+		postUpdate(ac_scene, 2) // COOL
+	} else if (ac_op_mode.state == 4) {
+		postUpdate(ac_scene, 1) // HEAT
+	} else if (ac_op_mode.state == 3 || ac_op_mode.state == 4){
+		postUpdate(ac_scene, 3)
+	}
+end
+

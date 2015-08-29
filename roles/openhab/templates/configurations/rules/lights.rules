@@ -131,7 +131,7 @@ rule "motion detected in the bathroom"
 				if (mode.state == 0) {
 					sendCommand(light_bathroom_dimmer, 60)
 				} else {
-					sendCommand(light_bathroom_dimmer, 15)
+					sendCommand(light_bathroom_dimmer, 10)
 				}	
 				if (timerBathroom == null) {
 					timerBathroom = createTimer(now.plusSeconds(240)) [|
@@ -179,7 +179,7 @@ rule "motion detected in the bathroom"
 	}
 end
 
-rule "light dimmer received an update"
+rule "light dimmer bathroom received an update"
 	when
 		Item light_bathroom_dimmer received update
 	then
@@ -188,7 +188,7 @@ rule "light dimmer received an update"
 		logInfo('org.openhab',"Bathroom dimmer received UPDATE: '" + light_basement_dimmer.state + "' converted it to percentages: '" + percent + "'")
 end
  
-rule "light dimmer changed"
+rule "light dimmer bathroom changed"
 	when
 		Item light_bathroom_dimmer received command
 	then
@@ -204,7 +204,7 @@ rule "light dimmer changed"
 		else if (percent > 0 && light_bathroom.state == OFF) postUpdate(light_bathroom, ON)
 		
 		//logInfo('org.openhab', 'Dimming from OpenHab, changed to ' + light_bathroom_dimmer.state)
-		var String htp = "http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B14%%5D.commandClasses%%5B38%%5D.Set(" + percent.toString + ")"
+		var String htp = "http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%5B14%5D.commandClasses%5B38%5D.Set(" + percent.toString + ")"
 		
 		sendHttpGetRequest(htp)
 		logInfo('org.openhab', 'Bathroom dimmer sent request: ' + htp)

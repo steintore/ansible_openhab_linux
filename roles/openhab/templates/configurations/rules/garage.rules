@@ -96,7 +96,8 @@ rule "Send a message after 7 minutes if garage door is open and nobody is home"
 	then
 		if (mode.state == 2 && (garage_door_1.state == ON || garage_door_2.state == ON)) {
 			if (message_received.state == OFF && !garage_door_1.changedSince(now.minusMinutes(8)) && !garage_door_2.changedSince(now.minusMinutes(8))) {
-				postUpdate(push_message_text, "Tydeligvis ingen hjemme, men garasjeporten er <a href=\"{{garagepi_screenshot_url}}\">ÅPEN</a>")
+				postUpdate(push_message_url, "{{garagepi_screenshot_url}}")
+				postUpdate(push_message_text, "Tydeligvis ingen hjemme, men garasjeporten er ÅPEN")
 			}
 		}
 		if (garage_door_1.state == Undefined || garage_door_1.state == Uninitialized) {

@@ -104,6 +104,7 @@ Number battery_living_room_temp	"Stuetemp [%f]"		<battery> (gBattery, gGF, Batte
 
 /* Text values */
 String push_message_text "Default message"
+String push_message_url ""
 
 /* Lighting */
 Group:Switch:OR(ON, OFF) 		Living_Room_Lights 		"Lys [(%d)]" <light>
