@@ -316,7 +316,7 @@ rule "Motion detector in basement wants to turn on the lights"
 				timerBasement.reschedule(now.plusSeconds(600))
 			if (mode.state == 0) // HOME
 				sendCommand(scene_light_basement, 1) // ON
-			else if (mode.state == 1) // NIGHT MODE
+			else if (mode.state == 1 || mode.state == 3) // NIGHT OR EVENING MODE
 				sendCommand(scene_light_basement, 2) // NIGHT MODE
 			else { //AWAY
 				pushover('Bevegelse i kjelleren...')
