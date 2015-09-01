@@ -197,10 +197,10 @@ end
 
 rule "Last update for motion detector"
 when
-	Item sensor_1_lu received update
+	Item livingroom_lu received update
 then
-  var v = new DateTime(new Long(sensor_1_lu.state.toString) * 1000L)
-  postUpdate(sensor_1_update, new DateTimeType(v.toGregorianCalendar))
+  var v = new DateTime(new Long(livingroom_lu.state.toString) * 1000L)
+  postUpdate(livingroom_update, new DateTimeType(v.toGregorianCalendar))
 end
 
 rule "Send a status message at 22 if anything is NOT ok"
@@ -216,7 +216,7 @@ rule "Send a status message at 22 if anything is NOT ok"
 		if (nas_lan.state == OFF && !nas_lan.changedSince(now.minusHours(12))) {
 			pushover('NAS is not responding, and has been off for 12 hours(' + nas_lan.lastUpdate.toString + ')')
 		} 	
-		if (mode.state != 0 && tv_power.state == ON) {
+		if (mode.state != 0 && mode.state != 3 && tv_power.state == ON) {
 			pushover('TV står på, men du har enten lagt deg eller er borte..')
 		} 	
 end

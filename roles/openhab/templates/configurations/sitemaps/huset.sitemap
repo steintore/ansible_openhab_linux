@@ -197,6 +197,6 @@ sitemap huset label="Huset"
 	}
 	Frame label="Bevegelse" icon="office" {
 		Group item=Motion
-		Text item=sensor_1_update 
+		Text item=livingroom_update 
 	}
 }

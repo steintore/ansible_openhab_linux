@@ -169,13 +169,13 @@ DateTime Moon_New     	"Neste nymåne [%1$td.%1$tm.%1$tY %1$tH:%1$tM]"  <moon>	(
 
 /* Samsung AC */
 Group AC
-Number ac_scene "Varmepumpe" (AC)
+Number ac_scene "Varmepumpe"										(AC, away_group, night_group)
 Number ac_current_temp "Målt temperatur [%.1f °C]" 	<temperature> 	(AC) 							{samsungac="[Livingroom|AC_FUN_TEMPNOW]"}
 Switch ac_power "Varmepumpe"						<power> 		(AC) 							{samsungac="[Livingroom|AC_FUN_POWER]"}
-Number ac_mode "Convenient mode [%s]" 				<sofa> 			(AC, away_group, night_group) 	{samsungac="[Livingroom|AC_FUN_COMODE]"}
+Number ac_mode "Convenient mode [%s]" 				<sofa> 			(AC)						 	{samsungac="[Livingroom|AC_FUN_COMODE]"}
 Number ac_mode_previous
-Number ac_op_mode "Operation mode [%s]" 			<sofa> 			(AC, away_group, night_group) 	{samsungac="[Livingroom|AC_FUN_OPMODE]"}
-Number ac_set_temp "Temperatur [%.1f°C]" 			<temperature> 	(AC, away_group, night_group) 	{samsungac="[Livingroom|AC_FUN_TEMPSET]"}
+Number ac_op_mode "Operation mode [%s]" 			<sofa> 			(AC) 							{samsungac="[Livingroom|AC_FUN_OPMODE]"}
+Number ac_set_temp "Temperatur [%.1f°C]" 			<temperature> 	(AC)						 	{samsungac="[Livingroom|AC_FUN_TEMPSET]"}
 Number ac_night_temp "Natttemp [%.1f°C]"			<temperature> 	(AC)
 Number ac_heat_temp "Varmetemp [%.1f°C]"			<temperature> 	(AC)
 Number ac_cool_temp "Kjøletemp [%.1f°C]"			<temperature> 	(AC)
@@ -198,12 +198,12 @@ DateTime ac_lastUpdate "Last update [%1$ta %1$tR]"	<clock>         (AC)
 
 
 Group Motion <office>
-Number sensor_1_temp 		"Temperature [%.1f °C]" 			<temperature> 	(Motion, gGF) 							{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B12%%5D.commandClasses%%5B49%%5D.data%%5B1%%5D:60000:JS(getValValue.js)]"}
-Number sensor_1_luminance 	"Luminance    [%.0f Lux]" 							(Motion) 								{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B12%%5D.commandClasses%%5B49%%5D.data%%5B3%%5D:60000:JS(getValValue.js)]"}
-Switch sensor_1_motion 		"Stuesensor [MAP(motion.map):%s]" 	<present>		(Motion) 								{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B12%%5D.commandClasses%%5B48%%5D.data%%5B1%%5D:60000:JS(getLevelValue.js)]"}
-Number sensor_1_battery 	"Bev.sensor, stue [%s %%]"			<energy>		(Motion, gBattery, BatteryLevel_100)	{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B12%%5D.commandClasses%%5B128%%5D.data:60000:JS(getLastValue.js)]"}
-Number sensor_1_lu 			"[%.0f]" 							<clock>		 											{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B12%%5D.commandClasses%%5B48%%5D.data%%5B1%%5D.level:60000:JS(getLastUpdate.js)]"}
-DateTime sensor_1_update 	"Last update [%1$ta %1$tR]" 		<clock>			(Motion)
+Number livingroom_temp 		"Temperature [%.1f °C]" 			<temperature> 	(Motion, gGF) 							{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B16%%5D.commandClasses%%5B49%%5D.data%%5B1%%5D:60000:JS(getValValue.js)]"}
+Number livingroom_luminance "Luminance    [%.0f Lux]" 							(Motion) 								{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B16%%5D.commandClasses%%5B49%%5D.data%%5B3%%5D:60000:JS(getValValue.js)]"}
+Switch livingroom_motion 	"Stuesensor [MAP(motion.map):%s]" 	<present>		(Motion) 								{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B16%%5D.commandClasses%%5B48%%5D.data%%5B1%%5D:60000:JS(getLevelValue.js)]"}
+Number livingroom_battery 	"Bev.sensor, stue [%s %%]"			<energy>		(Motion, gBattery, BatteryLevel_100)	{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B16%%5D.commandClasses%%5B128%%5D.data:60000:JS(getLastValue.js)]"}
+Number livingroom_lu 		"[%.0f]" 							<clock>		 											{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B16%%5D.commandClasses%%5B48%%5D.data%%5B1%%5D.level:60000:JS(getLastUpdate.js)]"}
+DateTime livingroom_update 	"Last update [%1$ta %1$tR]" 		<clock>			(Motion)
 
 /* Modes 0=HOME, 1=NIGHT, 2=AWAY */
 Number mode "Modus:" <present>
