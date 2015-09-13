@@ -195,6 +195,7 @@ then
 	}
 end
 
+/* 
 rule "Last update for motion detector"
 when
 	Item livingroom_lu received update
@@ -202,6 +203,7 @@ then
   var v = new DateTime(new Long(livingroom_lu.state.toString) * 1000L)
   postUpdate(livingroom_update, new DateTimeType(v.toGregorianCalendar))
 end
+*/
 
 rule "Send a status message at 22 if anything is NOT ok"
 	when

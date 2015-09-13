@@ -198,12 +198,12 @@ DateTime ac_lastUpdate "Last update [%1$ta %1$tR]"	<clock>         (AC)
 
 
 Group Motion <office>
-Number livingroom_temp 		"Temperature [%.1f °C]" 			<temperature> 	(Motion, gGF) 							{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B16%%5D.commandClasses%%5B49%%5D.data%%5B1%%5D:60000:JS(getValValue.js)]"}
-Number livingroom_luminance "Luminance    [%.0f Lux]" 							(Motion) 								{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B16%%5D.commandClasses%%5B49%%5D.data%%5B3%%5D:60000:JS(getValValue.js)]"}
-Switch livingroom_motion 	"Stuesensor [MAP(motion.map):%s]" 	<present>		(Motion) 								{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B16%%5D.commandClasses%%5B48%%5D.data%%5B1%%5D:60000:JS(getLevelValue.js)]"}
-Number livingroom_battery 	"Bev.sensor, stue [%s %%]"			<energy>		(Motion, gBattery, BatteryLevel_100)	{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B16%%5D.commandClasses%%5B128%%5D.data:60000:JS(getLastValue.js)]"}
-Number livingroom_lu 		"[%.0f]" 							<clock>		 											{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B16%%5D.commandClasses%%5B48%%5D.data%%5B1%%5D.level:60000:JS(getLastUpdate.js)]"}
-DateTime livingroom_update 	"Last update [%1$ta %1$tR]" 		<clock>			(Motion)
+//Number livingroom_temp 		"Temperature [%.1f °C]" 			<temperature> 	(Motion, gGF) 							{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B16%%5D.commandClasses%%5B49%%5D.data%%5B1%%5D:60000:JS(getValValue.js)]"}
+//Number livingroom_luminance "Luminance    [%.0f Lux]" 							(Motion) 								{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B16%%5D.commandClasses%%5B49%%5D.data%%5B3%%5D:60000:JS(getValValue.js)]"}
+//Switch livingroom_motion 	"Stuesensor [MAP(motion.map):%s]" 	<present>		(Motion) 								{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B16%%5D.commandClasses%%5B48%%5D.data%%5B1%%5D:60000:JS(getLevelValue.js)]"}
+//Number livingroom_battery 	"Bev.sensor, stue [%s %%]"			<energy>		(Motion, gBattery, BatteryLevel_100)	{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B16%%5D.commandClasses%%5B128%%5D.data:60000:JS(getLastValue.js)]"}
+//Number livingroom_lu 		"[%.0f]" 							<clock>		 											{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B16%%5D.commandClasses%%5B48%%5D.data%%5B1%%5D.level:60000:JS(getLastUpdate.js)]"}
+//DateTime livingroom_update 	"Last update [%1$ta %1$tR]" 		<clock>			(Motion)
 
 /* Modes 0=HOME, 1=NIGHT, 2=AWAY */
 Number mode "Modus:" <present>
