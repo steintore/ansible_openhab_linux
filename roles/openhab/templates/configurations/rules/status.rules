@@ -172,7 +172,7 @@ then
 			postUpdate(push_message_text, "Tørketrommelen er ferdig!")
 			timerDryer = createTimer(now.plusSeconds(120)) [|
 				var double maxLastTwoMinutes_timer = new Double(power_dryer.maximumSince(now.minusMinutes(2)).state.toString())
-				if (maxLastTwoMinutes_timer == 0)
+				if (maxLastTwoMinutes_timer <= 2)
 					sendCommand(dryer, OFF)
 			]	
 		}

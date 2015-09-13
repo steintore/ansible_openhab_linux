@@ -1,7 +1,10 @@
 
 if (stein_home.state == ON) {
 	logError('Sending to STT','Sending to STT: ' + push_message_text)
-	pushover(push_message_text.state.toString, 'stt_iphone', 0, push_message_url.state.toString)
+	if (push_message_url.state.toString.length > 0 && push_message_url.state != Uninitialized )
+		pushover(push_message_text.state.toString, 'stt_iphone', 0, push_message_url.state.toString)
+	else
+		pushover(push_message_text.state.toString)
 }
 if (anette_home.state == ON) {
 	logError('Sending to Anette','Sending to Anette: ' + push_message_text)

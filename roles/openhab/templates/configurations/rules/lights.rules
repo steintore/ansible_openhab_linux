@@ -1,6 +1,7 @@
 import org.openhab.core.library.types.*
 import org.openhab.core.persistence.*
 import org.openhab.model.script.actions.*
+import org.joda.time.*
 
 var Timer timerBathroom = null
 var Timer timerBasement = null
@@ -75,6 +76,7 @@ rule "Switch off living room lights"
 		sendCommand(scene_light_livingroom, 0)
 end
 
+/* Disable motion sensor in living room...
 rule "motion detected in the living room" 
 	when
 		Item livingroom_motion changed
@@ -84,7 +86,10 @@ rule "motion detected in the living room"
 		case ON: {
 			if (mode.state == 0) {
 				var double lux = new Double(livingroom_luminance.state.toString())
-				if (lux <= 100) {
+				var DateTime sunset = parse(Sunset_Time.state.toString)
+				var DateTime sunrise = parse(Sunrise_Time.state.toString)
+				logInfo("org.openhab", "Sunset:" + sunset + "__ sunrise: " + sunrise + " __ now:" + now)
+				if (lux <= 100 || (sunset.beforeNow && sunrise.afterNow) ) {
 					if (tv_power.state == OFF) {
 						sendCommand(scene_light_livingroom, 1)
 					} else if (tv_power.state == ON && scene_light_livingroom.state == 0) {
@@ -104,7 +109,9 @@ rule "motion detected in the living room"
 	}
 	logInfo('org.openhab', 'Motion sensor in the living room updated to: ' + livingroom_motion.state)
 end
+*/
 
+/* Disable motion sensor in living room...
 rule "Lighting in living room has changed" 
 	when
 		Item livingroom_luminance changed
@@ -119,6 +126,7 @@ rule "Lighting in living room has changed"
 			} 
 		}
 end
+*/
 
 rule "motion detected in the bathroom" 
 	when

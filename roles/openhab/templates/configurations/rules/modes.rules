@@ -48,8 +48,7 @@ rule "A change of mode"
 		case 1: { // NIGHT
 			logInfo('org.openhab', 'NIGHT MODE')
 			stored_states = storeStates(night_group)
-			if (livingroom_motion.state == OFF)
-				sendCommand(scene_light_livingroom, 0)
+			sendCommand(scene_light_livingroom, 0)
 			sendCommand(light_basement_power, OFF)
 			sendCommand(kontor_panelovn, OFF)
 			sendCommand(gang_panelovn, OFF)
@@ -110,7 +109,7 @@ end
  * At 20 in the evening we'll go into evening mode, but only if someone is at home.
  * Away mode overrules evening mode
  */
-rule "Switch to night mode in the evening"
+rule "Switch to evening mode in the evening"
 	when
 		Time cron "0 0 20 ? * *" 
 	then
@@ -125,13 +124,13 @@ end
  */
 rule "Switch to night mode in the evening"
 	when
-		Time cron "0 0 1 ? * *" 
+		Time cron "0 30 1 ? * *" 
 	then
 		if (mode.state == 0 || mode.state == 3) {
-			if (tv_power.state == ON || livingroom_motion.state == ON) {
+			if (tv_power.state == ON) {
 				// If TV is still on or there's someone in the living room, we'll wait a bit before going into night mode
 				night_timer = createTimer(now.plusSeconds(360)) [|
-					if (tv_power.state == ON || livingroom_motion.state == ON) {
+					if (tv_power.state == ON) {
 						night_timer.reschedule(now.plusSeconds(360))
 					} else {
 						if (mode.state == 0 || mode.state == 3) {
