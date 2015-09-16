@@ -341,3 +341,23 @@ rule "Motion detector in basement wants to turn on the lights"
 		}
 	}
 end
+
+rule "Remote in living room"
+	when
+		Item scene_remote_livingroom received command
+	then
+	switch (receivedCommand) {
+		case 1:  { // LIGHTS ON 
+			sendCommand(scene_light_livingroom, 1)
+		}
+		case 2: { // HEATING?
+			sendCommand(ac_scene, 1)
+		}
+		case 3: { // LIGHTS OFF
+			sendCommand(scene_light_livingroom, 0)
+		}
+		case 4: { // COOLING?
+			sendCommand(ac_scene, 2)
+		}
+	}
+end
