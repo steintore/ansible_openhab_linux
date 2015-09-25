@@ -3,8 +3,8 @@ sitemap huset label="Huset"
 	Frame label="Quick" {
 		Switch item=mode mappings=[0="Hjemme", 3="Kveld", 1="Natt", 2="Borte"]
 		Switch item=ac_scene mappings=[0="Av", 1="Varm", 2="Kjøl", 3="Luft"]
-		Switch item=scene_garage_1 mappings=[0="Lukk", 1="Åpne", 2="10"]
-		Switch item=scene_garage_2 mappings=[0="Lukk", 1="Åpne", 2="10"]
+		Switch item=scene_garage_1 mappings=[0="Lukk", 1="Åpne"] icon="garagedoor"
+		Switch item=scene_garage_2 mappings=[0="Lukk", 1="Åpne"] icon="garagedoor"
 	}
 	
     Frame label="Huset" {
@@ -15,7 +15,7 @@ sitemap huset label="Huset"
 				Text item=LivingRoomTemperature_LastUpdate visibility=[LivingRoomTemperature_LastUpdate>1800] valuecolor=[LivingRoomTemperature_LastUpdate>120="orange", LivingRoomTemperature_LastUpdate>300="red"]
 			}
 			Frame label="Lys" {
-				Switch item=scene_light_livingroom mappings=[0="Av", 1="På", 2="Film"]
+				Switch item=scene_light_livingroom mappings=[0="Av", 1="På", 2="Film", 3="Kjøkken"]
 			}
 			Frame label="Varmepumpe"{
 				Switch item=ac_scene mappings=[0="Av", 1="Varm", 2="Kjøl", 3="Luft"]
@@ -45,6 +45,7 @@ sitemap huset label="Huset"
     		Frame label="Bad" {
     			Text item=bathroom_temp
     			Slider item=light_bathroom_dimmer
+    			Switch item=light_bathroom_mirror
     		}
     		Frame label="Kontor"{
     			Text item=OfficeTemperature
@@ -63,7 +64,7 @@ sitemap huset label="Huset"
 				Text item=BasementTemperature_LastUpdate visibility=[BasementTemperature_LastUpdate>1800] valuecolor=[BasementTemperature_LastUpdate>120="orange", BasementTemperature_LastUpdate>300="red"]
 			}
     		Frame label="Lys"{
-    			Switch item=scene_light_basement mappings=[0="Av", 1="På", 2="Natt"]
+    			Switch item=scene_light_basement icon="light" mappings=[0="Av", 1="På", 2="Natt"]
     			Switch item=light_basement_power label="Kjellerstue" mappings=[OFF='Av',ON='På']
     		}
     		Frame label="Diverse" {
@@ -81,8 +82,8 @@ sitemap huset label="Huset"
 				Text item=OutdoorTemperature_LastUpdate visibility=[OutdoorTemperature_LastUpdate>30] valuecolor=[OutdoorTemperature_LastUpdate>120="orange", OutdoorTemperature_LastUpdate>300="red"]
     		}
     		Frame label="Garasjen" {
-				Switch item=scene_garage_1 mappings=[0="Lukk", 1="Åpne", 2="10"]
-				Switch item=scene_garage_2 mappings=[0="Lukk", 1="Åpne", 2="10"]
+				Switch item=scene_garage_1 mappings=[0="Lukk", 1="Åpne", 2="10"] icon="garagedoor"
+				Switch item=scene_garage_2 mappings=[0="Lukk", 1="Åpne", 2="10"] icon="garagedoor"
 				Switch item=message_received mappings=[ON="Ja"] icon="network" visibility=[garage_door_1==ON, garage_door_2==ON]
 				Text label="Livestream" {
 					Image url="http://{{garage_camera_ip}}/image/jpeg.cgi"

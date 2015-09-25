@@ -15,16 +15,22 @@ rule "Startup"
 			sendCommand(ac_night_temp, 19)
 		}
 		if (ac_heat_temp.state == Uninitialized) {
-			sendCommand(ac_night_temp, 22)
+			sendCommand(ac_heat_temp, 23)
 		}
 		if (ac_cool_temp.state == Uninitialized) {
-			sendCommand(ac_night_temp, 21)
+			sendCommand(ac_cool_temp, 20)
 		}
 		if (mode.state == Uninitialized || mode.state < 0 || mode.state > 2) {
 			sendCommand(mode, 0)
 		}
 		if (previous_mode.state == Uninitialized) {
 			sendCommand(previous_mode, 0)
+		}
+		if (scene_garage_2.state == Uninitialized) {
+			postUpdate(scene_garage_2, 0)
+		}
+		if (scene_garage_1.state == Uninitialized) {
+			postUpdate(scene_garage_1, 0)
 		}
 		
 end

@@ -44,19 +44,35 @@ then
 			sendCommand(light_living_old, OFF)
 			sendCommand(light_living_room_corner, OFF)
 			sendCommand(light_living_room_window, OFF)
+			sendCommand(light_kitchen_bench, OFF)
+			sendCommand(light_dining_table, OFF)
+			postUpdate(light_dining_table_dimmer, 0)
 			
 		}
 		case 1: { // ON
 			sendCommand(light_living_old, ON)
 			sendCommand(light_living_room_window, ON)
 			sendCommand(light_living_room_corner, ON)
-				
+			sendCommand(light_kitchen_bench, ON)
+			sendCommand(light_dining_table, ON)
+			postUpdate(light_dining_table_dimmer, 100)	
 		}
 		case 2: { // WATCHING A MOVIE
 			sendCommand(light_living_old, ON)
 			sendCommand(light_living_room_corner, OFF)
 			sendCommand(light_living_room_window, OFF)
+			sendCommand(light_kitchen_bench, OFF)
+			sendCommand(light_dining_table, OFF)
+			postUpdate(light_dining_table_dimmer, 0)
 				
+		}
+		case 3: {//EATING OR COOKING
+			sendCommand(light_kitchen_bench, ON)
+			sendCommand(light_dining_table, ON)
+			postUpdate(light_dining_table_dimmer, 100)
+			sendCommand(light_living_old, ON)
+			sendCommand(light_living_room_corner, OFF)
+			sendCommand(light_living_room_window, OFF)
 		}
 	}	
 	logInfo('org.openhab', 'scene_light_livingroom update to: ' + scene_light_livingroom.state)
@@ -136,10 +152,10 @@ rule "motion detected in the bathroom"
 	switch (bathroom_motion.state as OnOffType) {
 		case ON: {
 			if (mode.state != 2) {
-				if (mode.state == 0) {
-					sendCommand(light_bathroom_dimmer, 60)
+				if (mode.state == 0) { //HOME
+					sendCommand(scene_bathroom_light, 2) //DAY
 				} else {
-					sendCommand(light_bathroom_dimmer, 10)
+					sendCommand(scene_bathroom_light, 1) // NIGHT
 				}	
 				if (timerBathroom == null) {
 					timerBathroom = createTimer(now.plusSeconds(240)) [|
@@ -147,8 +163,7 @@ rule "motion detected in the bathroom"
 						if (bathroom_motion.state == ON) {
 							timerBathroom.reschedule(now.plusSeconds(240))
 						} else {
-							sendCommand(light_bathroom, OFF)	
-							postUpdate(light_bathroom_dimmer, 0)
+							sendCommand(scene_bathroom_light, 0)
 					
 							if(timerBathroom!=null) {
 								if(timerBathroom.running) {
@@ -171,8 +186,7 @@ rule "motion detected in the bathroom"
 					if (bathroom_motion.state == ON) {
 						timerBathroom.reschedule(now.plusSeconds(120))
 					} else {
-						sendCommand(light_bathroom, OFF)	
-						postUpdate(light_bathroom_dimmer, 0)
+						sendCommand(scene_bathroom_light, 0)
 				
 						if(timerBathroom!=null) {
 							if(timerBathroom.running) {
@@ -183,6 +197,30 @@ rule "motion detected in the bathroom"
 					}
 					]
 			}
+		}
+	}
+end
+
+rule "light bathroom 1st floor" 
+	when
+		Item scene_bathroom_light received command
+	then
+	switch(receivedCommand) {
+		case 0: {// OFF
+			sendCommand(light_bathroom_mirror, OFF)
+			sendCommand(light_bathroom, OFF)
+			postUpdate(light_bathroom_dimmer, 0)
+		}
+		case 1: {//NIGHT
+			sendCommand(light_bathroom_dimmer, 10)
+		}
+		case 2: {//DAY
+			sendCommand(light_bathroom_dimmer, 60)
+		
+		}
+		case 3: {//FULL
+			sendCommand(light_bathroom_dimmer, 100)
+			sendCommand(light_bathroom_mirror, ON)
 		}
 	}
 end
@@ -203,16 +241,58 @@ rule "light dimmer bathroom changed"
 		var Number percent = 0
 		if(light_bathroom_dimmer.state instanceof DecimalType) percent = light_bathroom_dimmer.state as DecimalType
 		
-		logInfo('org.openhab',"Bathroom dimmer received command: '" + light_basement_dimmer.state + "' converted it to percentages: '" + percent + "'")
+		logInfo('org.openhab',"Bathroom dimmer received command: '" + light_bathroom_dimmer.state + "' converted it to percentages: '" + percent + "'")
 		
 		if (percent > 100) percent = 100
 		if (percent < 0) percent = 0
 		
-		if(percent == 0 && light_bathroom.state == ON) postUpdate(light_bathroom, OFF)
-		else if (percent > 0 && light_bathroom.state == OFF) postUpdate(light_bathroom, ON)
+		if(percent == 0 && light_bathroom.state == ON) {
+			postUpdate(light_bathroom, OFF)
+			postUpdate(scene_bathroom_light, 0)
+		}
+		else if (percent > 0 && light_bathroom.state == OFF) {
+			postUpdate(light_bathroom, ON)
+			if (percent < 30)
+				postUpdate(scene_bathroom_light, 1) //NIGHT
+			else
+				postUpdate(scene_bathroom_light, 2) //DAY						
+		}
 		
 		//logInfo('org.openhab', 'Dimming from OpenHab, changed to ' + light_bathroom_dimmer.state)
-		var String htp = "http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%5B14%5D.commandClasses%5B38%5D.Set(" + percent.toString + ")"
+		var String htp = "http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%5B14%5D.SwitchMultilevel.Set(" + percent.toString + ")"
+		
+		sendHttpGetRequest(htp)
+		logInfo('org.openhab', 'Bathroom dimmer sent request: ' + htp)
+end
+
+rule "light dimmer living room received an update"
+	when
+		Item light_dining_table_dimmer received update
+	then
+		var Number percent = 0
+		if(light_dining_table_dimmer.state instanceof DecimalType) percent = light_dining_table_dimmer.state as DecimalType
+		logInfo('org.openhab',"Dining table dimmer received UPDATE: '" + light_dining_table_dimmer.state + "' converted it to percentages: '" + percent + "'")
+end
+ 
+rule "light dimmer dining table changed"
+	when
+		Item light_dining_table_dimmer received command
+	then
+		var Number percent = 0
+		if(light_dining_table_dimmer.state instanceof DecimalType) percent = light_dining_table_dimmer.state as DecimalType
+		logInfo('org.openhab',"Bathroom dimmer received command: '" + light_dining_table_dimmer.state + "' converted it to percentages: '" + percent + "'")
+		
+		if (percent > 100) percent = 100
+		if (percent < 0) percent = 0
+		
+		if(percent == 0 && light_dining_table.state == ON) {
+			postUpdate(light_dining_table, OFF)
+		} else if (percent > 0 && light_dining_table.state == OFF) {
+			postUpdate(light_dining_table, ON)						
+		}
+		
+		//logInfo('org.openhab', 'Dimming from OpenHab, changed to ' + light_bathroom_dimmer.state)
+		var String htp = "http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%5B22%5D.SwitchMultilevel.Set(" + percent.toString + ")"
 		
 		sendHttpGetRequest(htp)
 		logInfo('org.openhab', 'Bathroom dimmer sent request: ' + htp)
@@ -344,20 +424,21 @@ end
 
 rule "Remote in living room"
 	when
-		Item scene_remote_livingroom received command
-	then
-	switch (receivedCommand) {
-		case 1:  { // LIGHTS ON 
-			sendCommand(scene_light_livingroom, 1)
-		}
-		case 2: { // HEATING?
-			sendCommand(ac_scene, 1)
-		}
-		case 3: { // LIGHTS OFF
-			sendCommand(scene_light_livingroom, 0)
-		}
-		case 4: { // COOLING?
-			sendCommand(ac_scene, 2)
-		}
-	}
+        Item scene_remote_livingroom changed or
+        Item scene_remote_livingroom received update
+    then
+	    switch (scene_remote_livingroom.state) {
+            case 1:  { // LIGHTS ON
+	            sendCommand(scene_light_livingroom, 1)
+            }
+            case 2: { // ONLY LIVING ROOM, not kitchen
+                sendCommand(scene_light_livingroom, 2)
+            }
+            case 3: { // LIGHTS OFF
+                sendCommand(scene_light_livingroom, 0)
+            }
+            case 4: { // Kitchen not living room
+                sendCommand(scene_light_livingroom, 2)
+            }
+    }
 end
