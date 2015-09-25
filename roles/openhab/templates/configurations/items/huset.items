@@ -222,9 +222,9 @@ Number bathroom_battery 	 "Bev.sensor [%s %%]"			<battery>		(Motion, gBattery, B
 Switch light_bathroom_mirror "Speillys"						<light>			(gLight, gFirstFloor)					{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B19%%5D.SwitchBinary:10000:JS(getBasicOnOffState.js)] >[ON:GET:http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B19%%5D.SwitchBinary.Set(1)] >[OFF:GET:http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B19%%5D.SwitchBinary.Set(0)]"}
 Number scene_bathroom_light
 
-Number scene_remote_livingroom {http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B17%%5D.commandClasses%%5B91%%5D.data:60000:JS(getCurrentScene.js)]"}
+Number scene_remote_livingroom //{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B17%%5D.commandClasses%%5B91%%5D.data:60000:JS(getCurrentScene.js)]"}
 
-Switch light_hall_ground_floor "Lys gangen" <light> (gLight, gFirstFloor) // {http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B20%%5D.SwitchBinary:10000:JS(getBasicOnOffState.js)] >[ON:GET:http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B20%%5D.SwitchBinary.Set(1)] >[OFF:GET:http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B20%%5D.SwitchBinary.Set(0)]"}
+Switch light_hall_ground_floor "Lys gangen" <light> (gLight, gFirstFloor) {http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B20%%5D.SwitchBinary:10000:JS(getBasicOnOffState.js)] >[ON:GET:http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B20%%5D.SwitchBinary.Set(1)] >[OFF:GET:http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B20%%5D.SwitchBinary.Set(0)]"}
 /* Roomba */
 //String roomba_test <sofa> {tcp="<[{{roomba_ip}}:9001:'REGEX((.*))']"} // for a String Item that captures some state of a remote device that connects to openHAB
 

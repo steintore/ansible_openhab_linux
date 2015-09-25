@@ -5,7 +5,7 @@ import org.joda.time.*
 
 var Timer timerBathroom = null
 var Timer timerBasement = null
-
+/* 
 rule "send command from remote to living room light corner"
 when
         Item remote_light_living_room_corner changed
@@ -33,7 +33,7 @@ when
 then
         sendCommand(light_basement_window, remote_light_basement_window.state.toString)
 end
-
+*/
 rule "scene for lights in living room"
 when
 	Item scene_light_livingroom received command
@@ -76,20 +76,6 @@ then
 		}
 	}	
 	logInfo('org.openhab', 'scene_light_livingroom update to: ' + scene_light_livingroom.state)
-end
-
-rule "Switch on living room lights"
-	when
-		Item right_double_switch received command ON	
-	then
-		sendCommand(scene_light_livingroom, 1)
-end
-
-rule "Switch off living room lights"
-	when
-		Item right_double_switch received command OFF	
-	then
-		sendCommand(scene_light_livingroom, 0)
 end
 
 rule "motion detected in the ground floor hall" 
