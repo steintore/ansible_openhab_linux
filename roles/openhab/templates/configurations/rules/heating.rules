@@ -10,8 +10,9 @@ rule "If the room is too cold and we are home, then heat it up, but only if it i
 		var double tempOffice = new Double(OfficeTemperature.state.toString())
 		var double tempOutdoor = new Double(OutdoorTemperature.state.toString())
 		var double tempBasement = new Double(BasementTemperature.state.toString())
+		var double tempLivingroom = new Double(LivingRoomTemperature.state.toString())
 		
-		if (tempOutdoor < 10) {
+		if (tempOutdoor <= 10) {
 			if (gang_panelovn.state == OFF && mode.state == 0) {
 				if (tempOffice < 20) {
 					sendCommand(gang_panelovn, ON)
@@ -20,8 +21,17 @@ rule "If the room is too cold and we are home, then heat it up, but only if it i
 			}
 			if (tempBasement < 18 && BasementTemperature.maximumSince(now.minusMinutes(21)).state >= 18) {
 				pushover('Kjellertemp er nå: ' + tempBasement + " - den har gått fra " + BasementTemperature.maximumSince(now.minusMinutes(21)).state + " de siste 20 minuttene")
+			}
+			if (tempLivingroom < 20) {
+				sendCommand(ac_scene, 1)
 			}	
-		}		
+		} else if (tempOutdoor > 10 && tempOutdoor <= 15) {
+			if (tempLivingroom <= 20)
+				sendCommand(ac_scene, 1)
+		}
+		
+		if (tempOutdoor >= 19 && ac_scene.state == 1)
+			sendCommand(ac_scene , 0)
 end
 
 rule "When the error code from the AC changes, please let me know"

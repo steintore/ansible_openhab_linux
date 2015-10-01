@@ -85,16 +85,7 @@ rule "motion detected in the ground floor hall"
 	logInfo('org.openhab', 'Motion sensor in the hall changed to: ' + hall_gf_motion.state)
 	switch (hall_gf_motion.state as OnOffType) {
 		case ON: {
-			if (mode.state == 0) {
-				//var double lux = new Double(livingroom_luminance.state.toString())
-				//var DateTime sunset = parse(Sunset_Time.state.toString)
-				//var DateTime sunrise = parse(Sunrise_Time.state.toString)
-				//logInfo("org.openhab", "Sunset:" + sunset + "__ sunrise: " + sunrise + " __ now:" + now)
-				//if (lux <= 100 || (sunset.beforeNow && sunrise.afterNow) ) {
-								
-				//}
-				sendCommand(light_hall_ground_floor, ON)
-			}	
+			sendCommand(light_hall_ground_floor, ON)
 		}
 		case OFF: {
 			sendCommand(light_hall_ground_floor, OFF)	
