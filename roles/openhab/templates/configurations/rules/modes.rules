@@ -58,6 +58,7 @@ rule "A change of mode"
 			}
 			if (tv_power.state == ON) {
 				sendCommand(tv_power, OFF)
+				sendCommand(ac_mode, 0)
 			}
 			if (ac_scene.state == 1 && ac_night_temp.state != Uninitialized) {
 				sendCommand(ac_set_temp, ac_night_temp.state.toString)

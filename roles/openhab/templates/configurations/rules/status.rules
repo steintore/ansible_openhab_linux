@@ -176,10 +176,8 @@ then
 		var double maxLastTwoMinutes = new Double(power_dryer.maximumSince(now.minusMinutes(2)).state.toString())
 		if (w < 2 && maxLastHour > 100 && (maxLastTwoMinutes <= (w*2) || w == 0)) {
 			postUpdate(push_message_text, "Tørketrommelen er ferdig!")
-			timerDryer = createTimer(now.plusSeconds(120)) [|
-				var double maxLastTwoMinutes_timer = new Double(power_dryer.maximumSince(now.minusMinutes(2)).state.toString())
-				if (maxLastTwoMinutes_timer <= 2)
-					sendCommand(dryer, OFF)
+			timerDryer = createTimer(now.plusSeconds(240)) [|
+				sendCommand(dryer, OFF)
 			]	
 		}
 	} else if(timerDryer != null) {

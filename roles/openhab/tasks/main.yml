@@ -23,7 +23,6 @@
     - binding.systeminfo
     - persistence.rrd4j
     - persistence.logging
-    - persistence.influxdb
     - action.pushover
     - binding.configadmin
     - binding.astro
@@ -110,6 +109,15 @@
         - rules/modes.rules
         - scripts/pushMessages.script
         - sitemaps/huset.sitemap
+        - transform/de.map
+        - transform/en.map
+        - transform/getBasicOnOffState.js
+        - transform/getLastUpdate.js
+        - transform/getLastValue.js
+        - transform/getLevelValue.js
+        - transform/getPowerValue.js
+        - transform/motion.map
+        - transform/no.map
 
 - name: create openHAB configurations/transform directory
   file: >

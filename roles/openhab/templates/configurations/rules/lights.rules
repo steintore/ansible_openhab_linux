@@ -61,9 +61,6 @@ then
 			sendCommand(light_living_old, ON)
 			sendCommand(light_living_room_corner, OFF)
 			sendCommand(light_living_room_window, OFF)
-			sendCommand(light_kitchen_bench, OFF)
-			sendCommand(light_dining_table, OFF)
-			postUpdate(light_dining_table_dimmer, 0)
 				
 		}
 		case 3: {//EATING OR COOKING
@@ -388,7 +385,7 @@ rule "Remote in living room"
                 sendCommand(scene_light_livingroom, 0)
             }
             case 4: { // Kitchen not living room
-                sendCommand(scene_light_livingroom, 2)
+                sendCommand(scene_light_livingroom, 3)
             }
     }
 end
