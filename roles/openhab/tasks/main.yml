@@ -121,6 +121,7 @@
         - transform/getLastValue.js
         - transform/getLevelValue.js
         - transform/getPowerValue.js
+        - transform/getValValue.js
         - transform/motion.map
         - transform/no.map
 
