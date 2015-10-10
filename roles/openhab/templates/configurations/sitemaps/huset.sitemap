@@ -131,6 +131,7 @@ sitemap huset label="Huset"
 		Text item=Power icon="energy" {
 			Frame {
 				Group item=Energy
+				Group item=Smappee
 				Group item=gBattery label="Batteri" icon="energy"
 			}
 			Frame {
