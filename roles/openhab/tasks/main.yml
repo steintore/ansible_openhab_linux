@@ -67,6 +67,11 @@
     state=directory
     path={{ openhab_install_dir }}/runtime/{{openhab_version}}/configurations/persistence
 
+- name: create openHAB configurations/transform directory
+  file: >
+    state=directory
+    path={{ openhab_install_dir }}/runtime/{{openhab_version}}/configurations/transform
+
 - name: create openHAB configurations/rules directory
   file: >
     state=directory
