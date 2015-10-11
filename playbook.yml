@@ -3,3 +3,4 @@
     - rfxcom_tty: ttyUSB0
   roles:
     - openhab
+    - mosquitto

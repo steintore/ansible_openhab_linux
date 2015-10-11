@@ -1,0 +1,11 @@
+- name: Install mosquitto
+  apt: name=mosquitto update_cache=yes
+  sudo: true
+
+- name: Install mosquitto client
+  apt: name=mosquitto-clients update_cache=yes
+  sudo: true
+
+- name: Install python-mosquitto
+  apt: name=python-mosquitto update_cache=yes
+  sudo: true

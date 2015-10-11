@@ -106,6 +106,7 @@
         - persistence/influxdb.persist
         - persistence/logging.persist
         - persistence/myopenhab.persist
+        - persistence/mqtt.persist
         - rules/garage.rules
         - rules/heating.rules
         - rules/lights.rules
