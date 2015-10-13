@@ -23,6 +23,7 @@
     - binding.systeminfo
     - persistence.rrd4j
     - persistence.logging
+    - persistence.mqtt
     - action.pushover
     - binding.configadmin
     - binding.astro

@@ -15,5 +15,5 @@ Strategies {
  */
 Items {
     // persist all items once a day and on every change and restore them from the db at startup
-    * : strategy = everyMinute, everyChange, everyDay, restoreOnStartup
+    * : strategy = everyMinute, everyChange, everyDay
 }

@@ -61,6 +61,9 @@ then
 			sendCommand(light_living_old, ON)
 			sendCommand(light_living_room_corner, OFF)
 			sendCommand(light_living_room_window, OFF)
+			sendCommand(light_kitchen_bench, OFF)
+			sendCommand(light_dining_table, ON)
+			sendCommand(light_dining_table_dimmer, 50)
 				
 		}
 		case 3: {//EATING OR COOKING
