@@ -414,6 +414,9 @@ rule "Remote in living room"
         Item scene_remote_livingroom received update
     then
 	    switch (scene_remote_livingroom.state) {
+	    	case 0: {
+	    		// NOTHING
+	    	}
             case 1:  { // LIGHTS ON
 	            sendCommand(scene_light_livingroom, 1)
             }
