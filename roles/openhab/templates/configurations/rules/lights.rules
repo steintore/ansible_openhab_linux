@@ -5,6 +5,7 @@ import org.joda.time.*
 
 var Timer timerBathroom = null
 var Timer timerBasement = null
+var Timer timerGFHall = null
 /* 
 rule "send command from remote to living room light corner"
 when
@@ -86,9 +87,44 @@ rule "motion detected in the ground floor hall"
 	switch (hall_gf_motion.state as OnOffType) {
 		case ON: {
 			sendCommand(light_hall_ground_floor, ON)
+			if (timerGFHall == null) {
+				timerGFHall = createTimer(now.plusSeconds(60)) [|
+					if(hall_gf_motion.state == ON) {
+						timerGFHall.reschedule(now.plusSeconds(60))
+					} else {
+						sendCommand(light_hall_ground_floor, OFF)
+						
+						if (timerGFHall != null) {
+							if(timerGFHall.running) {
+								timerGFHall.cancel()
+							}
+							timerGFHall = null
+						}
+					}
+				]
+			} else {
+				timerGFHall.reschedule(now.plusSeconds(60))
+			}
 		}
 		case OFF: {
-			sendCommand(light_hall_ground_floor, OFF)	
+			if (timerGFHall == null) {
+				timerGFHall = createTimer(now.plusSeconds(30)) [|
+					if(hall_gf_motion.state == ON) {
+						timerGFHall.reschedule(now.plusSeconds(30))
+					} else {
+						sendCommand(light_hall_ground_floor, OFF)
+						
+						if (timerGFHall != null) {
+							if(timerGFHall.running) {
+								timerGFHall.cancel()
+							}
+							timerGFHall = null
+						}
+					}
+				]
+			} else {
+				timerGFHall.reschedule(now.plusSeconds(60))
+			}
 		}
 	}
 	logInfo('org.openhab', 'Motion sensor in the hall updated to: ' + hall_gf_motion.state)
@@ -389,6 +425,11 @@ rule "Remote in living room"
             }
             case 4: { // Kitchen not living room
                 sendCommand(scene_light_livingroom, 3)
+            } 
+            default: {
+            	pushover('Fikk en rar update fra fjernkontrollen: ' + scene_remote_livingroom.state.toString)
             }
     }
+    // Set it to 0, so that all changes are considered
+    postUpdate(scene_remote_livingroom, 0)
 end
