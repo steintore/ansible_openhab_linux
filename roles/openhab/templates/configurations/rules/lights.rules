@@ -79,6 +79,27 @@ then
 	logInfo('org.openhab', 'scene_light_livingroom update to: ' + scene_light_livingroom.state)
 end
 
+rule "change scene for lights in hall ground floor"
+when
+ 	Item scene_light_hall_gf received command
+then
+ 	switch(receivedCommand) {
+ 		case 0: {
+ 			sendCommand(light_hall_ground_floor, OFF)
+ 		}
+ 		case 1: {
+ 			sendCommand(light_hall_ground_floor, ON)
+ 		}
+ 		case 2: {
+ 			if (hall_gf_motion.state == ON)
+ 				sendCommand(light_hall_ground_floor, ON)
+ 			else
+ 				sendCommand(light_hall_ground_floor, OFF)
+ 		}
+ 	}
+end
+ 
+
 rule "motion detected in the ground floor hall" 
 	when
 		Item hall_gf_motion changed
@@ -86,24 +107,27 @@ rule "motion detected in the ground floor hall"
 	logInfo('org.openhab', 'Motion sensor in the hall changed to: ' + hall_gf_motion.state)
 	switch (hall_gf_motion.state as OnOffType) {
 		case ON: {
-			sendCommand(light_hall_ground_floor, ON)
-			if (timerGFHall == null) {
-				timerGFHall = createTimer(now.plusSeconds(60)) [|
-					if(hall_gf_motion.state == ON) {
-						timerGFHall.reschedule(now.plusSeconds(60))
-					} else {
-						sendCommand(light_hall_ground_floor, OFF)
+			if (scene_light_hall_gf.state == 1 || scene_light_hall_gf.state == 2) {
+				sendCommand(light_hall_ground_floor, ON)
+				if (timerGFHall == null) {
+					timerGFHall = createTimer(now.plusSeconds(60)) [|
+						if(hall_gf_motion.state == ON) {
+							timerGFHall.reschedule(now.plusSeconds(60))
+						} else {
+							sendCommand(light_hall_ground_floor, OFF)
 						
-						if (timerGFHall != null) {
-							if(timerGFHall.running) {
-								timerGFHall.cancel()
+							if (timerGFHall != null) {
+								if(timerGFHall.running) {
+									timerGFHall.cancel()
+								}
+								timerGFHall = null
 							}
-							timerGFHall = null
 						}
-					}
-				]
-			} else {
-				timerGFHall.reschedule(now.plusSeconds(60))
+					]
+				} else {
+					timerGFHall.reschedule(now.plusSeconds(60))
+				}
+			
 			}
 		}
 		case OFF: {
@@ -112,7 +136,8 @@ rule "motion detected in the ground floor hall"
 					if(hall_gf_motion.state == ON) {
 						timerGFHall.reschedule(now.plusSeconds(30))
 					} else {
-						sendCommand(light_hall_ground_floor, OFF)
+						if (scene_light_hall_gf.state == 0 || scene_light_hall_gf.state == 2)
+							sendCommand(light_hall_ground_floor, OFF)
 						
 						if (timerGFHall != null) {
 							if(timerGFHall.running) {
@@ -434,5 +459,80 @@ rule "Remote in living room"
             }
     }
     // Set it to 0, so that all changes are considered
-    postUpdate(scene_remote_livingroom, 0)
+    if (scene_remote_livingroom.state != 0)
+    	postUpdate(scene_remote_livingroom, 0)
+end
+
+
+rule "Motion detector outdoor halloween"
+	when
+	 	Item motion_detector_outdoor changed
+	then
+		switch (motion_detector_outdoor.state as OnOffType) {
+		case ON: {
+			if (timerBasement == null) {
+				timerBasement = createTimer(now.plusSeconds(600)) [|
+					sendCommand(motion_detector_outdoor, OFF)
+				
+					if(timerBasement!=null) {
+						if(timerBasement.running) {
+							timerBasement.cancel()
+						}	
+						timerBasement = null
+					}
+					]
+			} else {
+				timerBasement.reschedule(now.plusSeconds(600))
+				sendCommand(scene_halloween, 2) 
+			}
+		}
+		case OFF: {
+			sendCommand(scene_halloween, 1) // OFF
+			if(timerBasement!=null) {
+				if(timerBasement.running) {
+					timerBasement.cancel()
+				}	
+				timerBasement = null
+			}
+		}
+	}
+end
+
+rule "Scene halloween changed" 
+	when
+		Item scene_halloween changed
+	then
+		if (enable_halloween.state == ON) {
+			switch (scene_halloween.state) {
+	    		case 0: {
+	    			// OFF
+	    		}	
+	    		case 1: {
+	    			// NORMAL LIGHTS
+	    			sendCommand(light_11, OFF)
+	    			sendCommand(light_9, OFF)
+	    			sendCommand(light_10, OFF)
+	    			sendCommand(light_11, ON)
+	    			sendCommand(light_9, ON)
+	    			sendCommand(light_10, ON)
+	    			var DecimalType hue = new DecimalType(150) // 0-360; 0=red, 120=green, 240=blue, 360=red(again)
+					var PercentType sat = new PercentType(100) // 0-100
+					var PercentType bright = new PercentType(100) // 0-100
+					var HSBType light = new HSBType(hue,sat,bright)
+					sendCommand(color_9, light)
+					sendCommand(color_10, light)
+					sendCommand(color_11, light)
+	    		}
+	    		case 2: {
+	    			// HALLOWEEN LIGHTS
+	    			var DecimalType hue = new DecimalType(360) // 0-360; 0=red, 120=green, 240=blue, 360=red(again)
+					var PercentType sat = new PercentType(80) // 0-100
+					var PercentType bright = new PercentType(70) // 0-100
+					var HSBType light = new HSBType(hue,sat,bright)
+					sendCommand(color_9, light)
+					sendCommand(color_10, light)
+					sendCommand(color_11, light)
+	    		}
+	    	}
+	    }
 end

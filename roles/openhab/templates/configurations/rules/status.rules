@@ -33,6 +33,8 @@ rule "Startup"
 			postUpdate(scene_garage_1, 0)
 		}
 		
+		postUpdate(scene_light_hall_gf, 2) // SET TO AUTO
+		
 end
 
 rule "Leaving home, we think"

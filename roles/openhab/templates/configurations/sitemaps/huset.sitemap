@@ -15,7 +15,7 @@ sitemap huset label="Huset"
 				Text item=LivingRoomTemperature_LastUpdate visibility=[LivingRoomTemperature_LastUpdate>1800] valuecolor=[LivingRoomTemperature_LastUpdate>120="orange", LivingRoomTemperature_LastUpdate>300="red"]
 			}
 			Frame label="Lys" {
-				Switch item=light_hall_ground_floor
+				Switch item=scene_light_hall_gf mappings=[0="Av", 1="På", 2="Auto"]
 				Switch item=scene_light_livingroom mappings=[0="Av", 1="På", 2="Film", 3="Kjøkken"]
 			}
 			Frame label="Varmepumpe"{
@@ -201,5 +201,8 @@ sitemap huset label="Huset"
 	Frame label="Bevegelse" icon="office" {
 		Group item=Motion
 		//Text item=livingroom_update 
+	}
+	Frame label="Lys" icon="light" {
+		Group item=gLight
 	}
 }
