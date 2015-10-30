@@ -471,7 +471,7 @@ rule "Motion detector outdoor halloween"
 		switch (motion_detector_outdoor.state as OnOffType) {
 		case ON: {
 			if (timerBasement == null) {
-				timerBasement = createTimer(now.plusSeconds(600)) [|
+				timerBasement = createTimer(now.plusSeconds(120)) [|
 					sendCommand(motion_detector_outdoor, OFF)
 				
 					if(timerBasement!=null) {
@@ -482,12 +482,12 @@ rule "Motion detector outdoor halloween"
 					}
 					]
 			} else {
-				timerBasement.reschedule(now.plusSeconds(600))
+				timerBasement.reschedule(now.plusSeconds(120))
 				sendCommand(scene_halloween, 2) 
 			}
 		}
 		case OFF: {
-			sendCommand(scene_halloween, 1) // OFF
+			sendCommand(scene_halloween, 1) // NORMAL LIGHTS
 			if(timerBasement!=null) {
 				if(timerBasement.running) {
 					timerBasement.cancel()
@@ -515,13 +515,9 @@ rule "Scene halloween changed"
 	    			sendCommand(light_11, ON)
 	    			sendCommand(light_9, ON)
 	    			sendCommand(light_10, ON)
-	    			var DecimalType hue = new DecimalType(150) // 0-360; 0=red, 120=green, 240=blue, 360=red(again)
-					var PercentType sat = new PercentType(100) // 0-100
-					var PercentType bright = new PercentType(100) // 0-100
-					var HSBType light = new HSBType(hue,sat,bright)
-					sendCommand(color_9, light)
-					sendCommand(color_10, light)
-					sendCommand(color_11, light)
+					sendCommand(color_9, "62,50,80")
+					sendCommand(color_10, "62,50,80")
+					sendCommand(color_11, "62,50,80")
 	    		}
 	    		case 2: {
 	    			// HALLOWEEN LIGHTS
