@@ -129,10 +129,10 @@ rule "Switch to night mode in the evening"
 		Time cron "0 30 1 ? * *" 
 	then
 		if (mode.state == 0 || mode.state == 3) {
-			if (tv_power.state == ON) {
+			if (tv_power.state == ON || denon_receiver.state == ON || appletv.state == ON || xbox.state == ON) {
 				// If TV is still on or there's someone in the living room, we'll wait a bit before going into night mode
 				night_timer = createTimer(now.plusSeconds(360)) [|
-					if (tv_power.state == ON) {
+					if (tv_power.state == ON || denon_receiver.state == ON || appletv.state == ON || xbox.state == ON) {
 						night_timer.reschedule(now.plusSeconds(360))
 					} else {
 						if (mode.state == 0 || mode.state == 3) {
