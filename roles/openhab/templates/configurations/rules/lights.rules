@@ -157,7 +157,8 @@ end
 
 rule "motion detected in the bathroom" 
 	when
-		Item bathroom_motion changed
+		Item bathroom_motion changed or
+	 	Item bathroom_motion received update
 	then
 	logInfo('org.openhab', 'Motion sensor in the bathroom changed to: ' + bathroom_motion.state)
 	switch (bathroom_motion.state as OnOffType) {
@@ -464,15 +465,16 @@ rule "Remote in living room"
 end
 
 
-rule "Motion detector outdoor halloween"
+rule "Motion detector bahtroom ground floor"
 	when
-	 	Item motion_detector_outdoor changed
+	 	Item motion_bathroom_gf changed or
+	 	Item motion_bathroom_gf received update
 	then
-		switch (motion_detector_outdoor.state as OnOffType) {
+		switch (motion_bathroom_gf.state as OnOffType) {
 		case ON: {
 			if (timerBasement == null) {
-				timerBasement = createTimer(now.plusSeconds(120)) [|
-					sendCommand(motion_detector_outdoor, OFF)
+				timerBasement = createTimer(now.plusSeconds(600)) [|
+					sendCommand(motion_bathroom_gf, OFF)
 				
 					if(timerBasement!=null) {
 						if(timerBasement.running) {
@@ -481,13 +483,13 @@ rule "Motion detector outdoor halloween"
 						timerBasement = null
 					}
 					]
-			} else {
-				timerBasement.reschedule(now.plusSeconds(120))
-				sendCommand(scene_halloween, 2) 
-			}
+			} else
+				timerBasement.reschedule(now.plusSeconds(240))
+			sendCommand(color_10, "62,50,80")
+			sendCommand(color_10, ON)
 		}
 		case OFF: {
-			sendCommand(scene_halloween, 1) // NORMAL LIGHTS
+			sendCommand(color_10, OFF)
 			if(timerBasement!=null) {
 				if(timerBasement.running) {
 					timerBasement.cancel()
@@ -496,39 +498,4 @@ rule "Motion detector outdoor halloween"
 			}
 		}
 	}
-end
-
-rule "Scene halloween changed" 
-	when
-		Item scene_halloween changed
-	then
-		if (enable_halloween.state == ON) {
-			switch (scene_halloween.state) {
-	    		case 0: {
-	    			// OFF
-	    		}	
-	    		case 1: {
-	    			// NORMAL LIGHTS
-	    			sendCommand(light_11, OFF)
-	    			sendCommand(light_9, OFF)
-	    			sendCommand(light_10, OFF)
-	    			sendCommand(light_11, ON)
-	    			sendCommand(light_9, ON)
-	    			sendCommand(light_10, ON)
-					sendCommand(color_9, "62,50,80")
-					sendCommand(color_10, "62,50,80")
-					sendCommand(color_11, "62,50,80")
-	    		}
-	    		case 2: {
-	    			// HALLOWEEN LIGHTS
-	    			var DecimalType hue = new DecimalType(360) // 0-360; 0=red, 120=green, 240=blue, 360=red(again)
-					var PercentType sat = new PercentType(80) // 0-100
-					var PercentType bright = new PercentType(70) // 0-100
-					var HSBType light = new HSBType(hue,sat,bright)
-					sendCommand(color_9, light)
-					sendCommand(color_10, light)
-					sendCommand(color_11, light)
-	    		}
-	    	}
-	    }
 end

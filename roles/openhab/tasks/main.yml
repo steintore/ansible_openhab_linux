@@ -21,6 +21,7 @@
     - binding.samsungtv
     - binding.samsungac
     - binding.systeminfo
+    - binding.plex
     - persistence.rrd4j
     - persistence.logging
     - persistence.mqtt

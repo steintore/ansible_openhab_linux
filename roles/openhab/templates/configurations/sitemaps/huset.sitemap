@@ -17,6 +17,7 @@ sitemap huset label="Huset"
 			Frame label="Lys" {
 				Switch item=scene_light_hall_gf mappings=[0="Av", 1="På", 2="Auto"]
 				Switch item=scene_light_livingroom mappings=[0="Av", 1="På", 2="Film", 3="Kjøkken"]
+				Switch item=color_10
 			}
 			Frame label="Varmepumpe"{
 				Switch item=ac_scene mappings=[0="Av", 1="Varm", 2="Kjøl", 3="Luft"]
@@ -36,6 +37,31 @@ sitemap huset label="Huset"
 			}
 			Frame label="TV" visibility=[tv_power==ON] {
 				Group item=TV icon="video"
+			}
+			Frame label="Plex TV" visibility=[tv_power==ON] {
+        		Switch item=PlexTVPower
+        		Text item=PlexTVStatus
+        		Slider item=PlexTVProgress visibility=[PlexTVStatus!="Stopped"] 
+        		Setpoint item=PlexTVProgress visibility=[PlexTVStatus!="Stopped"] minValue=0 maxValue=100 step=1
+        		Text item=PlexTVTitle visibility=[PlexTVStatus!="Stopped"]
+        		Text item=PlexTVType visibility=[PlexTVStatus!="Stopped"]
+        		Switch item=PlexTVPause
+        		Switch item=PlexTVPlay
+        		Switch item=PlexTVStop mappings=[ON="Stop"]
+        		Slider item=PlexTVVolume
+
+        		Switch item=PlexTVSelect mappings=[ON="Select"]
+        		Switch item=PlexTVBack mappings=[ON="Back"]
+        		Switch item=PlexTVUp mappings=[ON="⬆"]
+        		Switch item=PlexTVDown mappings=[ON="⬇"]
+        		Switch item=PlexTVLeft mappings=[ON="⬅"]
+        		Switch item=PlexTVRight mappings=[ON="➡"]
+
+        		Switch item=PlexTVForward mappings=[ON="⤏"]
+        		Switch item=PlexTVReverse mappings=[ON="⤎"]
+			}
+			Frame label="Alt"   {
+				Group item=gGF
 			}
 		
     	}
@@ -57,6 +83,9 @@ sitemap huset label="Huset"
     			Switch item=Heating
     			Text item=power_panelovn_kontor visibility=[kontor_panelovn==ON]
     		}
+    		Frame label="Alt" {
+    			Group item=gFirstFloor
+    		}
     	}
     	Text item=BasementTemperature label="Kjeller [%.1f °C]" icon="cellar" valuecolor=[BasementTemperature_LastUpdate=="Uninitialized"="lightgray",BasementTemperature_LastUpdate>90="lightgray",>25="orange",>15="green",>5="orange",<=5="blue"]  {
     		Frame {
@@ -68,12 +97,36 @@ sitemap huset label="Huset"
     			Switch item=scene_light_basement icon="light" mappings=[0="Av", 1="På", 2="Natt"]
     			Switch item=light_basement_power label="Kjellerstue" mappings=[OFF='Av',ON='På']
     		}
+    		Frame label="Plex Xbox" visibility=[xbox==ON] {
+    			Switch item=PlexXBoxPower
+    			Text item=PlexXBoxStatus
+    			Slider item=PlexXBoxProgress visibility=[PlexTVStatus!="Stopped"] 
+    			Setpoint item=PlexXBoxProgress visibility=[PlexTVStatus!="Stopped"] minValue=0 maxValue=100 step=1
+    			Text item=PlexXBoxTitle visibility=[PlexTVStatus!="Stopped"]
+    			Text item=PlexXBoxType visibility=[PlexTVStatus!="Stopped"]
+    			Switch item=PlexXBoxPause
+    			Switch item=PlexXBoxPlay
+    			Switch item=PlexXBoxStop mappings=[ON="Stop"]
+    			Slider item=PlexXBoxVolume
+
+    			Switch item=PlexXBoxSelect mappings=[ON="Select"]
+    			Switch item=PlexXBoxBack mappings=[ON="Back"]
+    			Switch item=PlexXBoxUp mappings=[ON="⬆"]
+    			Switch item=PlexXBoxDown mappings=[ON="⬇"]
+    			Switch item=PlexXBoxLeft mappings=[ON="⬅"]
+    			Switch item=PlexXBoxRight mappings=[ON="➡"]
+
+	        	Switch item=PlexXBoxForward mappings=[ON="⤏"]
+    			Switch item=PlexXBoxReverse mappings=[ON="⤎"]
+    		}
     		Frame label="Diverse" {
 				Switch item=dryer
 				Text item=power_dryer visibility=[dryer==ON]
 				Text item=power_freezer
-				Text item=power_fridge
-				
+				Text item=power_fridge	
+			}
+			Frame label="Alt" {
+				Group item=gBasement
 			}
     	}
     	Text item=OutdoorTemperature label="Ute [%.1f °C]" icon="garden" valuecolor=[OutdoorTemperature_LastUpdate=="Uninitialized"="lightgray",OutdoorTemperature_LastUpdate>90="lightgray",>25="orange",>15="green",>5="orange",<=5="blue"]  {
@@ -100,6 +153,9 @@ sitemap huset label="Huset"
 				Chart item=Temperature_Chart period=h refresh=300 visibility=[Temperature_Chart_Period==0, Temperature_Chart_Period=="Uninitialized"]
 				Chart item=Temperature_Chart period=D refresh=1800 visibility=[Temperature_Chart_Period==1]
 				Chart item=Temperature_Chart period=W refresh=3600 visibility=[Temperature_Chart_Period==2]
+			}
+			Frame label="Alt" {
+				Group item=gOutdoor
 			}
     	}
     }
@@ -201,8 +257,5 @@ sitemap huset label="Huset"
 	Frame label="Bevegelse" icon="office" {
 		Group item=Motion
 		//Text item=livingroom_update 
-	}
-	Frame label="Lys" icon="light" {
-		Group item=gLight
 	}
 }
