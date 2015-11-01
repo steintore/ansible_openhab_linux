@@ -98,27 +98,62 @@ sitemap huset label="Huset"
     			Switch item=light_basement_power label="Kjellerstue" mappings=[OFF='Av',ON='På']
     		}
     		Frame label="Plex Xbox" visibility=[xbox==ON] {
-    			Switch item=PlexXBoxPower
-    			Text item=PlexXBoxStatus
-    			Slider item=PlexXBoxProgress visibility=[PlexTVStatus!="Stopped"] 
-    			Setpoint item=PlexXBoxProgress visibility=[PlexTVStatus!="Stopped"] minValue=0 maxValue=100 step=1
-    			Text item=PlexXBoxTitle visibility=[PlexTVStatus!="Stopped"]
-    			Text item=PlexXBoxType visibility=[PlexTVStatus!="Stopped"]
-    			Switch item=PlexXBoxPause
-    			Switch item=PlexXBoxPlay
-    			Switch item=PlexXBoxStop mappings=[ON="Stop"]
-    			Slider item=PlexXBoxVolume
+    			Text label="Plex" {
+    				Switch item=PlexXBoxPower
+    				Text item=PlexXBoxStatus
+    				Slider item=PlexXBoxProgress visibility=[PlexTVStatus!="Stopped"] 
+    				Setpoint item=PlexXBoxProgress visibility=[PlexTVStatus!="Stopped"] minValue=0 maxValue=100 step=1
+    				Text item=PlexXBoxTitle visibility=[PlexTVStatus!="Stopped"]
+    				Text item=PlexXBoxType visibility=[PlexTVStatus!="Stopped"]
+    				Switch item=PlexXBoxPause
+    				Switch item=PlexXBoxPlay
+    				Switch item=PlexXBoxStop mappings=[ON="Stop"]
+    				Slider item=PlexXBoxVolume
 
-    			Switch item=PlexXBoxSelect mappings=[ON="Select"]
-    			Switch item=PlexXBoxBack mappings=[ON="Back"]
-    			Switch item=PlexXBoxUp mappings=[ON="⬆"]
-    			Switch item=PlexXBoxDown mappings=[ON="⬇"]
-    			Switch item=PlexXBoxLeft mappings=[ON="⬅"]
-    			Switch item=PlexXBoxRight mappings=[ON="➡"]
+	    			Switch item=PlexXBoxSelect mappings=[ON="Select"]
+    				Switch item=PlexXBoxBack mappings=[ON="Back"]
+    				Switch item=PlexXBoxUp mappings=[ON="⬆"]
+    				Switch item=PlexXBoxDown mappings=[ON="⬇"]
+    				Switch item=PlexXBoxLeft mappings=[ON="⬅"]
+    				Switch item=PlexXBoxRight mappings=[ON="➡"]
 
-	        	Switch item=PlexXBoxForward mappings=[ON="⤏"]
-    			Switch item=PlexXBoxReverse mappings=[ON="⤎"]
+	        		Switch item=PlexXBoxForward mappings=[ON="⤏"]
+    				Switch item=PlexXBoxReverse mappings=[ON="⤎"]
+    			}
     		}
+    		Frame label="Denon receiver" {
+    			Switch item=DenonPower
+    			Text label="Avansert" visibility=[DenonPower==ON] {
+    				Frame label="Main Zone" {
+    					Switch item=DenonMainZone
+    					Slider item=DenonVolume
+    					Setpoint item=DenonVolume minValue=0 maxValue=100 step=0.5
+    					Switch item=DenonMute
+    					Switch item=DenonCommand label="Surround Mode" mappings=[MSSTANDARD="Standard", MSSTEREO="Stereo"]
+    					Text item=DenonSurroundMode
+					}
+					Frame label="Main Zone Input" {
+    					Selection label="Input" item=DenonInput mappings=[CD="CD", TUNER="Tuner", DVD="DVD", BD="Bluray", TV="TV", "SAT/CBL"="SAT/CBL", MPLAY="Mediaplayer", GAME="Game", AUX1="Aux1"]
+    					Text item=DenonInput
+    					Switch item=DenonInputCD mappings=[ON="CD"]
+    					Switch item=DenonInputTuner mappings=[ON="Tuner"]
+    					Switch item=DenonInputDVD mappings=[ON="DVD"]
+    					Switch item=DenonInputBluray mappings=[ON="Bluray"]
+    					Switch item=DenonInputTV mappings=[ON="TV"]
+    					Switch item=DenonInputSATCBL mappings=[ON="SAT/CBL"]
+    					Switch item=DenonInputMplay mappings=[ON="Mediaplayer"]
+    					Switch item=DenonInputGame mappings=[ON="Game"]
+    					Switch item=DenonInputAux1 mappings=[ON="Aux1"]
+					}
+					Frame label="Title Info" visibility=[DenonCurrentTrack!="Undefined",DenonCurrentArtist!="Undefined"] {
+    					Text item=DenonCurrentTrack
+    					Text item=DenonCurrentArtist
+    					Text item=DenonCurrentAlbum
+    					Webview url="http://{{denon_ip}}/NetAudio/art.asp-jpg" height=9
+					}
+				}
+    		}
+    		
     		Frame label="Diverse" {
 				Switch item=dryer
 				Text item=power_dryer visibility=[dryer==ON]

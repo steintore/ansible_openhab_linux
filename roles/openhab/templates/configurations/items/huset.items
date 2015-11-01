@@ -293,3 +293,37 @@ Switch PlexTVRight      "Right"         <video>     {plex="{{plex_id_tv}}#naviga
 
 Switch PlexTVForward    "Forward"       <video>     {plex="{{plex_id_tv}}#playback/stepForward"}
 Switch PlexTVReverse    "Reverse"       <video>     {plex="{{plex_id_tv}}#playback/stepBack"}
+
+/* Denon Receiver */
+Switch DenonPower           "Power"                 {denon="denon#PW"}
+Switch DenonMainZone        "Main Zone"             {denon="denon#ZM"}
+Dimmer DenonVolume          "Volume [%.1f]"         {denon="denon#MV"}
+Switch DenonMute            "Mute"                  {denon="denon#MU"}
+String DenonSurroundMode    "Surround mode [%s]"    {denon="denon#SURROUNDMODE"}
+String DenonCommand         "Command"               {denon="denon#COMMAND", autoupdate="false"}
+
+String DenonCurrentTrack        "Current track [%s]"        {denon="denon#TRACK"}
+String DenonCurrentArtist       "Current artist [%s]"       {denon="denon#ARTIST"}
+String DenonCurrentAlbum        "Current album [%s]"        {denon="denon#ALBUM"}
+
+String DenonInput           "Input [%s]"            {denon="denon#INPUT"}
+Switch DenonInputCD         "Input CD"              {denon="denon#SICD"}
+Switch DenonInputUSBIPOD    "Input USB/IPOD"        {denon="denon#SIUSB/IPOD"}
+Switch DenonInputNet        "Input Network"         {denon="denon#SINET"}
+Switch DenonInputSpotify    "Input Spotify"         {denon="denon#SISPOTIFY"}
+Switch DenonInputTuner      "Input Tuner"           {denon="denon#SITUNER"}
+Switch DenonInputDVD        "Input DVD"             {denon="denon#SIDVD"}
+Switch DenonInputBluray     "Input Bluray"          {denon="denon#SIBD"}
+Switch DenonInputTV         "Input TV"              {denon="denon#SITV"}
+Switch DenonInputSATCBL     "Input SAT/CBL"         {denon="denon#SISAT/CBL"}
+Switch DenonInputMplay      "Input Mediaplayer"     {denon="denon#SIMPLAY"}
+Switch DenonInputGame       "Input Game"            {denon="denon#SIGAME"}
+Switch DenonInputAux1       "Input Aux1"            {denon="denon#SIAUX1"}
+
+Switch DenonZoneTwo                 "Zone 2"                {denon="denon#Z2"}
+Dimmer DenonZoneTwoVolume           "Volume [%.1f]"         {denon="denon#Z2ZV"}
+Switch DenonZoneTwoMute             "Zone 2 Mute"           {denon="denon#Z2MU"}
+
+Switch DenonZoneTwoInputSource      "Zone 2 Input Source"   {denon="denon#Z2SOURCE"}
+Switch DenonZoneTwoInputUSB         "Zone 2 Input USB"      {denon="denon#Z2USB/IPOD"}
+Switch DenonZoneTwoInputTuner       "Zone 2 Tuner"          {denon="denon#Z2TUNER"}

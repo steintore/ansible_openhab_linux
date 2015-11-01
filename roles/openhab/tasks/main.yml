@@ -22,6 +22,7 @@
     - binding.samsungac
     - binding.systeminfo
     - binding.plex
+    - binding.denon
     - persistence.rrd4j
     - persistence.logging
     - persistence.mqtt
@@ -117,6 +118,7 @@
         - rules/status.rules
         - rules/modes.rules
         - rules/power.rules
+        - rules/plex.rules
         - scripts/pushMessages.script
         - sitemaps/huset.sitemap
         - transform/de.map
