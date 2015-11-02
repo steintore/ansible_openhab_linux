@@ -38,7 +38,7 @@ sitemap huset label="Huset"
 			Frame label="TV" visibility=[tv_power==ON] {
 				Group item=TV icon="video"
 			}
-			Frame label="Plex TV" visibility=[tv_power==ON] {
+			Frame label="Plex TV" visibility=[PlexTVPower==ON] {
         		Switch item=PlexTVPower
         		Text item=PlexTVStatus
         		Slider item=PlexTVProgress visibility=[PlexTVStatus!="Stopped"] 

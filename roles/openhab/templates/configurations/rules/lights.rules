@@ -107,14 +107,15 @@ rule "motion detected in the ground floor hall"
 	logInfo('org.openhab', 'Motion sensor in the hall changed to: ' + hall_gf_motion.state)
 	switch (hall_gf_motion.state as OnOffType) {
 		case ON: {
-			if (scene_light_hall_gf.state == 1 || scene_light_hall_gf.state == 2) {
+			if (scene_light_hall_gf.state == 2) {
 				sendCommand(light_hall_ground_floor, ON)
 				if (timerGFHall == null) {
 					timerGFHall = createTimer(now.plusSeconds(60)) [|
 						if(hall_gf_motion.state == ON) {
 							timerGFHall.reschedule(now.plusSeconds(60))
 						} else {
-							sendCommand(light_hall_ground_floor, OFF)
+							if (scene_light_hall_gf.state == 2)
+								sendCommand(light_hall_ground_floor, OFF)
 						
 							if (timerGFHall != null) {
 								if(timerGFHall.running) {
@@ -157,8 +158,7 @@ end
 
 rule "motion detected in the bathroom" 
 	when
-		Item bathroom_motion changed or
-	 	Item bathroom_motion received update
+		Item bathroom_motion changed
 	then
 	logInfo('org.openhab', 'Motion sensor in the bathroom changed to: ' + bathroom_motion.state)
 	switch (bathroom_motion.state as OnOffType) {
@@ -465,7 +465,7 @@ rule "Remote in living room"
 end
 
 
-rule "Motion detector bahtroom ground floor"
+rule "Motion detector bathroom ground floor"
 	when
 	 	Item motion_bathroom_gf changed or
 	 	Item motion_bathroom_gf received update

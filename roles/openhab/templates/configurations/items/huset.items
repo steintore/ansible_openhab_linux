@@ -156,8 +156,8 @@ Dimmer dimmer_11 	"Ute 2 [%d %%]" 	<hue> (gLight) {hue="11;brightness;30"}
 Dimmer CT_dimm_11   "Ute 2"  			<hue> (gLight) {hue="11;colorTemperature;30"}
 
 /* Motion detector */
-Switch motion_detector_basement "Bevegelse gang nede" 	<switch> (gGF, Motion) {rfxcom="<13734590.10:Command"}
-Switch motion_bathroom_gf 		"Bevegelse bad 1." 		<switch> (gGF, Motion) {rfxcom="<18220938.10:Command"}
+Switch motion_detector_basement "Bevegelse gang nede" 	<switch> (gBasement, Motion) {rfxcom="<13734590.10:Command"}
+Switch motion_bathroom_gf 		"Bevegelse bad 1." 		<switch> (gGF, Motion) 		 {rfxcom="<18220938.10:Command"}
 
 Group:Switch:AND(ON, OFF) 		gBasementLights	"Lys [(%d)]"	 <light>		
 Number scene_light_basement "Lys kjellergang" <light> (gLight, gBasementLights, gBasement)
@@ -221,11 +221,11 @@ DateTime ac_lastUpdate "Last update [%1$ta %1$tR]"	<clock>         (AC)
 
 Group Motion <office>
 Number hall_gf_temp 		"Temp gang [%.1f °C]" 			<temperature> 	(Motion, gGF) 							{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B16%%5D.SensorMultilevel.data%%5B1%%5D:60000:JS(getValValue.js)]"}
-Number hall_gf_luminance 	"Lux gang [%.0f Lux]" 							(Motion) 								{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B16%%5D.SensorMultilevel.data%%5B3%%5D:60000:JS(getValValue.js)]"}
-Switch hall_gf_motion 		"Gang [MAP(motion.map):%s]" 	<present>		(Motion) 								{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B16%%5D.SensorBinary.data%%5B1%%5D:60000:JS(getLevelValue.js)]"}
-Number hall_gf_battery 		"Bev.sensor, gang [%s %%]"		<energy>		(Motion, gBattery, BatteryLevel_100)	{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B16%%5D.Battery.data:60000:JS(getLastValue.js)]"}
-Number hall_gf_lu 			"[%.0f]" 						<clock>		 											{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B16%%5D.SensorBinary.data%%5B1%%5D.level:60000:JS(getLastUpdate.js)]"}
-DateTime hall_gf_update 	"Last update [%1$ta %1$tR]" 	<clock>			(Motion)
+Number hall_gf_luminance 	"Lux gang [%.0f Lux]" 							(Motion, gGF) 								{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B16%%5D.SensorMultilevel.data%%5B3%%5D:60000:JS(getValValue.js)]"}
+Switch hall_gf_motion 		"Gang [MAP(motion.map):%s]" 	<present>		(Motion, gGF) 								{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B16%%5D.SensorBinary.data%%5B1%%5D:60000:JS(getLevelValue.js)]"}
+Number hall_gf_battery 		"Bev.sensor, gang [%s %%]"		<energy>		(Motion, gGF, gBattery, BatteryLevel_100)	{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B16%%5D.Battery.data:60000:JS(getLastValue.js)]"}
+Number hall_gf_lu 			"[%.0f]" 						<clock>		 	(gGF)										{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B16%%5D.SensorBinary.data%%5B1%%5D.level:60000:JS(getLastUpdate.js)]"}
+DateTime hall_gf_update 	"Last update [%1$ta %1$tR]" 	<clock>			(Motion, gGF)
 
 /* Modes 0=HOME, 1=NIGHT, 2=AWAY */
 Number mode "Modus:" <present>
@@ -243,8 +243,8 @@ Number scene_bathroom_light
 
 Number scene_remote_livingroom //{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B17%%5D.commandClasses%%5B91%%5D.data:60000:JS(getCurrentScene.js)]"}
 
-Switch light_hall_ground_floor "Lys gangen" <light> (gLight, gFirstFloor) {http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B20%%5D.SwitchBinary:10000:JS(getBasicOnOffState.js)] >[ON:GET:http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B20%%5D.SwitchBinary.Set(1)] >[OFF:GET:http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B20%%5D.SwitchBinary.Set(0)]"}
-Number scene_light_hall_gf
+Switch light_hall_ground_floor "Lys gang" <light> (gLight, gGF) {http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B20%%5D.SwitchBinary:10000:JS(getBasicOnOffState.js)] >[ON:GET:http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B20%%5D.SwitchBinary.Set(1)] >[OFF:GET:http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B20%%5D.SwitchBinary.Set(0)]"}
+Number scene_light_hall_gf "Lys gang" <light> (gLight, gGF)
 /* Roomba */
 //String roomba_test <sofa> {tcp="<[{{roomba_ip}}:9001:'REGEX((.*))']"} // for a String Item that captures some state of a remote device that connects to openHAB
 
