@@ -194,17 +194,42 @@ sitemap huset label="Huset"
 			}
     	}
     }
+    
     Frame label="Været" {
-		Text item=Date {
-			Frame label="Sola" {
-				Text item=Sunrise_Time
-				Text item=Sunset_Time	
-			}
-			Frame label="Månen" {
-				Text item=Moonrise_Time
-				Text item=Moonset_Time
-				Text item=Moon_Full
-				Text item=Moon_New
+    	Text item=Condition icon="sun" {
+        Frame {
+            Text item=Weather_LastUpdate visibility=[Weather_LastUpdate>30] valuecolor=[Weather_LastUpdate>120="orange", Weather_LastUpdate>300="red"]
+            Text item=Weather_Temperature valuecolor=[Weather_LastUpdate=="Uninitialized"="lightgray",Weather_LastUpdate>90="lightgray",>77="orange",>60="green",>40="aqua",<=40="blue"]{
+            Frame {
+                Text item=Weather_Temp_Max valuecolor=[>30="orange",>25="green",>10="aqua",<=0="blue"]
+                Text item=Weather_Temp_Min valuecolor=[>30="orange",>25="green",>10="aqua]",<=0="blue"]
+            }
+            Frame {
+                Switch item=Weather_Chart_Period label="Period" mappings=[0="Hour", 1="Day", 2="Week"]
+                Image url="http://localhost:8080/rrdchart.png?items=Weather_Temperature,Weather_Temp_Max,Weather_Temp_Min&period=h" refresh=6000 visibility=[Weather_Chart_Period==0, Weather_Chart_Period=="Uninitialized"]
+                Image url="http://localhost:8080/rrdchart.png?items=Weather_Temperature,Weather_Temp_Max,Weather_Temp_Min&period=D" refresh=30000 visibility=[Weather_Chart_Period==1]
+                Image url="http://localhost:8080/rrdchart.png?items=Weather_Temperature,Weather_Temp_Max,Weather_Temp_Min&period=W" refresh=30000 visibility=[Weather_Chart_Period==2]
+              }
+        }
+        Text item=Weather_Humidity {
+            Frame {
+                Switch item=Weather_Humidity_Chart_Period label="Period" mappings=[0="Hour", 1="Day", 2="Week"]
+                Image url="http://localhost:8080/rrdchart.png?items=Weather_Humidity&period=h" refresh=6000 visibility=[Weather_Humidity_Chart_Period==0, Weather_Humidity_Chart_Period=="Uninitialized"]
+                Image url="http://localhost:8080/rrdchart.png?items=Weather_Humidity&period=D" refresh=30000 visibility=[Weather_Humidity_Chart_Period==1]
+                Image url="http://localhost:8080/rrdchart.png?items=Weather_Humidity&period=W" refresh=30000 visibility=[Weather_Humidity_Chart_Period==2]
+            }
+        }
+        Text item=Weather_Pressure {
+            Frame {
+                Switch item=Weather_Pressure_Chart_Period label="Period" mappings=[0="Hour", 1="Day", 2="Week"]
+                Image url="http://localhost:8080/rrdchart.png?items=Weather_Pressure&period=h" refresh=6000 visibility=[Weather_Pressure_Chart_Period==0, Weather_Pressure_Chart_Period=="Uninitialized"]
+                Image url="http://localhost:8080/rrdchart.png?items=Weather_Pressure&period=D" refresh=30000 visibility=[Weather_Pressure_Chart_Period==1]
+                Image url="http://localhost:8080/rrdchart.png?items=Weather_Pressure&period=W" refresh=30000 visibility=[Weather_Pressure_Chart_Period==2]
+             }
+         }
+         Text item=Sunrise_Time
+		 Text item=Sunset_Time	
+         Webview url="/weather?locationId=home&layout=example&iconset=colorful" height=7
 			}
 		}
 	}

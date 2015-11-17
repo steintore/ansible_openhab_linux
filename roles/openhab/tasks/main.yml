@@ -19,10 +19,10 @@
     - binding.ntp
     - binding.rfxcom
     - binding.samsungtv
-    - binding.samsungac
     - binding.systeminfo
     - binding.plex
     - binding.denon
+    - persistence.influxdb
     - persistence.rrd4j
     - persistence.logging
     - persistence.mqtt
@@ -105,6 +105,7 @@
         - items/huset.items
         - items/systeminfo.items
         - items/power.items
+        - items/weather.items
         - persistence/rrd4j.persist
         - persistence/influxdb.persist
         - persistence/logging.persist
@@ -119,6 +120,7 @@
         - rules/modes.rules
         - rules/power.rules
         - rules/plex.rules
+        - rules/weather.rules
         - scripts/pushMessages.script
         - sitemaps/huset.sitemap
         - transform/de.map

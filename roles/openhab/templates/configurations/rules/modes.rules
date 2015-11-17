@@ -97,6 +97,7 @@ rule "A change of mode"
 			sendCommand(color_10, OFF)
 			sendCommand(color_11, OFF)
 			sendCommand(DenonPower, OFF)
+			sendCommand(scene_light_hall_gf, 2) // AUTO
 			if (ac_scene.state == 1 && ac_night_temp.state != Uninitialized) {
 				sendCommand(ac_set_temp, ac_night_temp.state.toString)
 			} else if (ac_scene.state > 1) {
@@ -125,7 +126,7 @@ rule "Switch to evening mode in the evening"
 end
 
 /*
- * At 01:00 in the evening we'll go into night mode, but only if someone is at home.
+ * At 01:30 in the evening we'll go into night mode, but only if someone is at home.
  * Away mode overrules night mode
  */
 rule "Switch to night mode in the evening"

@@ -1,0 +1,11 @@
+sitemap panel label="Panel"
+{
+	Frame label="First" {
+				Switch item=scene_light_hall_gf
+				Switch item=scene_light_livingroom
+				Switch item=color_10
+				Switch item=PlexTVPause
+        		Switch item=PlexTVPlay
+        		Switch item=PlexTVStop
+	}
+}
