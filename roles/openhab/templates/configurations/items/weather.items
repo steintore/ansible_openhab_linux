@@ -60,5 +60,6 @@ Number   Temp_Min_1   "Min [%.2f °C]"   	 (gOutdoor, gWeather)	{weather="locati
 Number   Temp_Max_2   "Max [%.2f °C]"   	 (gOutdoor, gWeather)	{weather="locationId=home, forecast=2, type=temperature, property=max, roundingMode=down, scale=0"}
 Number   Temp_Min_2   "Min [%.2f °C]"   	 (gOutdoor, gWeather)	{weather="locationId=home, forecast=2, type=temperature, property=min, roundingMode=down, scale=0"}
 
-Number          Weather_Chart_Period             "Chart Period"
-Number          Weather_Humidity_Chart_Period   "Chart Period"
+Number	Weather_Chart_Period            "Periode"
+Number  Weather_Humidity_Chart_Period	"Periode"
+Number	Weather_Pressure_Chart_Period 	"Periode"

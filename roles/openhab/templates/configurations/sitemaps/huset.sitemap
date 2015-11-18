@@ -82,6 +82,7 @@ sitemap huset label="Huset"
     		Frame label="Varme" {
     			Switch item=Heating
     			Text item=power_panelovn_kontor visibility=[kontor_panelovn==ON]
+    			Text item=power_panelovn_gang visibility=[gang_panelovn==ON]
     		}
     		Frame label="Alt" {
     			Group item=gFirstFloor
@@ -254,6 +255,7 @@ sitemap huset label="Huset"
 				Text item=power_dryer
 				Text item=power_freezer
 				Text item=power_panelovn_kontor
+				Text item=power_panelovn_gang
 				Text item=power_fridge
 			}
 			Frame {

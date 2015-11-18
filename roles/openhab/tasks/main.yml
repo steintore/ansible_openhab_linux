@@ -156,6 +156,9 @@
   with_fileglob:
         - transform/*
 
+- name: sync the weather-folder into webapps
+  copy: dest={{ openhab_install_dir }}/runtime/{{openhab_version}}/webapps/ src=../files/weather-data
+
 - name: create openHAB static directory
   file: >
     state=directory

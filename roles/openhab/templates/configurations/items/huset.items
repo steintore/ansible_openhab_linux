@@ -237,7 +237,7 @@ Number light_bathroom_dimmer "Dimmer [%s]" 					<light> 												{http="<[htt
 Number bathroom_temp 		 "Temp [%.1f °C]" 				<temperature> 	(Motion) 								{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B15%%5D.SensorMultilevel.data%%5B1%%5D:20000:JS(getValValue.js)]"}
 Number bathroom_lux 		 "Lys    [%.0f Lux]" 							(Motion) 								{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B15%%5D.SensorMultilevel.data%%5B3%%5D:20000:JS(getValValue.js)]"}
 Switch bathroom_motion 		 "Bad [MAP(motion.map):%s]" 	<present>		(Motion) 								{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B15%%5D.SensorBinary.data%%5B1%%5D:20000:JS(getLevelValue.js)]"}
-Number bathroom_battery 	 "Bev.sensor [%s %%]"			<battery>		(Motion, gBattery, BatteryLevel_100)	{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B15%%5D.Battery.data:20000:JS(getLastValue.js)]"}
+Number bathroom_battery 	 "Bev.sensor, bad [%s %%]"		<battery>		(Motion, gBattery, BatteryLevel_100)	{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B15%%5D.Battery.data:20000:JS(getLastValue.js)]"}
 Switch light_bathroom_mirror "Speillys"						<light>			(gLight, gFirstFloor)					{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B19%%5D.SwitchBinary:10000:JS(getBasicOnOffState.js)] >[ON:GET:http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B19%%5D.SwitchBinary.Set(1)] >[OFF:GET:http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B19%%5D.SwitchBinary.Set(0)]"}
 Number scene_bathroom_light
 
