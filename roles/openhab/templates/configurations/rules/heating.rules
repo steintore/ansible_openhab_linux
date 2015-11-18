@@ -22,9 +22,14 @@ rule "If the room is too cold and we are home, then heat it up, but only if it i
 			if (tempBasement < 18 && BasementTemperature.maximumSince(now.minusMinutes(21)).state >= 18) {
 				pushover('Kjellertemp er nå: ' + tempBasement + " - den har gått fra " + BasementTemperature.maximumSince(now.minusMinutes(21)).state + " de siste 20 minuttene")
 			}
-			if (tempLivingroom < 20) {
+			if (tempLivingroom < 20 && mode.state == 0 && ac_scene.state != 1) {
 				sendCommand(ac_scene, 1)
-			}	
+			} else if (tempLivingroom < 19 && mode.state == 1 && ac_scene.state != 1) {
+				sendCommand(ac_scene, 1)
+			} else if (tempLivingroom < 17 && mode.state == 2 && ac_scene.state != 1) {
+				sendCommand(ac_scene, 1)
+			}
+					
 		} else if (tempOutdoor > 10 && tempOutdoor <= 15) {
 			if (tempLivingroom <= 20)
 				sendCommand(ac_scene, 1)
@@ -74,8 +79,17 @@ then
 				sendCommand(ac_windlevel, 0)
 
 			// correct temperature
-			if (ac_set_temp.state != ac_heat_temp.state)
-				sendCommand(ac_set_temp, ac_heat_temp.state.toString)				
+			if (mode.state == 0) { //HOME
+				if (ac_set_temp.state != ac_heat_temp.state)
+				sendCommand(ac_set_temp, ac_heat_temp.state.toString)	
+			} else if (mode.state == 1) { //NIGHT
+				if (ac_night_temp.state != Uninitialized && ac_night_temp.state != ac_heat_temp.state) 
+					sendCommand(ac_set_temp, ac_night_temp.state.toString)
+			} else { //AWAY
+				if (ac_night_temp.state != Uninitialized && ac_night_temp.state != ac_heat_temp.state)
+					sendCommand(ac_set_temp, ac_night_temp.state.toString)
+			}
+							
 		}
 		case 2: { // COOLING
 			if (ac_power.state == OFF)

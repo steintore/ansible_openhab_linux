@@ -26,9 +26,8 @@ Group:Number:SUM					Power			"Nå: [%.1f W]"			<energy>				(All)
 Group:Number:SUM					Energy			"Totalt: [%.1f KWh]"	<energy>				(All)
 Number panelovn_kontor_energy 	"Panelovn totalforbruk: [%.2f KWh]"			<energy> (Energy) 				{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B5%%5D.commandClasses%%5B50%%5D.data%%5B0%%5D:20000:JS(getPowerValue.js)]"}
 Number power_panelovn_kontor  	"Strøm panelovn kontor	[%.1f W]" 			<energy> (Power, Power_Chart) 	{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B5%%5D.commandClasses%%5B49%%5D.data%%5B4%%5D:20000:JS(getPowerValue.js)]"}
-//Number power_panelovn_gang  	"Strøm panelovn gang	[%.1f W]" 			<energy> (Power, Power_Chart) 	{http="<[zwave:20000:JS(getHallOvenPower.js)]"}
-// ZWaveAPI/Run/devices[10].Meter.data[2].val
-//Number panelovn_gang_energy 	"Panelovn gang totalforbruk: [%.2f KWh]"	<energy> (Energy) {http="<[zwave:20000:JS(getOfficeHallTotal.js)]"}
+Number power_panelovn_gang  	"Strøm panelovn gang	[%.1f W]" 			<energy> (Power, Power_Chart) 	{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B10%%5D.Meter.data%%5B2%%5D:20000:JS(getPowerValue.js)]"}
+Number panelovn_gang_energy 	"Panelovn gang totalforbruk: [%.2f KWh]"	<energy> (Energy) 				{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B10%%5D.Meter.data%%5B0%%5D:20000:JS(getPowerValue.js)]"}
 
 Group Power_Chart (Power)
 Number Power_Chart_Period "Periode"
