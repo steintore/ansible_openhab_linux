@@ -54,9 +54,9 @@ Switch denon_receiver		"Denon receiver"		<present>		(proximity) {nh="{{denon_ip}
 /* Temperature */
 Group Temperature_Chart (Weather)
 Number Temperature_Chart_Period 			"Periode"
-Number Weather_Temp_Max 					"Dagens max [%.1f °C]"				<temperature> 	(Temperature_Chart)
-Number Weather_Temp_Min 					"Dagens min [%.1f °C]"				<temperature> 	(Temperature_Chart)
-Number Weather_Humidex						"Humidex [SCALE(humidex.scale):%s]"					(Weather)
+Number Outdoor_Temp_Max 					"Dagens max [%.1f °C]"				<temperature> 	(Temperature_Chart)
+Number Outdoor_Temp_Min 					"Dagens min [%.1f °C]"				<temperature> 	(Temperature_Chart)
+Number Outdoor_Humidex						"Humidex [SCALE(humidex.scale):%s]"					(Weather)
 Number OutdoorTemperature 					"Ute [%.1f °C]" 					<temperature> 	(Temperature,gOutdoor,Temperature_Chart) { rfxcom="<26628:Temperature" }
 Number OutdoorHumidity 						"Luftfuktighet ute [%.1f %%]" 		<temperature> 	(gOutdoor, Weather) { rfxcom="<26628:Humidity" }
 DateTime OutdoorTemperature_LastUpdate		"Last Update [%1$ta %1$tR]"			<clock>

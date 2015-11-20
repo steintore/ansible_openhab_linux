@@ -181,8 +181,8 @@ sitemap huset label="Huset"
 				}
 			}
 			Frame label="Ute" icon="garden" {
-				Text item=Weather_Temp_Max valuecolor=[>25="orange",>15="green",>5="orange",<=5="blue"]
-				Text item=Weather_Temp_Min valuecolor=[>25="orange",>15="green",>5="orange",<=5="blue"]
+				Text item=Outdoor_Temp_Max valuecolor=[>25="orange",>15="green",>5="orange",<=5="blue"]
+				Text item=Outdoor_Temp_Min valuecolor=[>25="orange",>15="green",>5="orange",<=5="blue"]
 			}
 			Frame label="Tempdetaljer" {
 				Switch item=Temperature_Chart_Period label="Periode" mappings=[0="Time", 1="Dag", 2="Uke"] icon="temperature"
@@ -206,7 +206,7 @@ sitemap huset label="Huset"
                 Text item=Weather_Temp_Min valuecolor=[>30="orange",>25="green",>10="aqua]",<=0="blue"]
             }
             Frame {
-                Switch item=Weather_Chart_Period label="Period" mappings=[0="Hour", 1="Day", 2="Week"]
+                Switch item=Weather_Chart_Period label="Periode" mappings=[0="Time", 1="Dag", 2="Uke"]
                 Image url="http://localhost:8080/rrdchart.png?items=Weather_Temperature,Weather_Temp_Max,Weather_Temp_Min&period=h" refresh=6000 visibility=[Weather_Chart_Period==0, Weather_Chart_Period=="Uninitialized"]
                 Image url="http://localhost:8080/rrdchart.png?items=Weather_Temperature,Weather_Temp_Max,Weather_Temp_Min&period=D" refresh=30000 visibility=[Weather_Chart_Period==1]
                 Image url="http://localhost:8080/rrdchart.png?items=Weather_Temperature,Weather_Temp_Max,Weather_Temp_Min&period=W" refresh=30000 visibility=[Weather_Chart_Period==2]
@@ -214,7 +214,7 @@ sitemap huset label="Huset"
         }
         Text item=Weather_Humidity {
             Frame {
-                Switch item=Weather_Humidity_Chart_Period label="Period" mappings=[0="Hour", 1="Day", 2="Week"]
+                Switch item=Weather_Humidity_Chart_Period label="Periode" mappings=[0="Time", 1="Dag", 2="Uke"]
                 Image url="http://localhost:8080/rrdchart.png?items=Weather_Humidity&period=h" refresh=6000 visibility=[Weather_Humidity_Chart_Period==0, Weather_Humidity_Chart_Period=="Uninitialized"]
                 Image url="http://localhost:8080/rrdchart.png?items=Weather_Humidity&period=D" refresh=30000 visibility=[Weather_Humidity_Chart_Period==1]
                 Image url="http://localhost:8080/rrdchart.png?items=Weather_Humidity&period=W" refresh=30000 visibility=[Weather_Humidity_Chart_Period==2]
@@ -222,7 +222,7 @@ sitemap huset label="Huset"
         }
         Text item=Weather_Pressure {
             Frame {
-                Switch item=Weather_Pressure_Chart_Period label="Period" mappings=[0="Hour", 1="Day", 2="Week"]
+                Switch item=Weather_Pressure_Chart_Period label="Periode" mappings=[0="Time", 1="Dag", 2="Uke"]
                 Image url="http://localhost:8080/rrdchart.png?items=Weather_Pressure&period=h" refresh=6000 visibility=[Weather_Pressure_Chart_Period==0, Weather_Pressure_Chart_Period=="Uninitialized"]
                 Image url="http://localhost:8080/rrdchart.png?items=Weather_Pressure&period=D" refresh=30000 visibility=[Weather_Pressure_Chart_Period==1]
                 Image url="http://localhost:8080/rrdchart.png?items=Weather_Pressure&period=W" refresh=30000 visibility=[Weather_Pressure_Chart_Period==2]

@@ -134,7 +134,7 @@ then
 	var Number x = 7.5 * T/(237.7 + T)
 	var Number e = 6.112 * Math::pow(10, x.doubleValue) * H/100
 	var Number humidex = T + (new Double(5) / new Double(9)) * (e - 10)
-	Weather_Humidex.postUpdate(humidex)
+	Outdoor_Humidex.postUpdate(humidex)
 end
 
 rule "Update max and min temperatures"
@@ -143,8 +143,8 @@ when
 	Time cron "0 0 0 * * ?" or
 	System started
 then	
-	postUpdate(Weather_Temp_Max, OutdoorTemperature.maximumSince(now.toLocalDate.toDateTimeAtStartOfDay).state)
-	postUpdate(Weather_Temp_Min, OutdoorTemperature.minimumSince(now.toLocalDate.toDateTimeAtStartOfDay).state)
+	postUpdate(Outdoor_Temp_Max, OutdoorTemperature.maximumSince(now.toLocalDate.toDateTimeAtStartOfDay).state)
+	postUpdate(Outdoor_Temp_Min, OutdoorTemperature.minimumSince(now.toLocalDate.toDateTimeAtStartOfDay).state)
 	//logInfo("Weather","Temperature evolved of " + OutdoorTemperature.deltaSince(now.minusMinutes(2)).toString + " degrees.")
 end
 
