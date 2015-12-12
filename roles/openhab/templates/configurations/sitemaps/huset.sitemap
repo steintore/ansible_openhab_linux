@@ -126,31 +126,22 @@ sitemap huset label="Huset"
     			Switch item=DenonPower
     			Text label="Avansert" visibility=[DenonPower==ON] {
     				Frame label="Main Zone" {
-    					Switch item=DenonMainZone
     					Slider item=DenonVolume
-    					Setpoint item=DenonVolume minValue=0 maxValue=100 step=0.5
+    					Setpoint item=DenonVolume minValue=20 maxValue=80 step=5
     					Switch item=DenonMute
     					Switch item=DenonCommand label="Surround Mode" mappings=[MSSTANDARD="Standard", MSSTEREO="Stereo"]
     					Text item=DenonSurroundMode
 					}
 					Frame label="Main Zone Input" {
-    					Selection label="Input" item=DenonInput mappings=[CD="CD", TUNER="Tuner", DVD="DVD", BD="Bluray", TV="TV", "SAT/CBL"="SAT/CBL", MPLAY="Mediaplayer", GAME="Game", AUX1="Aux1"]
+    					Selection label="Input" item=DenonInput mappings=[DVD="XBox One", BD="XBox", "SAT/CBL"="TV", MPLAY="Apple TV", AUX1="PC", SPOTIFY="Spotify", NET="Nettverk"]
     					Text item=DenonInput
-    					Switch item=DenonInputCD mappings=[ON="CD"]
-    					Switch item=DenonInputTuner mappings=[ON="Tuner"]
-    					Switch item=DenonInputDVD mappings=[ON="DVD"]
-    					Switch item=DenonInputBluray mappings=[ON="Bluray"]
-    					Switch item=DenonInputTV mappings=[ON="TV"]
-    					Switch item=DenonInputSATCBL mappings=[ON="SAT/CBL"]
-    					Switch item=DenonInputMplay mappings=[ON="Mediaplayer"]
-    					Switch item=DenonInputGame mappings=[ON="Game"]
-    					Switch item=DenonInputAux1 mappings=[ON="Aux1"]
-					}
-					Frame label="Title Info" visibility=[DenonCurrentTrack!="Undefined",DenonCurrentArtist!="Undefined"] {
-    					Text item=DenonCurrentTrack
-    					Text item=DenonCurrentArtist
-    					Text item=DenonCurrentAlbum
-    					Webview url="http://{{denon_ip}}/NetAudio/art.asp-jpg" height=9
+    					Switch item=DenonInputDVD mappings=[ON="XBox One"]
+    					Switch item=DenonInputBluray mappings=[ON="XBox"]
+    					Switch item=DenonInputSATCBL mappings=[ON="TV"]
+    					Switch item=DenonInputMplay mappings=[ON="Apple TV"]
+    					Switch item=DenonInputAux1 mappings=[ON="PC"]
+    					Switch item=DenonInputSpotify mappings=[ON="Spotify"]
+    					Switch item=DenonInputNet mappings=[ON="Netverk"]
 					}
 				}
     		}
