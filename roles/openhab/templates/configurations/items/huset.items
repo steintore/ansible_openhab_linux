@@ -295,7 +295,7 @@ Switch PlexTVForward    "Forward"       <video>     {plex="{{plex_id_tv}}#playba
 Switch PlexTVReverse    "Reverse"       <video>     {plex="{{plex_id_tv}}#playback/stepBack"}
 
 /* Denon Receiver */
-Switch DenonPower           "Power"                 {denon="denon#PW"}
+Switch DenonPower           "Power"                 {denon="denon#PW", nh="{{denon_ip}}"}
 Switch DenonMainZone        "Main Zone"             {denon="denon#ZM"}
 Dimmer DenonVolume          "Volume [%.1f]"         {denon="denon#MV"}
 Switch DenonMute            "Mute"                  {denon="denon#MU"}

@@ -6,12 +6,18 @@
 		</encoder>
 	</appender>
 
-	<appender name="FILE" class="ch.qos.logback.core.FileAppender">
-		<file>${openhab.logdir:-logs}/openhab.log</file>
-		<encoder>
-			<pattern>%d{HH:mm:ss.SSS} %-5level %logger{30}[:%line]- %msg%n%ex{5}</pattern>
-		</encoder>
-	</appender>
+	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+                <file>${openhab.logdir:-logs}/openhab.log</file>
+                <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                        <!-- weekly rollover and archiving -->
+                        <fileNamePattern>logs/openhab-%d{yyyy-ww}.log.zip</fileNamePattern>
+                        <!-- keep 30 days' worth of history -->
+                        <maxHistory>30</maxHistory>
+                </rollingPolicy>
+                <encoder>
+                        <pattern>%d{HH:mm:ss.SSS} %-5level %logger{30}[:%line]- %msg%n%ex{5}</pattern>
+                </encoder>
+        </appender>
 
 	<appender name="EVENTFILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<file>${openhab.logdir:-logs}/events.log</file>
@@ -35,6 +41,7 @@
 	<!--logger name="org.openhab.binding.rfxcom" level="DEBUG"-->
 	<!--logger name="org.openhab.binding.samsungac" level="DEBUG"-->
 	<logger name="javax.jmdns" level="OFF"/>
+	<logger name="org.openhab.binding.denon" level="OFF" />
 
 	<!-- this class gives an irrelevant warning at startup -->
 	<logger name="org.atmosphere.cpr.AtmosphereFramework" level="ERROR" />
