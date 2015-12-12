@@ -39,7 +39,7 @@
 
 	<logger name="org.openhab" level="INFO"/>
 	<!--logger name="org.openhab.binding.rfxcom" level="DEBUG"-->
-	<!--logger name="org.openhab.binding.samsungac" level="DEBUG"-->
+	<logger name="org.openhab.binding.samsungac" level="ERROR" />
 	<logger name="javax.jmdns" level="OFF"/>
 	<logger name="org.openhab.binding.denon" level="OFF" />
 

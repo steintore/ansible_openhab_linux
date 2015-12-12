@@ -135,7 +135,7 @@ rule "Switch to night mode in the evening"
 	then
 		if (mode.state == 0 || mode.state == 3) {
 			if (tv_power.state == ON || denon_receiver.state == ON || appletv.state == ON || xbox.state == ON) {
-				// If TV is still on or there's someone in the living room, we'll wait a bit before going into night mode
+				// If TV/Receiver/AppleTV/XBox is still on or there's someone in the living room, we'll wait a bit before going into night mode
 				night_timer = createTimer(now.plusSeconds(360)) [|
 					if (tv_power.state == ON || denon_receiver.state == ON || appletv.state == ON || xbox.state == ON) {
 						night_timer.reschedule(now.plusSeconds(360))
