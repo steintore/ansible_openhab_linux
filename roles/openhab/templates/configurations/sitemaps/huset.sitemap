@@ -3,6 +3,7 @@ sitemap huset label="Huset"
 	Frame label="Quick" {
 		Switch item=mode mappings=[0="Hjemme", 3="Kveld", 1="Natt", 2="Borte"]
 		Switch item=ac_scene mappings=[0="Av", 1="Varm", 2="Kjøl", 3="Luft"]
+		Selection item=ac_mode mappings=[0="Off", 1="Quiet", 5="TurboMode"] visibility=[tv_power==ON]
 		Switch item=scene_garage_1 mappings=[0="Lukk", 1="Åpne"] icon="garagedoor"
 		Switch item=scene_garage_2 mappings=[0="Lukk", 1="Åpne"] icon="garagedoor"
 	}
