@@ -134,14 +134,6 @@ sitemap huset label="Huset"
 					}
 					Frame label="Main Zone Input" {
     					Selection label="Input" item=DenonInput mappings=[DVD="XBox One", BD="XBox", "SAT/CBL"="TV", MPLAY="Apple TV", AUX1="PC", SPOTIFY="Spotify", NET="Nettverk"]
-    					Text item=DenonInput
-    					Switch item=DenonInputDVD mappings=[ON="XBox One"]
-    					Switch item=DenonInputBluray mappings=[ON="XBox"]
-    					Switch item=DenonInputSATCBL mappings=[ON="TV"]
-    					Switch item=DenonInputMplay mappings=[ON="Apple TV"]
-    					Switch item=DenonInputAux1 mappings=[ON="PC"]
-    					Switch item=DenonInputSpotify mappings=[ON="Spotify"]
-    					Switch item=DenonInputNet mappings=[ON="Netverk"]
 					}
 				}
     		}

@@ -57,14 +57,20 @@ then
 				sendCommand(ac_power, OFF)
 		}
 		case 1: { // HEATING
+			var double tempOutdoor = new Double(OutdoorTemperature.state.toString())
 			if (ac_power.state == OFF)
 				sendCommand(ac_power, ON)
 				
-			// Set to Off if tv is off, otherwise to QUIET
-			if (tv_power.state == OFF && ac_mode.state != 0)
-				sendCommand(ac_mode, 0)
-			else if (tv_power.state == ON && ac_mode.state != 1)
-				sendCommand(ac_mode, 1) // QUIET
+
+			if (tempOutdoor < 5) {
+				sendCommand(ac_mode, 5) // TURBO MODE
+			} else {
+				// Set to Off if tv is off, otherwise to QUIET
+				if (tv_power.state == OFF && ac_mode.state != 0)
+					sendCommand(ac_mode, 0)
+				else if (tv_power.state == ON && ac_mode.state != 1)
+					sendCommand(ac_mode, 1) // QUIET
+			}
 			
 			// Set to heating if not already set
 			if (ac_op_mode.state != 4)
