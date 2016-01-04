@@ -60,18 +60,7 @@ then
 			var double tempOutdoor = new Double(OutdoorTemperature.state.toString())
 			if (ac_power.state == OFF)
 				sendCommand(ac_power, ON)
-				
-
-			if (tempOutdoor < 5) {
-				sendCommand(ac_mode, 5) // TURBO MODE
-			} else {
-				// Set to Off if tv is off, otherwise to QUIET
-				if (tv_power.state == OFF && ac_mode.state != 0)
-					sendCommand(ac_mode, 0)
-				else if (tv_power.state == ON && ac_mode.state != 1)
-					sendCommand(ac_mode, 1) // QUIET
-			}
-			
+						
 			// Set to heating if not already set
 			if (ac_op_mode.state != 4)
 				sendCommand(ac_op_mode, 4)
@@ -94,6 +83,16 @@ then
 			} else { //AWAY
 				if (ac_night_temp.state != Uninitialized && ac_night_temp.state != ac_heat_temp.state)
 					sendCommand(ac_set_temp, ac_night_temp.state.toString)
+			}
+			
+			if (tempOutdoor < 5 && mode.state == 0) {
+				sendCommand(ac_mode, 5) // TURBO MODE
+			} else {
+				// Set to Off if tv is off, otherwise to QUIET
+				if (tv_power.state == OFF || ac_mode.state != 0)
+					sendCommand(ac_mode, 0)
+				else if (tv_power.state == ON && ac_mode.state != 1)
+					sendCommand(ac_mode, 1) // QUIET
 			}
 							
 		}
