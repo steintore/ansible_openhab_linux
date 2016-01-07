@@ -75,14 +75,20 @@ then
 
 			// correct temperature
 			if (mode.state == 0) { //HOME
-				if (ac_set_temp.state != ac_heat_temp.state)
-				sendCommand(ac_set_temp, ac_heat_temp.state.toString)	
+				if (ac_set_temp.state != ac_heat_temp.state && tempOutdoor > -5)
+					sendCommand(ac_set_temp, ac_heat_temp.state.toString)
+				else if (tempOutdoor <= -5 )
+					sendCommand(ac_set_temp, (new Double(ac_heat_temp.state.toString) + 3).toString())	
 			} else if (mode.state == 1) { //NIGHT
 				if (ac_night_temp.state != Uninitialized && ac_night_temp.state != ac_heat_temp.state) 
 					sendCommand(ac_set_temp, ac_night_temp.state.toString)
+				if (tempOutdoor <= -5)
+					sendCommand(ac_set_temp, (new Double(ac_night_temp.state.toString) + 3).toString())
 			} else { //AWAY
 				if (ac_night_temp.state != Uninitialized && ac_night_temp.state != ac_heat_temp.state)
 					sendCommand(ac_set_temp, ac_night_temp.state.toString)
+					else if (tempOutdoor <= -5)
+					sendCommand(ac_set_temp, (new Double(ac_night_temp.state.toString) + 3).toString())
 			}
 			
 			if (tempOutdoor < 5 && mode.state == 0) {

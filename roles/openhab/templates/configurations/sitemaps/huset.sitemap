@@ -3,7 +3,7 @@ sitemap huset label="Huset"
 	Frame label="Quick" {
 		Switch item=mode mappings=[0="Hjemme", 3="Kveld", 1="Natt", 2="Borte"]
 		Switch item=ac_scene mappings=[0="Av", 1="Varm", 2="Kjøl", 3="Luft"]
-		Selection item=ac_mode mappings=[0="Off", 1="Quiet", 5="TurboMode"] visibility=[tv_power==ON]
+		Switch item=ac_mode mappings=[0="Off", 1="Quiet", 5="TurboMode"] visibility=[tv_power==ON]
 		Switch item=scene_garage_1 mappings=[0="Lukk", 1="Åpne"] icon="garagedoor"
 		Switch item=scene_garage_2 mappings=[0="Lukk", 1="Åpne"] icon="garagedoor"
 	}
@@ -23,9 +23,6 @@ sitemap huset label="Huset"
 			Frame label="Varmepumpe"{
 				Switch item=ac_scene mappings=[0="Av", 1="Varm", 2="Kjøl", 3="Luft"]
 				Setpoint item=ac_set_temp minValue=16 maxValue=28 step=1 icon="temperature" visibility=[ac_power==ON]
-				Setpoint item=ac_night_temp minValue=16 maxValue=28 step=1 icon="temperature"
-				Setpoint item=ac_heat_temp minValue=16 maxValue=28 step=1 icon="temperature"
-				Setpoint item=ac_cool_temp minValue=16 maxValue=28 step=1 icon="temperature"
 				Text label="Avansert" icon="office" visibility=[ac_power==ON] {
 					Switch item=ac_power icon="heating" valuecolor=[ac_lastUpdate=="Uninitialized"="lightgray", ac_lastUpdate>240="orange", ac_lastUpdate<240="green"]
 					Text item=ac_current_temp visibility=[ac_power==ON]
@@ -33,6 +30,9 @@ sitemap huset label="Huset"
 					Selection item=ac_op_mode mappings=[0="Auto", 1="Cool", 2="Dry", 3="Wind", 4="Heat"] visibility=[ac_power==ON]
 					Selection item=ac_direction icon="wind" mappings=[0="Auto", 1="SwingUD", 2="Rotation", 3="Fixed", 4="SwingLR"] visibility=[ac_power==ON]
 					Selection item=ac_windlevel icon="wind" mappings=[0="Auto", 1="Low", 2="Mid", 3="High", 4="Turbo"] visibility=[ac_power==ON]
+					Setpoint item=ac_night_temp minValue=16 maxValue=28 step=1 icon="temperature"
+					Setpoint item=ac_heat_temp minValue=16 maxValue=28 step=1 icon="temperature"
+					Setpoint item=ac_cool_temp minValue=16 maxValue=28 step=1 icon="temperature"
 					Text item=ac_error
 				}
 			}
@@ -160,8 +160,9 @@ sitemap huset label="Huset"
 				Switch item=scene_garage_2 mappings=[0="Lukk", 1="Åpne", 2="10"] icon="garagedoor"
 				Switch item=message_received mappings=[ON="Ja"] icon="network" visibility=[garage_door_1==ON, garage_door_2==ON]
 				Text label="Livestream" {
-					Image url="http://{{garage_camera_ip}}/image/jpeg.cgi"
-					Image url="{{garagepi_screenshot_url}}"
+					//Image url="http://{{garage_camera_ip}}/image/jpeg.cgi"
+					Image url="http://{{garagepi_ip}}:8080/?action=snapshot"
+					Video url="http://{{garagepi_ip}}:8080/?action=stream"
 				}
 			}
 			Frame label="Ute" icon="garden" {
@@ -169,10 +170,10 @@ sitemap huset label="Huset"
 				Text item=Outdoor_Temp_Min valuecolor=[>25="orange",>15="green",>5="orange",<=5="blue"]
 			}
 			Frame label="Tempdetaljer" {
-				Switch item=Temperature_Chart_Period label="Periode" mappings=[0="Time", 1="Dag", 2="Uke"] icon="temperature"
-				Chart item=Temperature_Chart period=h refresh=300 visibility=[Temperature_Chart_Period==0, Temperature_Chart_Period=="Uninitialized"]
-				Chart item=Temperature_Chart period=D refresh=1800 visibility=[Temperature_Chart_Period==1]
-				Chart item=Temperature_Chart period=W refresh=3600 visibility=[Temperature_Chart_Period==2]
+				Switch item=Temperature_Chart_Period label="Periode" mappings=[0="Time", 1="Dag", 2="Uke"]
+                Image url="http://localhost:8080/rrdchart.png?items=OutdoorTemperature,Outdoor_Temp_Max,Outdoor_Temp_Min&period=h" refresh=6000 visibility=[Temperature_Chart_Period==0, Temperature_Chart_Period=="Uninitialized"]
+                Image url="http://localhost:8080/rrdchart.png?items=OutdoorTemperature,Outdoor_Temp_Max,Outdoor_Temp_Min&period=D" refresh=30000 visibility=[Temperature_Chart_Period==1]
+                Image url="http://localhost:8080/rrdchart.png?items=OutdoorTemperature,Outdoor_Temp_Max,Outdoor_Temp_Min&period=W" refresh=30000 visibility=[Temperature_Chart_Period==2]
 			}
 			Frame label="Alt" {
 				Group item=gOutdoor
@@ -214,7 +215,7 @@ sitemap huset label="Huset"
          }
          Text item=Sunrise_Time
 		 Text item=Sunset_Time	
-         Webview url="/weather?locationId=home&layout=example&iconset=colorful" height=7
+         Webview url="http://localhost:8080/weather?locationId=home&layout=example&iconset=colorful" height=7
 			}
 		}
 	}
