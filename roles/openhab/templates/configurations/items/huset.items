@@ -217,6 +217,9 @@ Number  AC_ADD_APMODE_END "AC_ADD_APMODE_END [%s]" 					(AC) 							{samsungac="
 Switch  AC_ADD_AUTOCLEAN "AC_ADD_AUTOCLEAN [%s]" 					(AC) 							{samsungac="[Livingroom|AC_ADD_AUTOCLEAN]"}
 Number  AC_FUN_SUPPORTED "AC_FUN_SUPPORTED [%s]" 					(AC) 							{samsungac="[Livingroom|AC_FUN_SUPPORTED]"}
 DateTime ac_lastUpdate "Last update [%1$ta %1$tR]"	<clock>         (AC)
+Number AC_lower_temp_threshold "Temp terskel" 	(AC)
+Number AC_quiet_temp_threshold "Stille terskel" (AC)
+Number AC_additional_degrees   "Ekstra grader" 	(AC)
 
 
 Group Motion <office>

@@ -58,6 +58,8 @@ then
 		}
 		case 1: { // HEATING
 			var double tempOutdoor = new Double(OutdoorTemperature.state.toString())
+			var double lowerTempThreshold = new Double(AC_lower_temp_threshold.state.toString())
+			var double additionalDegrees = new Double(AC_additional_degrees.state.toString())
 			if (ac_power.state == OFF)
 				sendCommand(ac_power, ON)
 						
@@ -75,23 +77,23 @@ then
 
 			// correct temperature
 			if (mode.state == 0) { //HOME
-				if (ac_set_temp.state != ac_heat_temp.state && tempOutdoor > -5)
+				if (ac_set_temp.state != ac_heat_temp.state && tempOutdoor > lowerTempThreshold)
 					sendCommand(ac_set_temp, ac_heat_temp.state.toString)
-				else if (tempOutdoor <= -5 )
-					sendCommand(ac_set_temp, (new Double(ac_heat_temp.state.toString) + 3).toString())	
+				else if (tempOutdoor <= lowerTempThreshold )
+					sendCommand(ac_set_temp, (new Double(ac_heat_temp.state.toString) + additionalDegrees).toString())	
 			} else if (mode.state == 1) { //NIGHT
 				if (ac_night_temp.state != Uninitialized && ac_night_temp.state != ac_heat_temp.state) 
 					sendCommand(ac_set_temp, ac_night_temp.state.toString)
-				if (tempOutdoor <= -5)
-					sendCommand(ac_set_temp, (new Double(ac_night_temp.state.toString) + 3).toString())
+				if (tempOutdoor <= lowerTempThreshold)
+					sendCommand(ac_set_temp, (new Double(ac_night_temp.state.toString) + additionalDegrees).toString())
 			} else { //AWAY
 				if (ac_night_temp.state != Uninitialized && ac_night_temp.state != ac_heat_temp.state)
 					sendCommand(ac_set_temp, ac_night_temp.state.toString)
-					else if (tempOutdoor <= -5)
-					sendCommand(ac_set_temp, (new Double(ac_night_temp.state.toString) + 3).toString())
+					else if (tempOutdoor <= lowerTempThreshold)
+					sendCommand(ac_set_temp, (new Double(ac_night_temp.state.toString) + additionalDegrees).toString())
 			}
 			
-			if (tempOutdoor < 5 && mode.state == 0) {
+			if (tempOutdoor < lowerTempThreshold && mode.state == 0) {
 				sendCommand(ac_mode, 5) // TURBO MODE
 			} else {
 				// Set to Off if tv is off, otherwise to QUIET

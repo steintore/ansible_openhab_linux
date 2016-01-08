@@ -33,6 +33,9 @@ sitemap huset label="Huset"
 					Setpoint item=ac_night_temp minValue=16 maxValue=28 step=1 icon="temperature"
 					Setpoint item=ac_heat_temp minValue=16 maxValue=28 step=1 icon="temperature"
 					Setpoint item=ac_cool_temp minValue=16 maxValue=28 step=1 icon="temperature"
+					Setpoint item=AC_lower_temp_threshold minValue=-10.0 maxValue=10 step=1 icon="temperature"
+					Setpoint item=AC_quiet_temp_threshold minValue=-10.0 maxValue=20 step=2 icon="temperature"
+					Setpoint item=AC_additional_degrees minValue=0 maxValue=5 step=1 icon="temperature"
 					Text item=ac_error
 				}
 			}
@@ -160,8 +163,8 @@ sitemap huset label="Huset"
 				Switch item=scene_garage_2 mappings=[0="Lukk", 1="Åpne", 2="10"] icon="garagedoor"
 				Switch item=message_received mappings=[ON="Ja"] icon="network" visibility=[garage_door_1==ON, garage_door_2==ON]
 				Text label="Livestream" {
-					//Image url="http://{{garage_camera_ip}}/image/jpeg.cgi"
 					Image url="http://{{garagepi_ip}}:8080/?action=snapshot"
+					Image url="{{garagepi_screenshot_url}}"
 					Video url="http://{{garagepi_ip}}:8080/?action=stream"
 				}
 			}

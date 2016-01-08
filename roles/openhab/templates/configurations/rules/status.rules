@@ -32,6 +32,14 @@ rule "Startup"
 		if (scene_garage_1.state == Uninitialized) {
 			postUpdate(scene_garage_1, 0)
 		}
+		if (AC_lower_temp_threshold.state == Uninitialized)
+			postUpdate(AC_lower_temp_threshold, -5)
+			
+		if (AC_quiet_temp_threshold.state == Uninitialized)
+			postUpdate(AC_quiet_temp_threshold, -5)
+			
+		if (AC_additional_degrees.state == Uninitialized)
+			postUpdate(AC_additional_degrees, 2)
 		
 		postUpdate(scene_light_hall_gf, 2) // SET TO AUTO
 		
