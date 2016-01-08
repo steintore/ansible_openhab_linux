@@ -6,6 +6,7 @@ sitemap huset label="Huset"
 		Switch item=ac_mode mappings=[0="Off", 1="Quiet", 5="TurboMode"] visibility=[tv_power==ON]
 		Switch item=scene_garage_1 mappings=[0="Lukk", 1="Åpne"] icon="garagedoor"
 		Switch item=scene_garage_2 mappings=[0="Lukk", 1="Åpne"] icon="garagedoor"
+		Image url="{{garagepi_screenshot_url}}" visibility=[garage_door_1==ON, garage_door_2==ON]
 	}
 	
     Frame label="Huset" {
@@ -18,7 +19,6 @@ sitemap huset label="Huset"
 			Frame label="Lys" {
 				Switch item=scene_light_hall_gf mappings=[0="Av", 1="På", 2="Auto"]
 				Switch item=scene_light_livingroom mappings=[0="Av", 1="På", 2="Film", 3="Kjøkken"]
-				Switch item=color_10
 			}
 			Frame label="Varmepumpe"{
 				Switch item=ac_scene mappings=[0="Av", 1="Varm", 2="Kjøl", 3="Luft"]
@@ -40,7 +40,7 @@ sitemap huset label="Huset"
 				}
 			}
 			Frame label="TV" visibility=[tv_power==ON] {
-				Group item=TV icon="video"
+				Group item=TV icon="television"
 			}
 			Frame label="Plex TV" visibility=[PlexTVPower==ON] {
         		Switch item=PlexTVPower
@@ -162,8 +162,7 @@ sitemap huset label="Huset"
 				Switch item=scene_garage_1 mappings=[0="Lukk", 1="Åpne", 2="10"] icon="garagedoor"
 				Switch item=scene_garage_2 mappings=[0="Lukk", 1="Åpne", 2="10"] icon="garagedoor"
 				Switch item=message_received mappings=[ON="Ja"] icon="network" visibility=[garage_door_1==ON, garage_door_2==ON]
-				Text label="Livestream" {
-					Image url="http://{{garagepi_ip}}:8080/?action=snapshot"
+				Text label="Livestream" icon="camera" {
 					Image url="{{garagepi_screenshot_url}}"
 					Video url="http://{{garagepi_ip}}:8080/?action=stream"
 				}

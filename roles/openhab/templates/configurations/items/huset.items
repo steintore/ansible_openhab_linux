@@ -23,10 +23,11 @@ Switch gang_panelovn 	"Panelovn gang" 	<heating> 	(gFirstFloor, Heating, away_gr
 
 /* Energy/Power measuring */
 Group:Number:SUM					Power			"Nå: [%.1f W]"			<energy>				(All)
+Group:Number:SUM					PowerHeating	"Varme: [%.1f W]"		<energy>				(All)
 Group:Number:SUM					Energy			"Totalt: [%.1f KWh]"	<energy>				(All)
 Number panelovn_kontor_energy 	"Panelovn totalforbruk: [%.2f KWh]"			<energy> (Energy) 				{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B5%%5D.commandClasses%%5B50%%5D.data%%5B0%%5D:20000:JS(getPowerValue.js)]"}
-Number power_panelovn_kontor  	"Strøm panelovn kontor	[%.1f W]" 			<energy> (Power, Power_Chart) 	{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B5%%5D.commandClasses%%5B49%%5D.data%%5B4%%5D:20000:JS(getPowerValue.js)]"}
-Number power_panelovn_gang  	"Strøm panelovn gang	[%.1f W]" 			<energy> (Power, Power_Chart) 	{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B10%%5D.Meter.data%%5B2%%5D:20000:JS(getPowerValue.js)]"}
+Number power_panelovn_kontor  	"Strøm panelovn kontor	[%.1f W]" 			<energy> (Power, PowerHeating, Power_Chart) 	{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B5%%5D.commandClasses%%5B49%%5D.data%%5B4%%5D:20000:JS(getPowerValue.js)]"}
+Number power_panelovn_gang  	"Strøm panelovn gang	[%.1f W]" 			<energy> (Power, PowerHeating, Power_Chart) 	{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B10%%5D.Meter.data%%5B2%%5D:20000:JS(getPowerValue.js)]"}
 Number panelovn_gang_energy 	"Panelovn gang totalforbruk: [%.2f KWh]"	<energy> (Energy) 				{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B10%%5D.Meter.data%%5B0%%5D:20000:JS(getPowerValue.js)]"}
 
 Group Power_Chart (Power)
@@ -217,9 +218,9 @@ Number  AC_ADD_APMODE_END "AC_ADD_APMODE_END [%s]" 					(AC) 							{samsungac="
 Switch  AC_ADD_AUTOCLEAN "AC_ADD_AUTOCLEAN [%s]" 					(AC) 							{samsungac="[Livingroom|AC_ADD_AUTOCLEAN]"}
 Number  AC_FUN_SUPPORTED "AC_FUN_SUPPORTED [%s]" 					(AC) 							{samsungac="[Livingroom|AC_FUN_SUPPORTED]"}
 DateTime ac_lastUpdate "Last update [%1$ta %1$tR]"	<clock>         (AC)
-Number AC_lower_temp_threshold "Temp terskel" 	(AC)
-Number AC_quiet_temp_threshold "Stille terskel" (AC)
-Number AC_additional_degrees   "Ekstra grader" 	(AC)
+Number AC_lower_temp_threshold "Temp terskel [%.1f°C]" 	(AC)
+Number AC_quiet_temp_threshold "Stille terskel [%.1f°C]" (AC)
+Number AC_additional_degrees   "Ekstra grader [%.1f°C]" 	(AC)
 
 
 Group Motion <office>
