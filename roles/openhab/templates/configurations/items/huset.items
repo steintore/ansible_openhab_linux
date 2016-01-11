@@ -55,6 +55,7 @@ Switch denon_receiver		"Denon receiver"		<present>		(proximity) {nh="{{denon_ip}
 /* Temperature */
 Group Temperature_Chart (Weather)
 Number Temperature_Chart_Period 			"Periode"
+Number Temperature_Livingroom_Chart_Period  "Periode"
 Number Outdoor_Temp_Max 					"Temp max [%.1f °C]"				<temperature> 	(Temperature_Chart)
 Number Outdoor_Temp_Min 					"Temp min [%.1f °C]"				<temperature> 	(Temperature_Chart)
 Number Outdoor_Humidex						"Humidex [SCALE(humidex.scale):%s]"					(Weather)
@@ -179,6 +180,7 @@ Switch 		  tv_power 		"TV"		<power>	   		(TV, proximity){samsungtv="ON:Livingroo
 Rollershutter tv_channel 	"Kanal"     <channel>   	(TV){samsungtv="UP:Livingroom:KEY_CHUP, DOWN:Livingroom:KEY_CHDOWN"}
 Switch        tv_mute		"Lyd av/på" <volume>	    (TV){samsungtv="ON:Livingroom:KEY_MUTE, OFF:Livingroom:KEY_MUTE"}
 Rollershutter tv_volume     "Volum"		<volume>	    (TV){samsungtv="UP:Livingroom:KEY_VOLUP, DOWN:Livingroom:KEY_VOLDOWN"}
+Number 		  tv_pause_play "Pause/play"<video>			(TV){samsungtv="1:Livingroom:KEY_PLAY, 2:Livingroom:KEY_PAUSE"}
 
 /* Astro information */
 Group Astro

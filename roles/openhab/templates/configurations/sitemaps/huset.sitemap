@@ -3,6 +3,7 @@ sitemap huset label="Huset"
 	Frame label="Quick" {
 		Switch item=mode mappings=[0="Hjemme", 3="Kveld", 1="Natt", 2="Borte"]
 		Switch item=ac_scene mappings=[0="Av", 1="Varm", 2="Kjøl", 3="Luft"]
+		Setpoint item=ac_set_temp minValue=16 maxValue=28 step=1 icon="temperature" visibility=[ac_power==ON]
 		Switch item=ac_mode mappings=[0="Off", 1="Quiet", 5="TurboMode"] visibility=[tv_power==ON]
 		Switch item=scene_garage_1 mappings=[0="Lukk", 1="Åpne"] icon="garagedoor"
 		Switch item=scene_garage_2 mappings=[0="Lukk", 1="Åpne"] icon="garagedoor"
@@ -16,8 +17,15 @@ sitemap huset label="Huset"
     			Text item=LivingRoomHumidity
 				Text item=LivingRoomTemperature_LastUpdate visibility=[LivingRoomTemperature_LastUpdate>1800] valuecolor=[LivingRoomTemperature_LastUpdate>120="orange", LivingRoomTemperature_LastUpdate>300="red"]
 			}
+			Frame label="Tempdetaljer" {
+				Switch item=Temperature_Livingroom_Chart_Period label="Periode" mappings=[0="Timer", 1="Dag", 2="Uke", 3="2 uker"]
+                Image url="http://localhost:8080/rrdchart.png?items=LivingRoomTemperature,ac_set_temp&period=12h" refresh=6000 visibility=[Temperature_Livingroom_Chart_Period==0, Temperature_Livingroom_Chart_Period=="Uninitialized"]
+                Image url="http://localhost:8080/rrdchart.png?items=LivingRoomTemperature,ac_set_temp&period=D" refresh=30000 visibility=[Temperature_Livingroom_Chart_Period==1]
+                Image url="http://localhost:8080/rrdchart.png?items=LivingRoomTemperature,ac_set_temp&period=W" refresh=30000 visibility=[Temperature_Livingroom_Chart_Period==2]
+                Image url="http://localhost:8080/rrdchart.png?items=LivingRoomTemperature,ac_set_temp&period=2W" refresh=30000 visibility=[Temperature_Livingroom_Chart_Period==3]
+			}
 			Frame label="Lys" {
-				Switch item=scene_light_hall_gf mappings=[0="Av", 1="På", 2="Auto"]
+				Switch item=scene_light_hall_gf icon="light" mappings=[0="Av", 1="På", 2="Auto"]
 				Switch item=scene_light_livingroom mappings=[0="Av", 1="På", 2="Film", 3="Kjøkken"]
 			}
 			Frame label="Varmepumpe"{
@@ -41,6 +49,7 @@ sitemap huset label="Huset"
 			}
 			Frame label="TV" visibility=[tv_power==ON] {
 				Group item=TV icon="television"
+				Selection item=tv_pause_play mappings=[1="Pause", 2="Play"]
 			}
 			Frame label="Plex TV" visibility=[PlexTVPower==ON] {
         		Switch item=PlexTVPower
@@ -75,7 +84,7 @@ sitemap huset label="Huset"
     		}
     		Frame label="Bad" {
     			Text item=bathroom_temp
-    			Slider item=light_bathroom_dimmer
+    			Slider item=light_bathroom_dimmer icon="slider"
     			Switch item=light_bathroom_mirror
     		}
     		Frame label="Kontor"{
@@ -201,18 +210,20 @@ sitemap huset label="Huset"
         }
         Text item=Weather_Humidity {
             Frame {
-                Switch item=Weather_Humidity_Chart_Period label="Periode" mappings=[0="Time", 1="Dag", 2="Uke"]
+                Switch item=Weather_Humidity_Chart_Period label="Periode" mappings=[0="Time", 1="Dag", 2="Uke", 3="2 uker"]
                 Image url="http://localhost:8080/rrdchart.png?items=Weather_Humidity&period=h" refresh=6000 visibility=[Weather_Humidity_Chart_Period==0, Weather_Humidity_Chart_Period=="Uninitialized"]
                 Image url="http://localhost:8080/rrdchart.png?items=Weather_Humidity&period=D" refresh=30000 visibility=[Weather_Humidity_Chart_Period==1]
                 Image url="http://localhost:8080/rrdchart.png?items=Weather_Humidity&period=W" refresh=30000 visibility=[Weather_Humidity_Chart_Period==2]
+                Image url="http://localhost:8080/rrdchart.png?items=Weather_Humidity&period=2W" refresh=30000 visibility=[Weather_Humidity_Chart_Period==3]
             }
         }
         Text item=Weather_Pressure {
             Frame {
-                Switch item=Weather_Pressure_Chart_Period label="Periode" mappings=[0="Time", 1="Dag", 2="Uke"]
+                Switch item=Weather_Pressure_Chart_Period label="Periode" mappings=[0="Time", 1="Dag", 2="Uke", 3="2 uker"]
                 Image url="http://localhost:8080/rrdchart.png?items=Weather_Pressure&period=h" refresh=6000 visibility=[Weather_Pressure_Chart_Period==0, Weather_Pressure_Chart_Period=="Uninitialized"]
                 Image url="http://localhost:8080/rrdchart.png?items=Weather_Pressure&period=D" refresh=30000 visibility=[Weather_Pressure_Chart_Period==1]
                 Image url="http://localhost:8080/rrdchart.png?items=Weather_Pressure&period=W" refresh=30000 visibility=[Weather_Pressure_Chart_Period==2]
+                Image url="http://localhost:8080/rrdchart.png?items=Weather_Pressure&period=2W" refresh=30000 visibility=[Weather_Pressure_Chart_Period==3]
              }
          }
          Text item=Sunrise_Time
@@ -246,10 +257,11 @@ sitemap huset label="Huset"
 				Text item=power_fridge
 			}
 			Frame {
-				Switch item=Power_Chart_Period label="Periode" mappings=[0="Time", 1="Dag", 2="Uke"] icon="energy"
+				Switch item=Power_Chart_Period label="Periode" mappings=[0="Time", 1="Dag", 2="Uke", 3="2 uker"] icon="energy"
 				Chart item=Power_Chart period=h refresh=300 visibility=[Power_Chart_Period==0, Power_Chart_Period=="Uninitialized"]
 				Chart item=Power_Chart period=D refresh=1800 visibility=[Power_Chart_Period==1]
 				Chart item=Power_Chart period=W refresh=3600 visibility=[Power_Chart_Period==2]
+				Chart item=Power_Chart period=2W refresh=3600 visibility=[Power_Chart_Period==2]
 			}
 			
 		}
