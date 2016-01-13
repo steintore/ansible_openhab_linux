@@ -71,6 +71,9 @@ rule "A change of mode"
 				sendCommand(ac_set_temp, ac_night_temp.state.toString)
 			} else if (ac_scene.state > 1)
 				sendCommand(ac_scene, 0)
+				
+			if (ac_mode.state == 1) // QUIET
+				sendCommand(ac_mode, 0) 
 		}
 		
 		case 2: { //AWAY
