@@ -11,14 +11,12 @@
 - name: remove everything from the addons-folder
   shell: "rm {{ openhab_install_dir }}/runtime/{{openhab_version}}/addons/*"
 
-- name: link snapshot bindings into runtime
-  file: >
-    state=link
-    src={{ openhab_install_dir }}/addons/{{openhab_snapshot_version}}/org.openhab.{{ item }}-{{openhab_snapshot_version}}.jar
-    dest={{ openhab_install_dir }}/runtime/{{openhab_version}}/addons/org.openhab.{{ item }}-{{openhab_snapshot_version}}.jar
-  with_items:
-    - binding.samsungac
-    - binding.weather
+#- name: link snapshot bindings into runtime
+#  file: >
+#    state=link
+#    src={{ openhab_install_dir }}/addons/{{openhab_snapshot_version}}/org.openhab.{{ item }}-{{openhab_snapshot_version}}.jar
+#    dest={{ openhab_install_dir }}/runtime/{{openhab_version}}/addons/org.openhab.{{ item }}-{{openhab_snapshot_version}}.jar
+#  with_items:
 
 - name: link bindings into runtime
   file: >
@@ -43,21 +41,23 @@
     - binding.astro
     - binding.hue
     - binding.systeminfo
+    - binding.samsungac
+    - binding.weather
 
 - name: install sigar
   include: install_sigar.yml
 
 - name: download my.openhab jar
   get_url: >
-    url=https://bintray.com/artifact/download/openhab/mvn/org/openhab/io/org.openhab.io.myopenhab/1.7.0/org.openhab.io.myopenhab-1.7.0.jar
+    url=https://bintray.com/artifact/download/openhab/mvn/org/openhab/io/org.openhab.io.myopenhab/{{openhab_version}}/org.openhab.io.myopenhab-{{openhab_version}}.jar
     dest={{ openhab_install_dir }}/addons/{{openhab_version}}/
     validate_certs=no
 
 - name: link to my.openhab jar
   file: >
     state=link
-    src={{ openhab_install_dir }}/addons/{{openhab_version}}/org.openhab.io.myopenhab-1.7.0.jar
-    dest={{ openhab_install_dir }}/runtime/{{openhab_version}}/addons/org.openhab.io.myopenhab-1.7.0.jar
+    src={{ openhab_install_dir }}/addons/{{openhab_version}}/org.openhab.io.myopenhab-{{openhab_version}}.jar
+    dest={{ openhab_install_dir }}/runtime/{{openhab_version}}/addons/org.openhab.io.myopenhab-{{openhab_version}}.jar
 
 - name: See if configurations is a directory (then we nuke it next)
   shell: "[ -d {{ openhab_install_dir }}/runtime/{{openhab_version}}/configurations ] && echo 'Directory' || echo ''"
