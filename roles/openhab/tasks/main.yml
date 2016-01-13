@@ -5,8 +5,8 @@
 - name: install openHAB addons
   include: install_openhab_component.yml component=addons
 
-- name: install openHAB snapshot addons
-  include: install_openhab_snapshot_component.yml component=addons
+#- name: install openHAB snapshot addons
+#  include: install_openhab_snapshot_component.yml component=addons
 
 - name: remove everything from the addons-folder
   shell: "rm {{ openhab_install_dir }}/runtime/{{openhab_version}}/addons/*"
