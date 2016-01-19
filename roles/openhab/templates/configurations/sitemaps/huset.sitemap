@@ -228,7 +228,7 @@ sitemap huset label="Huset"
          }
          Text item=Sunrise_Time
 		 Text item=Sunset_Time	
-         Webview url="http://localhost:8080/weather?locationId=home&layout=example&iconset=colorful" height=7
+         Webview url="http://localhost:8080/weather?locationId=home&layout=Weather_Pressure&iconset=colorful" height=7
 			}
 		}
 	}

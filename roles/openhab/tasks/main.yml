@@ -135,7 +135,7 @@
         - rules/weather.rules
         - scripts/pushMessages.script
         - sitemaps/huset.sitemap
-        - transform/de.map
+        - sitemaps/panel.sitemap
         - transform/en.map
         - transform/getBasicOnOffState.js
         - transform/getLastUpdate.js

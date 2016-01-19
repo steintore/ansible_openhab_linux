@@ -183,7 +183,7 @@ end
 
 rule "Return to day mode during weekend"
 	when
-		Time cron "0 0 7 ? * SAT-SUN"
+		Time cron "0 0 6 ? * SAT-SUN"
 	then
 		if (mode.state == 1) {
 			sendCommand(mode, 0)
