@@ -13,6 +13,6 @@ sitemap panel label="Panel"
 				Switch item=garage_door_2
 	}
 	Frame label="Weather" {
-			Webview url="/weather?locationId=home&layout=weather_large&iconset=dark"
+			Webview url="/weather?locationId=home&layout=weatherPanel&iconset=dark"
 	}
 }
