@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!--meta http-equiv="refresh" content="30" /-->
+	<meta http-equiv="Content-type" CONTENT="text/html; charset=utf-8">
+	<link rel="stylesheet" type="text/css" href="weather-data/layouts/weatherpanel.css" />
+	<script src="weather-data/layouts/moment.js"></script>
+	<script type="text/javascript" src="weather-data/layouts/weatherpanel.js"></script>
+	
+</head>
+
+<body>
+	<div id="main" class="zoom-auto light-text">
+	<div id="time">
+		00 00 00
+	</div>
+	<p id="date" class="title">
+		
+	</p>
+	<div id="weather">
+		<div id="weather-inner" class="clearfix">
+			<div class="now">
+				<img src="weather-data/images/${param:iconset}/${weather:condition.commonId}.png"/>
+				<b class="temp">${weather:temperature.current(%.1f)}</b>
+				<p class="label">Nå</p>
+				<p class="condition">${weather:condition.text}</p>
+			</div>
+			<ul class="clearfix">
+				<li class="weather-container">
+					<span><img src="weather-data/images/${param:iconset}/${forecast(0):condition.commonId}.png"/></span>
+					<div class="temp">${forecast(0):temperature.min(%.0f)}&nbsp;${forecast(0):temperature.max(%.0f)}</div>
+					<p class="day">dagens</p>
+					<p class="condition">${forecast(0):condition.text}</p>
+				</li>
+				<li class="weather-container">
+					<span><img src="weather-data/images/${param:iconset}/${forecast(1):condition.commonId}.png"/></span>
+					<div class="temp">${forecast(1):temperature.min(%.0f)}&nbsp;${forecast(1):temperature.max(%.0f)}</div>
+					<p class="day">${forecast(1):condition.observationTime(%1$tA)}</p>
+					<p class="condition">${forecast(1):condition.text}</p>
+				</li>
+				<li class="weather-container">
+					<span><img src="weather-data/images/${param:iconset}/${forecast(2):condition.commonId}.png"/></span>
+					<div class="temp">${forecast(2):temperature.min(%.0f)}&nbsp;${forecast(2):temperature.max(%.0f)}</div>
+					<p class="day">${forecast(2):condition.observationTime(%1$tA)}</p>
+					<p class="condition">${forecast(2):condition.text}</p>
+				</li>
+				<li class="weather-container">
+					<img src="weather-data/images/${param:iconset}/${forecast(3):condition.commonId}.png"/>
+					<div class="temp">${forecast(3):temperature.min(%.0f)}&nbsp;${forecast(3):temperature.max(%.0f)}</div>
+					<p class="day">${forecast(3):condition.observationTime(%1$tA)}</p>
+					<p class="condition">${forecast(3):condition.text}</p>
+				</li>
+			</ul>
+		</div>
+		<div id="city">
+
+		</div>
+	</div>
+</div>
+</body>
+
+</html>
