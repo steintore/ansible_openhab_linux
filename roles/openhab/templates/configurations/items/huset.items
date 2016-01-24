@@ -159,7 +159,7 @@ Dimmer CT_dimm_11   "Ute 2"  			<hue> (gLight) {hue="11;colorTemperature;30"}
 
 /* Motion detector */
 Switch motion_detector_basement "Bevegelse gang nede" 	<switch> (gBasement, Motion) {rfxcom="<13734590.10:Command"}
-Switch motion_bathroom_gf 		"Bevegelse bad 1." 		<switch> (gGF, Motion) 		 {rfxcom="<18220938.10:Command"}
+/*Switch motion_bathroom_gf 		"Bevegelse bad 1." 		<switch> (gGF, Motion) 		 {rfxcom="<18220938.10:Command"}*/
 
 Group:Switch:AND(ON, OFF) 		gBasementLights	"Lys [(%d)]"	 <light>		
 Number scene_light_basement "Lys kjellergang" <light> (gLight, gBasementLights, gBasement)

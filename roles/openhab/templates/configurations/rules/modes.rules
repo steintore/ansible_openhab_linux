@@ -19,8 +19,7 @@ rule "A change of mode"
 			restoreStates(stored_states)
 			if (tempOutdoor < 10) {
 				sendCommand(ac_scene, 1)
-				if (tempOutdoor < 5) {
-					sendCommand(kontor_panelovn, ON)
+				if (tempOutdoor < 0) {
 					sendCommand(gang_panelovn, ON)
 				}
 			}
@@ -117,18 +116,21 @@ rule "A change of mode"
 		
 		case 3: { // EVENING MODE
 			sendCommand(scene_light_hall, 2) // NIGHT
+			if (ac_scene.state == 1 && ac_night_temp.state != Uninitialized) {
+				sendCommand(ac_set_temp, ac_night_temp.state.toString)
+			}
 		}
 	}
 	postUpdate(previous_mode, mode.state.toString)
 end
 
 /*
- * At 20 in the evening we'll go into evening mode, but only if someone is at home.
+ * At 22 in the evening we'll go into evening mode, but only if someone is at home.
  * Away mode overrules evening mode
  */
 rule "Switch to evening mode in the evening"
 	when
-		Time cron "0 0 21 ? * *" 
+		Time cron "0 0 22 ? * *" 
 	then
 		if (mode.state == 0) {
 			sendCommand(mode, 3)

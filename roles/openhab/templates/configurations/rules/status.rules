@@ -12,10 +12,10 @@ rule "Startup"
 		System started
 	then
 		if (ac_night_temp.state == Uninitialized) {
-			sendCommand(ac_night_temp, 19)
+			sendCommand(ac_night_temp, 17)
 		}
 		if (ac_heat_temp.state == Uninitialized) {
-			sendCommand(ac_heat_temp, 23)
+			sendCommand(ac_heat_temp, 22)
 		}
 		if (ac_cool_temp.state == Uninitialized) {
 			sendCommand(ac_cool_temp, 20)
@@ -39,7 +39,7 @@ rule "Startup"
 			postUpdate(AC_quiet_temp_threshold, -5)
 			
 		if (AC_additional_degrees.state == Uninitialized)
-			postUpdate(AC_additional_degrees, 2)
+			postUpdate(AC_additional_degrees, 1)
 		
 		postUpdate(scene_light_hall_gf, 2) // SET TO AUTO
 		

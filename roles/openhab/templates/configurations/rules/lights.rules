@@ -284,10 +284,10 @@ rule "light in basement hall"
 			sendCommand(light_basement_4, 100)
 		}
 		case 2: { //NIGHT MODE
-			sendCommand(light_basement_1, 30)
-			sendCommand(light_basement_2, 30)
-			sendCommand(light_basement_3, 30)
-			sendCommand(light_basement_4, 30)
+			sendCommand(light_basement_1, 50)
+			sendCommand(light_basement_2, 50)
+			sendCommand(light_basement_3, 50)
+			sendCommand(light_basement_4, 50)
 		}
 	}
 end
@@ -314,8 +314,16 @@ rule "Motion detector in basement wants to turn on the lights"
 	then
 		switch (motion_detector_basement.state as OnOffType) {
 		case ON: {
+			if (mode.state == 0) // HOME
+				sendCommand(scene_light_basement, 1) // ON
+			else if (mode.state == 1 || mode.state == 3) // NIGHT OR EVENING MODE
+				sendCommand(scene_light_basement, 2) // NIGHT MODE
+			else { //AWAY
+				pushover('Bevegelse i kjelleren...')
+			}
+			
 			if (timerBasement == null) {
-				timerBasement = createTimer(now.plusSeconds(3600)) [|
+				timerBasement = createTimer(now.plusSeconds(1800)) [|
 					logInfo("org.openhab", "Basement light timer created by OFF-signal timed out, state for motion: '" + motion_detector_basement.state)
 					sendCommand(motion_detector_basement, OFF)
 				
@@ -327,23 +335,23 @@ rule "Motion detector in basement wants to turn on the lights"
 					}
 					]
 			} else
-				timerBasement.reschedule(now.plusSeconds(3600))
-			if (mode.state == 0) // HOME
-				sendCommand(scene_light_basement, 1) // ON
-			else if (mode.state == 1 || mode.state == 3) // NIGHT OR EVENING MODE
-				sendCommand(scene_light_basement, 2) // NIGHT MODE
-			else { //AWAY
-				pushover('Bevegelse i kjelleren...')
-			}
+				timerBasement.reschedule(now.plusSeconds(1800))
 		}
 		case OFF: {
-			sendCommand(scene_light_basement, 0) // OFF
-			if(timerBasement!=null) {
-				if(timerBasement.running) {
-					timerBasement.cancel()
-				}	
-				timerBasement = null
-			}
+			if (timerBasement == null) {
+				timerBasement = createTimer(now.plusSeconds(120)) [|
+					logInfo("org.openhab", "Basement light timer created by OFF-signal timed out, state for motion: '" + motion_detector_basement.state)
+					sendCommand(motion_detector_basement, OFF)
+				
+					if(timerBasement!=null) {
+						if(timerBasement.running) {
+							timerBasement.cancel()
+						}	
+						timerBasement = null
+					}
+					]
+			} else
+				timerBasement.reschedule(now.plusSeconds(120))
 		}
 	}
 end
@@ -376,40 +384,4 @@ rule "Remote in living room"
     // Set it to 0, so that all changes are considered
     if (scene_remote_livingroom.state != 0)
     	postUpdate(scene_remote_livingroom, 0)
-end
-
-
-rule "Motion detector bathroom ground floor"
-	when
-	 	Item motion_bathroom_gf changed or
-	 	Item motion_bathroom_gf received update
-	then
-		switch (motion_bathroom_gf.state as OnOffType) {
-		case ON: {
-			if (timerBasement == null) {
-				timerBasement = createTimer(now.plusSeconds(600)) [|
-					sendCommand(motion_bathroom_gf, OFF)
-				
-					if(timerBasement!=null) {
-						if(timerBasement.running) {
-							timerBasement.cancel()
-						}	
-						timerBasement = null
-					}
-					]
-			} else
-				timerBasement.reschedule(now.plusSeconds(240))
-			sendCommand(color_10, "62,50,80")
-			sendCommand(color_10, ON)
-		}
-		case OFF: {
-			sendCommand(color_10, OFF)
-			if(timerBasement!=null) {
-				if(timerBasement.running) {
-					timerBasement.cancel()
-				}	
-				timerBasement = null
-			}
-		}
-	}
 end

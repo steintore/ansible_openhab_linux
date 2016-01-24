@@ -261,7 +261,7 @@ sitemap huset label="Huset"
 				Chart item=Power_Chart period=h refresh=300 visibility=[Power_Chart_Period==0, Power_Chart_Period=="Uninitialized"]
 				Chart item=Power_Chart period=D refresh=1800 visibility=[Power_Chart_Period==1]
 				Chart item=Power_Chart period=W refresh=3600 visibility=[Power_Chart_Period==2]
-				Chart item=Power_Chart period=2W refresh=3600 visibility=[Power_Chart_Period==2]
+				Chart item=Power_Chart period=2W refresh=3600 visibility=[Power_Chart_Period==3]
 			}
 			
 		}
