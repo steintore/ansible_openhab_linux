@@ -338,19 +338,22 @@ rule "Motion detector in basement wants to turn on the lights"
 				timerBasement.reschedule(now.plusSeconds(1800))
 		}
 		case OFF: {
-			if (timerBasement == null) {
-				timerBasement = createTimer(now.plusSeconds(120)) [|
-					logInfo("org.openhab", "Basement light timer created by OFF-signal timed out, state for motion: '" + motion_detector_basement.state)
-					sendCommand(scene_light_basement, 0)
-					if(timerBasement!=null) {
-						if(timerBasement.running) {
-							timerBasement.cancel()
-						}	
-						timerBasement = null
-					}
-					]
-			} else
-				timerBasement.reschedule(now.plusSeconds(120))
+			if(timerBasement!=null) {
+				if(timerBasement.running) {
+					timerBasement.cancel()
+				}	
+				timerBasement = null
+			}
+			timerBasement = createTimer(now.plusSeconds(120)) [|
+				logInfo("org.openhab", "Basement light timer created by OFF-signal timed out, state for motion: '" + motion_detector_basement.state)
+				sendCommand(scene_light_basement, 0)
+				if(timerBasement!=null) {
+					if(timerBasement.running) {
+						timerBasement.cancel()
+					}	
+					timerBasement = null
+				}
+			]
 		}
 	}
 end
