@@ -83,25 +83,26 @@ then
 			sendCommand(light_living_room_window, ON)
 			sendCommand(light_living_room_corner, ON)
 			sendCommand(light_kitchen_bench, ON)
-			sendCommand(light_dining_table, ON)
-			postUpdate(light_dining_table_dimmer, 100)	
+			sendCommand(light_dining_table_dimmer, 90)
 		}
-		case 2: { // WATCHING A MOVIE
-			sendCommand(light_living_old, ON)
-			sendCommand(light_living_room_corner, OFF)
-			sendCommand(light_living_room_window, OFF)
-			sendCommand(light_kitchen_bench, OFF)
-			sendCommand(light_dining_table, ON)
-			sendCommand(light_dining_table_dimmer, 50)
-				
+		case 2: { // ++ More light please
+			var Number percent = 0
+			if(light_dining_table_dimmer.state instanceof DecimalType) percent = light_dining_table_dimmer.state as DecimalType
+			if (percent < 90)
+				sendCommand(light_dining_table_dimmer, percent + 10)
+			else 	
+				sendCommand(light_dining_table_dimmer, 99)
 		}
-		case 3: {//EATING OR COOKING
-			sendCommand(light_kitchen_bench, ON)
-			sendCommand(light_dining_table, ON)
-			postUpdate(light_dining_table_dimmer, 100)
-			sendCommand(light_living_old, ON)
-			sendCommand(light_living_room_corner, OFF)
-			sendCommand(light_living_room_window, OFF)
+		case 3: { // -- Less light please
+			var Number percent = 0
+			if(light_dining_table_dimmer.state instanceof DecimalType) percent = light_dining_table_dimmer.state as DecimalType
+			
+			if (percent < 10) {
+				sendCommand(light_dining_table, OFF)
+				postUpdate(light_dining_table_dimmer, 0)
+			} else {
+				sendCommand(light_dining_table_dimmer, percent - 10)
+			}
 		}
 	}	
 	logInfo('org.openhab', 'scene_light_livingroom update to: ' + scene_light_livingroom.state)
@@ -141,7 +142,7 @@ rule "light bathroom 1st floor"
 			sendCommand(light_bathroom_dimmer, 10)
 		}
 		case 2: {//DAY
-			sendCommand(light_bathroom_dimmer, 60)
+			sendCommand(light_bathroom_dimmer, 80)
 		
 		}
 		case 3: {//FULL
@@ -208,7 +209,7 @@ rule "light dimmer dining table changed"
 		if(light_dining_table_dimmer.state instanceof DecimalType) percent = light_dining_table_dimmer.state as DecimalType
 		logInfo('org.openhab',"Bathroom dimmer received command: '" + light_dining_table_dimmer.state + "' converted it to percentages: '" + percent + "'")
 		
-		if (percent > 100) percent = 100
+		if (percent > 100) percent = 99
 		if (percent < 0) percent = 0
 		
 		if(percent == 0 && light_dining_table.state == ON) {
@@ -221,7 +222,7 @@ rule "light dimmer dining table changed"
 		var String htp = "http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%5B22%5D.SwitchMultilevel.Set(" + percent.toString + ")"
 		
 		sendHttpGetRequest(htp)
-		logInfo('org.openhab', 'Bathroom dimmer sent request: ' + htp)
+		logInfo('org.openhab', 'Dining room dimmer sent request: ' + htp)
 end
 
 rule "light in hall 1st floor"
@@ -370,13 +371,13 @@ rule "Remote in living room"
             case 1:  { // LIGHTS ON
 	            sendCommand(scene_light_livingroom, 1)
             }
-            case 2: { // ONLY LIVING ROOM, not kitchen
+            case 2: { // ++ More light if possible please
                 sendCommand(scene_light_livingroom, 2)
             }
             case 3: { // LIGHTS OFF
                 sendCommand(scene_light_livingroom, 0)
             }
-            case 4: { // Kitchen not living room
+            case 4: { // -- Less light if possible please
                 sendCommand(scene_light_livingroom, 3)
             } 
             default: {

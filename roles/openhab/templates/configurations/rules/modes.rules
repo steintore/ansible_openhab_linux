@@ -73,6 +73,9 @@ rule "A change of mode"
 				
 			if (ac_mode.state == 1) // QUIET
 				sendCommand(ac_mode, 0) 
+				
+			sendCommand(kontor_panelovn, OFF)
+			sendCommand(gang_panelovn, OFF)
 		}
 		
 		case 2: { //AWAY
@@ -119,6 +122,8 @@ rule "A change of mode"
 			if (ac_scene.state == 1 && ac_night_temp.state != Uninitialized) {
 				sendCommand(ac_set_temp, ac_night_temp.state.toString)
 			}
+			sendCommand(kontor_panelovn, OFF)
+			sendCommand(gang_panelovn, OFF)
 		}
 	}
 	postUpdate(previous_mode, mode.state.toString)
@@ -130,7 +135,7 @@ end
  */
 rule "Switch to evening mode in the evening"
 	when
-		Time cron "0 0 22 ? * *" 
+		Time cron "0 0 21 ? * *" 
 	then
 		if (mode.state == 0) {
 			sendCommand(mode, 3)
