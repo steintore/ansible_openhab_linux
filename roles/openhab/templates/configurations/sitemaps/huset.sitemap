@@ -161,6 +161,14 @@ sitemap huset label="Huset"
 			Frame label="Alt" {
 				Group item=gBasement
 			}
+			Frame label="Tempdetaljer" {
+				Switch item=Temperature_Basement_Chart_Period label="Periode" mappings=[0="Timer", 1="Dag", 2="Uke", 3="2 uker"]
+                Image url="http://localhost:8080/rrdchart.png?items=BasementTemperature,tv_room_basement_floor_temp,hall_basement_floor_temp,laundry_basement_floor_temp&period=12h" refresh=30000 visibility=[Temperature_Basement_Chart_Period==0, Temperature_Basement_Chart_Period=="Uninitialized"]
+                Image url="http://localhost:8080/rrdchart.png?items=BasementTemperature,tv_room_basement_floor_temp,hall_basement_floor_temp,laundry_basement_floor_temp&period=D" refresh=90000 visibility=[Temperature_Basement_Chart_Period==1]
+                Image url="http://localhost:8080/rrdchart.png?items=BasementTemperature,tv_room_basement_floor_temp,hall_basement_floor_temp,laundry_basement_floor_temp&period=W" refresh=90000 visibility=[Temperature_Basement_Chart_Period==2]
+                Image url="http://localhost:8080/rrdchart.png?items=BasementTemperature,tv_room_basement_floor_temp,hall_basement_floor_temp,laundry_basement_floor_temp&period=2W" refresh=90000 visibility=[Temperature_Basement_Chart_Period==3]
+			}
+			
     	}
     	Text item=OutdoorTemperature label="Ute [%.1f °C]" icon="garden" valuecolor=[OutdoorTemperature_LastUpdate=="Uninitialized"="lightgray",OutdoorTemperature_LastUpdate>90="lightgray",>25="orange",>15="green",>5="orange",<=5="blue"]  {
     		Frame {

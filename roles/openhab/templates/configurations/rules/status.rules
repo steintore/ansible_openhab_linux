@@ -41,6 +41,9 @@ rule "Startup"
 		if (AC_additional_degrees.state == Uninitialized)
 			postUpdate(AC_additional_degrees, 1)
 		
+		if(floor_night_power_level.state == Uninitialized)
+			postUpdate(floor_night_power_level, 2)
+		
 		postUpdate(scene_light_hall_gf, 2) // SET TO AUTO
 		
 end
