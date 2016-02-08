@@ -344,7 +344,7 @@ sitemap huset label="Huset"
 			Frame label="Andre etasje" {
 				Text item=bathroom_1st_floor_temp
 				Text item=bathroom_1st_floor_mode
-				Setpoint item=bathroom_1st_floor_power_level minValue=0 maxValue=10 step=1				
+				//Setpoint item=bathroom_1st_floor_power_level minValue=0 maxValue=10 step=1				
 			}
 			Frame label="Generelt" {
 				Setpoint item=floor_night_power_level minValue=0 maxValue=10 step=1
