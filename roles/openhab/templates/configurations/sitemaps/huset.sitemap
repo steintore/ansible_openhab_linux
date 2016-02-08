@@ -316,6 +316,42 @@ sitemap huset label="Huset"
 	Frame label="Heating" {
 		Group item=Heating
 	}
+	
+	Frame label="Gulvvarme" {
+		Text label="Gulvvarme" {
+			Frame label="Kjeller" {
+				Text item=laundry_basement_floor_temp
+				Text item=laundry_basement_floor_mode
+				Setpoint item=laundry_basement_floor_power_level minValue=0 maxValue=10 step=1
+				
+				Text item=hall_basement_floor_temp
+				Text item=hall_basement_floor_mode
+				Setpoint item=hall_basement_floor_power_level minValue=0 maxValue=10 step=1
+				
+				Text item=tv_room_basement_floor_temp
+				Text item=tv_room_basement_floor_mode
+				Setpoint item=tv_room_basement_floor_power_level minValue=0 maxValue=10 step=1
+			}
+			Frame label="Første etasje" {
+				Text item=hall_gf_floor_temp
+				Text item=hall_gf_floor_mode
+				Setpoint item=hall_gf_floor_power_level minValue=0 maxValue=10 step=1
+				
+				Text item=bathroom_gf_floor_temp
+				Text item=bathroom_gf_floor_mode
+				Setpoint item=bathroom_gf_floor_power_level minValue=0 maxValue=10 step=1
+			}
+			Frame label="Andre etasje" {
+				Text item=bathroom_1st_floor_temp
+				Text item=bathroom_1st_floor_mode
+				Setpoint item=bathroom_1st_floor_power_level minValue=0 maxValue=10 step=1				
+			}
+			Frame label="Generelt" {
+				Setpoint item=floor_night_power_level minValue=0 maxValue=10 step=1
+			}
+		}
+	}
+	
 	Frame label="Bevegelse" icon="office" {
 		Group item=Motion
 		//Text item=livingroom_update 

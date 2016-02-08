@@ -145,6 +145,7 @@
         - transform/getValValue.js
         - transform/motion.map
         - transform/no.map
+        - transform/floor.map
 
 - name: create openHAB configurations/transform directory
   file: >
