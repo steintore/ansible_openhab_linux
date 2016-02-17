@@ -195,27 +195,27 @@ rule "Adjust basement floor heating"
 	then
 	switch(receivedCommand) {
 		case 0: { // OFF
-			sendCommand(tv_room_basement_floor_mode, 0)
-			sendCommand(laundry_basement_floor_mode, 0)
-			sendCommand(hall_basement_floor_mode, 0)
+			sendCommand(tv_room_basement_floor_power_level, 0)
+			sendCommand(laundry_basement_floor_power_level, 0)
+			sendCommand(hall_basement_floor_power_level, 0)
 			pushover("Basement floor heating switched off")
 		}
 		case 1: { // NIGHT/LOW
-			sendCommand(tv_room_basement_floor_mode, floor_night_power_level.state.toString)
-			sendCommand(laundry_basement_floor_mode, floor_night_power_level.state.toString)
-			sendCommand(hall_basement_floor_mode, floor_night_power_level.state.toString)
+			sendCommand(tv_room_basement_floor_power_level, floor_night_power_level.state.toString)
+			sendCommand(laundry_basement_floor_power_level, floor_night_power_level.state.toString)
+			sendCommand(hall_basement_floor_power_level, floor_night_power_level.state.toString)
 			pushover("Basement floor heating switched to night mode")
 		}
 		case 2: { // DAY
-			sendCommand(tv_room_basement_floor_mode, floor_day_power_level.state.toString)
-			sendCommand(laundry_basement_floor_mode, floor_day_power_level.state.toString)
-			sendCommand(hall_basement_floor_mode, floor_day_power_level.state.toString)
+			sendCommand(tv_room_basement_floor_power_level, floor_day_power_level.state.toString)
+			sendCommand(laundry_basement_floor_power_level, floor_day_power_level.state.toString)
+			sendCommand(hall_basement_floor_power_level, floor_day_power_level.state.toString)
 			pushover("Basement floor heating switched to day mode")
 		}
 		case 3: { //HOLIDAY
-			sendCommand(tv_room_basement_floor_mode, floor_holiday_power_level.state.toString)
-			sendCommand(laundry_basement_floor_mode, floor_holiday_power_level.state.toString)
-			sendCommand(hall_basement_floor_mode, floor_holiday_power_level.state.toString)
+			sendCommand(tv_room_basement_floor_power_level, floor_holiday_power_level.state.toString)
+			sendCommand(laundry_basement_floor_power_level, floor_holiday_power_level.state.toString)
+			sendCommand(hall_basement_floor_power_level, floor_holiday_power_level.state.toString)
 			pushover("Basement floor heating switched to holiday mode")
 		}
 	}
