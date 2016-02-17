@@ -41,11 +41,15 @@ rule "Startup"
 		if (AC_additional_degrees.state == Uninitialized)
 			postUpdate(AC_additional_degrees, 1)
 		
-		if(floor_night_power_level.state == Uninitialized)
-			postUpdate(floor_night_power_level, 2)
-		
 		postUpdate(scene_light_hall_gf, 2) // SET TO AUTO
-		
+		postUpdate(floor_holiday_power_level, 2)
+		postUpdate(floor_day_power_level, 4)
+		postUpdate(floor_night_power_level, 2)
+		postUpdate(basementFloorWeekdaysON, 14)
+		postUpdate(basementFloorWeekdaysOFF, 21)
+		postUpdate(basementFloorWeekendON, 8)
+		postUpdate(basementFloorWeekendOFF, 22)
+		postUpdate(floor_holiday_mode, 2)				
 end
 
 rule "Leaving home, we think"

@@ -117,11 +117,11 @@
         - items/systeminfo.items
         - items/power.items
         - items/weather.items
+        - items/floorHeating.items
         - persistence/rrd4j.persist
         - persistence/influxdb.persist
         - persistence/logging.persist
         - persistence/myopenhab.persist
-        - persistence/mqtt.persist
         - rules/garage.rules
         - rules/heating.rules
         - rules/lights.rules

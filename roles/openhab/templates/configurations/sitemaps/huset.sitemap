@@ -2,12 +2,13 @@ sitemap huset label="Huset"
 {
 	Frame label="Quick" {
 		Switch item=mode mappings=[0="Hjemme", 3="Kveld", 1="Natt", 2="Borte"]
+		Switch item=holiday_mode visibility=[mode==2]
 		Switch item=ac_scene mappings=[0="Av", 1="Varm", 2="Kjøl", 3="Luft"]
 		Setpoint item=ac_set_temp minValue=16 maxValue=28 step=1 icon="temperature" visibility=[ac_power==ON]
 		Switch item=ac_mode mappings=[0="Off", 1="Quiet", 5="TurboMode"] visibility=[tv_power==ON]
 		Switch item=scene_garage_1 mappings=[0="Lukk", 1="Åpne"] icon="garagedoor"
 		Switch item=scene_garage_2 mappings=[0="Lukk", 1="Åpne"] icon="garagedoor"
-		Image url="{{garagepi_screenshot_url}}" visibility=[garage_door_1==ON, garage_door_2==ON]
+		Image url="{{garagepi_screenshot_url}}" refresh=10000 visibility=[garage_door_1==ON, garage_door_2==ON]
 	}
 	
     Frame label="Huset" {
@@ -19,7 +20,7 @@ sitemap huset label="Huset"
 			}
 			Frame label="Tempdetaljer" {
 				Switch item=Temperature_Livingroom_Chart_Period label="Periode" mappings=[0="Timer", 1="Dag", 2="Uke", 3="2 uker"]
-                Image url="http://localhost:8080/rrdchart.png?items=LivingRoomTemperature,ac_set_temp&period=12h" refresh=6000 visibility=[Temperature_Livingroom_Chart_Period==0, Temperature_Livingroom_Chart_Period=="Uninitialized"]
+                Image url="http://localhost:8080/rrdchart.png?items=LivingRoomTemperature,ac_set_temp&period=12h" refresh=30000 visibility=[Temperature_Livingroom_Chart_Period==0, Temperature_Livingroom_Chart_Period=="Uninitialized"]
                 Image url="http://localhost:8080/rrdchart.png?items=LivingRoomTemperature,ac_set_temp&period=D" refresh=30000 visibility=[Temperature_Livingroom_Chart_Period==1]
                 Image url="http://localhost:8080/rrdchart.png?items=LivingRoomTemperature,ac_set_temp&period=W" refresh=30000 visibility=[Temperature_Livingroom_Chart_Period==2]
                 Image url="http://localhost:8080/rrdchart.png?items=LivingRoomTemperature,ac_set_temp&period=2W" refresh=30000 visibility=[Temperature_Livingroom_Chart_Period==3]
@@ -163,7 +164,7 @@ sitemap huset label="Huset"
 			}
 			Frame label="Tempdetaljer" {
 				Switch item=Temperature_Basement_Chart_Period label="Periode" mappings=[0="Timer", 1="Dag", 2="Uke", 3="2 uker"]
-                Image url="http://localhost:8080/rrdchart.png?items=BasementTemperature,tv_room_basement_floor_temp,hall_basement_floor_temp,laundry_basement_floor_temp&period=12h" refresh=30000 visibility=[Temperature_Basement_Chart_Period==0, Temperature_Basement_Chart_Period=="Uninitialized"]
+                Image url="http://localhost:8080/rrdchart.png?items=BasementTemperature,tv_room_basement_floor_temp,hall_basement_floor_temp,laundry_basement_floor_temp&period=12h" refresh=90000 visibility=[Temperature_Basement_Chart_Period==0, Temperature_Basement_Chart_Period=="Uninitialized"]
                 Image url="http://localhost:8080/rrdchart.png?items=BasementTemperature,tv_room_basement_floor_temp,hall_basement_floor_temp,laundry_basement_floor_temp&period=D" refresh=90000 visibility=[Temperature_Basement_Chart_Period==1]
                 Image url="http://localhost:8080/rrdchart.png?items=BasementTemperature,tv_room_basement_floor_temp,hall_basement_floor_temp,laundry_basement_floor_temp&period=W" refresh=90000 visibility=[Temperature_Basement_Chart_Period==2]
                 Image url="http://localhost:8080/rrdchart.png?items=BasementTemperature,tv_room_basement_floor_temp,hall_basement_floor_temp,laundry_basement_floor_temp&period=2W" refresh=90000 visibility=[Temperature_Basement_Chart_Period==3]
@@ -181,8 +182,7 @@ sitemap huset label="Huset"
 				Switch item=scene_garage_2 mappings=[0="Lukk", 1="Åpne", 2="10"] icon="garagedoor"
 				Switch item=message_received mappings=[ON="Ja"] icon="network" visibility=[garage_door_1==ON, garage_door_2==ON]
 				Text label="Livestream" icon="camera" {
-					Image url="{{garagepi_screenshot_url}}"
-					Video url="http://{{garagepi_ip}}:8080/?action=stream"
+					Image url="{{garagepi_screenshot_url}}" refresh=5000
 				}
 			}
 			Frame label="Ute" icon="garden" {
@@ -191,7 +191,7 @@ sitemap huset label="Huset"
 			}
 			Frame label="Tempdetaljer" {
 				Switch item=Temperature_Chart_Period label="Periode" mappings=[0="Time", 1="Dag", 2="Uke"]
-                Image url="http://localhost:8080/rrdchart.png?items=OutdoorTemperature,Outdoor_Temp_Max,Outdoor_Temp_Min&period=h" refresh=6000 visibility=[Temperature_Chart_Period==0, Temperature_Chart_Period=="Uninitialized"]
+                Image url="http://localhost:8080/rrdchart.png?items=OutdoorTemperature,Outdoor_Temp_Max,Outdoor_Temp_Min&period=h" refresh=30000 visibility=[Temperature_Chart_Period==0, Temperature_Chart_Period=="Uninitialized"]
                 Image url="http://localhost:8080/rrdchart.png?items=OutdoorTemperature,Outdoor_Temp_Max,Outdoor_Temp_Min&period=D" refresh=30000 visibility=[Temperature_Chart_Period==1]
                 Image url="http://localhost:8080/rrdchart.png?items=OutdoorTemperature,Outdoor_Temp_Max,Outdoor_Temp_Min&period=W" refresh=30000 visibility=[Temperature_Chart_Period==2]
 			}
@@ -212,7 +212,7 @@ sitemap huset label="Huset"
             }
             Frame {
                 Switch item=Weather_Chart_Period label="Periode" mappings=[0="Time", 1="Dag", 2="Uke"]
-                Image url="http://localhost:8080/rrdchart.png?items=Weather_Temperature,Weather_Temp_Max,Weather_Temp_Min&period=h" refresh=6000 visibility=[Weather_Chart_Period==0, Weather_Chart_Period=="Uninitialized"]
+                Image url="http://localhost:8080/rrdchart.png?items=Weather_Temperature,Weather_Temp_Max,Weather_Temp_Min&period=h" refresh=30000 visibility=[Weather_Chart_Period==0, Weather_Chart_Period=="Uninitialized"]
                 Image url="http://localhost:8080/rrdchart.png?items=Weather_Temperature,Weather_Temp_Max,Weather_Temp_Min&period=D" refresh=30000 visibility=[Weather_Chart_Period==1]
                 Image url="http://localhost:8080/rrdchart.png?items=Weather_Temperature,Weather_Temp_Max,Weather_Temp_Min&period=W" refresh=30000 visibility=[Weather_Chart_Period==2]
               }
@@ -220,7 +220,7 @@ sitemap huset label="Huset"
         Text item=Weather_Humidity {
             Frame {
                 Switch item=Weather_Humidity_Chart_Period label="Periode" mappings=[0="Time", 1="Dag", 2="Uke", 3="2 uker"]
-                Image url="http://localhost:8080/rrdchart.png?items=Weather_Humidity&period=h" refresh=6000 visibility=[Weather_Humidity_Chart_Period==0, Weather_Humidity_Chart_Period=="Uninitialized"]
+                Image url="http://localhost:8080/rrdchart.png?items=Weather_Humidity&period=h" refresh=30000 visibility=[Weather_Humidity_Chart_Period==0, Weather_Humidity_Chart_Period=="Uninitialized"]
                 Image url="http://localhost:8080/rrdchart.png?items=Weather_Humidity&period=D" refresh=30000 visibility=[Weather_Humidity_Chart_Period==1]
                 Image url="http://localhost:8080/rrdchart.png?items=Weather_Humidity&period=W" refresh=30000 visibility=[Weather_Humidity_Chart_Period==2]
                 Image url="http://localhost:8080/rrdchart.png?items=Weather_Humidity&period=2W" refresh=30000 visibility=[Weather_Humidity_Chart_Period==3]
@@ -229,7 +229,7 @@ sitemap huset label="Huset"
         Text item=Weather_Pressure {
             Frame {
                 Switch item=Weather_Pressure_Chart_Period label="Periode" mappings=[0="Time", 1="Dag", 2="Uke", 3="2 uker"]
-                Image url="http://localhost:8080/rrdchart.png?items=Weather_Pressure&period=h" refresh=6000 visibility=[Weather_Pressure_Chart_Period==0, Weather_Pressure_Chart_Period=="Uninitialized"]
+                Image url="http://localhost:8080/rrdchart.png?items=Weather_Pressure&period=h" refresh=30000 visibility=[Weather_Pressure_Chart_Period==0, Weather_Pressure_Chart_Period=="Uninitialized"]
                 Image url="http://localhost:8080/rrdchart.png?items=Weather_Pressure&period=D" refresh=30000 visibility=[Weather_Pressure_Chart_Period==1]
                 Image url="http://localhost:8080/rrdchart.png?items=Weather_Pressure&period=W" refresh=30000 visibility=[Weather_Pressure_Chart_Period==2]
                 Image url="http://localhost:8080/rrdchart.png?items=Weather_Pressure&period=2W" refresh=30000 visibility=[Weather_Pressure_Chart_Period==3]
@@ -237,7 +237,7 @@ sitemap huset label="Huset"
          }
          Text item=Sunrise_Time
 		 Text item=Sunset_Time	
-         Webview url="http://localhost:8080/weather?locationId=home&layout=Weather_Pressure&iconset=colorful" height=7
+         Webview url="http://localhost:8080/weather?locationId=home&layout=weather&iconset=colorful" height=7
 			}
 		}
 	}
@@ -267,10 +267,10 @@ sitemap huset label="Huset"
 			}
 			Frame {
 				Switch item=Power_Chart_Period label="Periode" mappings=[0="Time", 1="Dag", 2="Uke", 3="2 uker"] icon="energy"
-				Chart item=Power_Chart period=h refresh=300 visibility=[Power_Chart_Period==0, Power_Chart_Period=="Uninitialized"]
-				Chart item=Power_Chart period=D refresh=1800 visibility=[Power_Chart_Period==1]
-				Chart item=Power_Chart period=W refresh=3600 visibility=[Power_Chart_Period==2]
-				Chart item=Power_Chart period=2W refresh=3600 visibility=[Power_Chart_Period==3]
+				Chart item=Power_Chart period=h refresh=30000 visibility=[Power_Chart_Period==0, Power_Chart_Period=="Uninitialized"]
+				Chart item=Power_Chart period=D refresh=18000 visibility=[Power_Chart_Period==1]
+				Chart item=Power_Chart period=W refresh=36000 visibility=[Power_Chart_Period==2]
+				Chart item=Power_Chart period=2W refresh=36000 visibility=[Power_Chart_Period==3]
 			}
 			
 		}
@@ -326,8 +326,16 @@ sitemap huset label="Huset"
 	}
 	
 	Frame label="Gulvvarme" {
-		Text label="Gulvvarme" {
+		Text label="Gulvvarme" icon="heating" {
 			Frame label="Kjeller" {
+				Switch item=scene_basement_floor_heating mappings=[0="Av", 1="Natt", 2="Dag", 3="Ferie"]
+				
+				Setpoint item=basementFloorWeekdaysON minValue=0 maxValue=23 step=1
+				Setpoint item=basementFloorWeekdaysOFF minValue=0 maxValue=23 step=1
+				
+				Setpoint item=basementFloorWeekendON minValue=0 maxValue=23 step=1
+				Setpoint item=basementFloorWeekendOFF minValue=0 maxValue=23 step=1
+				
 				Text item=laundry_basement_floor_temp
 				Text item=laundry_basement_floor_mode
 				Setpoint item=laundry_basement_floor_power_level minValue=0 maxValue=10 step=1
@@ -351,11 +359,12 @@ sitemap huset label="Huset"
 			}
 			Frame label="Andre etasje" {
 				Text item=bathroom_1st_floor_temp
-				Text item=bathroom_1st_floor_mode
-				//Setpoint item=bathroom_1st_floor_power_level minValue=0 maxValue=10 step=1				
+				Text item=bathroom_1st_floor_mode				
 			}
 			Frame label="Generelt" {
 				Setpoint item=floor_night_power_level minValue=0 maxValue=10 step=1
+				Setpoint item=floor_day_power_level minValue=0 maxValue=10 step=1
+				Setpoint item=floor_holiday_power_level minValue=0 maxValue=10 step=1
 			}
 		}
 	}
