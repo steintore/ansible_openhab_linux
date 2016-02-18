@@ -303,7 +303,7 @@ then
 				sendCommand(ac_scene, 0)
 			}
 			if (bathroom_1st_floor_mode.state != 0)
-				sendCommand(bathroom_1st_floor_mode, 3) //ECO MODE
+				sendCommand(bathroom_1st_floor_mode, 11) //ECO MODE
 		}
 		case OFF: {
 			if (scene_basement_floor_heating.state > 0)
@@ -312,7 +312,7 @@ then
 				sendCommand(hall_gf_floor_power_level, floor_day_power_level.state.toString)
 			if (bathroom_gf_floor_power_level.state > 0 && bathroom_gf_floor_power_level.state != floor_day_power_level.state)
 				sendCommand(bathroom_gf_floor_power_level, floor_day_power_level.state.toString)
-				if (bathroom_1st_floor_mode.state == 3)
+			if (bathroom_1st_floor_mode.state == 11)
 				sendCommand(bathroom_1st_floor_mode, 1) //HEATING MODE				
 		}
 	}

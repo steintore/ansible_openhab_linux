@@ -359,7 +359,7 @@ sitemap huset label="Huset"
 			}
 			Frame label="Andre etasje" {
 				Text item=bathroom_1st_floor_temp
-				Switch item=bathroom_1st_floor_mode mappings=[0="Av",1="Varme",3="Eco"]
+				Switch item=bathroom_1st_floor_mode mappings=[0="Av",1="Varme",11="Eco"]
 				Setpoint item=bathroom_1st_floor_set_temp_heating minValue=18 maxValue=30 step=1
 				Setpoint item=bathroom_1st_floor_set_temp_eco minValue=15 maxValue=20 step=1
 								
