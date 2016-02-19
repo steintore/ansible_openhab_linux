@@ -1,5 +1,13 @@
 import org.openhab.core.library.types.*
 
+rule "Log in to smappee every 20 minutes"
+ 	when
+ 		Time cron "0 0/20 * * * ?"
+ 	then
+ 		var String htp = "http://{{smappee_ip}}/gateway/apipublic/logon"
+		sendHttpPostRequest(htp, "Content-Type: application/json", "admin")
+end
+
 rule "Updated power"
 	when
 		Item smappee_power_phase1 changed or
