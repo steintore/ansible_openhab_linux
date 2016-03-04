@@ -118,14 +118,15 @@ rule "A change of mode"
 		}
 		
 		case 3: { // EVENING MODE
+			logInfo('org.openhab', 'EVENING MODE')
 			stored_heating_states = storeStates(floorHeatingNight)
 			sendCommand(scene_light_hall, 2) // NIGHT
 			sendCommand(kontor_panelovn, OFF)
 			
 			if (floor_night_power_level.state != Uninitialized) {
-			floorHeatingNight?.members.forEach [item | 
-				sendCommand(item, floor_night_power_level.state.toString)
-			]
+				floorHeatingNight?.members.forEach [item | 
+					sendCommand(item, floor_night_power_level.state.toString)
+				]
 			}
 		}
 	}

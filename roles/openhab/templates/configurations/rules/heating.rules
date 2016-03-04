@@ -46,14 +46,17 @@ rule "If the room is too cold and we are home, then heat it up, but only if it i
 				sendCommand(ac_scene , 0)
 			
 		} else {
-			if (tempBasement < 15 || tempLivingroom < 15 || tempOffice < 15) {
-				pushover("En eller annen temperatur er under 15 grader: [Stue: " + tempLivingroom + ", kontor: " + tempOffice + ", kjeller: " + tempBasement + "]")
-				if (tempLivingroom < 15)
+			if (tempBasement < 12 || tempLivingroom < 12 || tempOffice < 12) {
+				pushover("En eller annen temperatur er under 12 grader: [Stue: " + tempLivingroom + ", kontor: " + tempOffice + ", kjeller: " + tempBasement + "]")
+				if (tempLivingroom < 12)
 					sendCommand(ac_scene, 1)
-				if (tempBasement < 15) {
+				if (tempOffice < 12) {
 					sendCommand(kontor_panelovn, ON)
-					sendCommand(gang_panelovn, ON)	
+					//sendCommand(gang_panelovn, ON)	
 				}
+			}
+			if (tempOffice >= 19 && kontor_panelovn.state == ON) {
+				sendCommand(kontor_panelovn, OFF)
 			}
 		}
 end
@@ -297,7 +300,7 @@ then
 			if (bathroom_gf_floor_power_level.state > 0 && bathroom_gf_floor_power_level.state != floor_holiday_power_level.state)
 				sendCommand(bathroom_gf_floor_power_level, floor_holiday_power_level.state.toString)
 			if (ac_scene.state == 1) {
-				if (ac_night_temp.state != Uninitialized && ac_night_temp.state != ac_heat_temp.state) 
+				if (ac_night_temp.state != Uninitialized && ac_night_temp.state != ac_set_temp.state) 
 					sendCommand(ac_set_temp, ac_night_temp.state.toString)
 			} else if(ac_scene.state != 0) { // switch of air conditioner if not heating
 				sendCommand(ac_scene, 0)
@@ -313,7 +316,11 @@ then
 			if (bathroom_gf_floor_power_level.state > 0 && bathroom_gf_floor_power_level.state != floor_day_power_level.state)
 				sendCommand(bathroom_gf_floor_power_level, floor_day_power_level.state.toString)
 			if (bathroom_1st_floor_mode.state == 11)
-				sendCommand(bathroom_1st_floor_mode, 1) //HEATING MODE				
+				sendCommand(bathroom_1st_floor_mode, 1) //HEATING MODE
+			if (ac_scene.state == 1) {
+				if (ac_heat_temp.state != Uninitialized && ac_heat_temp.state != ac_set_temp.state) 
+					sendCommand(ac_set_temp, ac_heat_temp.state.toString)
+			}				
 		}
 	}
 end	
