@@ -52,6 +52,7 @@ rule "A change of mode"
 				if (t.length() > 0)
 					postUpdate(push_message_text, t)
 			}
+			sendCommand(screen_pi_screen, ON)
 		}
 		
 		case 1: { // NIGHT
@@ -77,7 +78,7 @@ rule "A change of mode"
 			sendCommand(kontor_panelovn, OFF)
 			sendCommand(gang_panelovn, OFF)
 			
-			// TURN DOWN
+			sendCommand(screen_pi_screen, OFF)
 		}
 		
 		case 2: { //AWAY
@@ -115,6 +116,7 @@ rule "A change of mode"
 			if (ac_scene.state > 1) {
 				sendCommand(ac_scene, 0)
 			}
+			sendCommand(screen_pi_screen, OFF)
 		}
 		
 		case 3: { // EVENING MODE

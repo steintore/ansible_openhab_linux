@@ -307,6 +307,9 @@ then
 			}
 			if (bathroom_1st_floor_mode.state != 0)
 				sendCommand(bathroom_1st_floor_mode, 11) //ECO MODE
+			
+			sendCommand(screen_pi_screen, OFF)
+			sendCommand(screen_pi, OFF)
 		}
 		case OFF: {
 			if (scene_basement_floor_heating.state > 0)
@@ -320,7 +323,11 @@ then
 			if (ac_scene.state == 1) {
 				if (ac_heat_temp.state != Uninitialized && ac_heat_temp.state != ac_set_temp.state) 
 					sendCommand(ac_set_temp, ac_heat_temp.state.toString)
-			}				
+			}
+			if (screen_pi.state == ON) 
+				sendCommand(screen_pi_screen, ON)
+			else 
+				pushover('ScreenPi is switched off...')				
 		}
 	}
 end	

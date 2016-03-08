@@ -70,3 +70,19 @@ then
 		timerAnetteMobileWlan.reschedule(now.plusSeconds(1200))
 	}
 end
+
+rule "No one at home" 
+when
+	Item Home changed from ON to OFF
+then
+	sendCommand(screen_pi_screen, OFF)
+end
+
+rule "When someone comes home"
+when
+	Item Home changed from OFF to ON or
+	Item Mobile_Anette_Wlan changed from OFF to ON or
+	Item Mobile_Stein_Wlan changed from OFF to ON
+then
+	sendCommand(screen_pi_screen, ON)
+end

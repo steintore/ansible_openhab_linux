@@ -42,6 +42,7 @@
     - binding.systeminfo
     - binding.samsungac
     - binding.weather
+    - binding.exec
 
 - name: install sigar
   include: install_sigar.yml
