@@ -5,7 +5,7 @@ rule "Log in to smappee every 20 minutes"
  		Time cron "0 0/20 * * * ?"
  	then
  		var String htp = "http://{{smappee_ip}}/gateway/apipublic/logon"
-		sendHttpPostRequest(htp, "Content-Type: application/json", "admin")
+		sendHttpPostRequest(htp, "application/json", "admin")
 end
 
 rule "Updated power"
