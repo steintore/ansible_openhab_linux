@@ -228,6 +228,7 @@ when
 then
 	if (dryer.state == ON) {
 		var double w = new Double(power_dryer.state.toString())
+		if (w > 0 && w < 1) w = 1
 		var double maxLastHour = new Double(power_dryer.maximumSince(now.minusHours(1)).state.toString())
 		var double maxLastTwoMinutes = new Double(power_dryer.maximumSince(now.minusMinutes(2)).state.toString())
 		if (w < 2 && maxLastHour > 100 && (maxLastTwoMinutes <= (w*2) || w == 0)) {
