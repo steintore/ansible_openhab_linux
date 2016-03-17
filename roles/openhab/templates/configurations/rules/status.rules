@@ -231,7 +231,7 @@ then
 		if (w > 0 && w < 1) w = 1
 		var double maxLastHour = new Double(power_dryer.maximumSince(now.minusHours(1)).state.toString())
 		var double maxLastTwoMinutes = new Double(power_dryer.maximumSince(now.minusMinutes(2)).state.toString())
-		if (w < 2 && maxLastHour > 100 && (maxLastTwoMinutes <= (w*2) || w == 0)) {
+		if (w <= 5 && maxLastHour > 200 && (maxLastTwoMinutes <= (w*2) || w == 0)) {
 			postUpdate(push_message_text, "Tørketrommelen er ferdig!")
 			timerDryer = createTimer(now.plusSeconds(240)) [|
 				sendCommand(dryer, OFF)
