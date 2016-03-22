@@ -1,5 +1,5 @@
 openhab_install_dir: "{{ ansible_env.HOME }}/storage/openhab"
-openhab_version: 1.8.0
-openhab_snapshot_version: 1.8.1-SNAPSHOT
+openhab_version: 1.8.2
+openhab_snapshot_version: 1.9.0-SNAPSHOT
 
 rfxcom_tty: ttyUSB0
