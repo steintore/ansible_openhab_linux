@@ -79,6 +79,7 @@ rule "A change of mode"
 			sendCommand(gang_panelovn, OFF)
 			
 			sendCommand(screen_pi_screen, OFF)
+			sendCommand(justMorning, OFF)
 		}
 		
 		case 2: { //AWAY
@@ -117,6 +118,7 @@ rule "A change of mode"
 				sendCommand(ac_scene, 0)
 			}
 			sendCommand(screen_pi_screen, OFF)
+			sendCommand(justMorning, OFF)
 		}
 		
 		case 3: { // EVENING MODE
@@ -127,9 +129,10 @@ rule "A change of mode"
 			
 			if (floor_night_power_level.state != Uninitialized) {
 				floorHeatingNight?.members.forEach [item | 
-					sendCommand(item, floor_night_power_level.state.toString)
+					sendCommand(item, floor_night_power_level.state as DecimalType)
 				]
 			}
+			sendCommand(justMorning, OFF)
 		}
 	}
 	postUpdate(previous_mode, mode.state.toString)
@@ -191,6 +194,7 @@ rule "Return to day mode during the week"
 	then
 		if (mode.state == 1) {
 			sendCommand(mode, 0)
+			sendCommand(justMorning, ON)
 		}
 end
 
@@ -202,3 +206,23 @@ rule "Return to day mode during weekend"
 			sendCommand(mode, 0)
 		}
 end
+
+rule "Switch no night/day mode when button is pressed"
+	when
+		Item left_double_switch received command or
+		Item left_double_switch changed
+	then
+	
+		switch (left_double_switch.state as OnOffType) {
+			case ON: { // DAY MODE
+				if(mode.state != 0)
+					sendCommand(mode, 0)
+			}
+			case OFF: { // NIGHT MODE
+				if (mode.state != 1)
+					sendCommand(mode, 1)
+			}
+		}
+
+end
+

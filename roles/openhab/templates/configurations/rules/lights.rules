@@ -5,6 +5,7 @@ import org.joda.time.*
 
 var Timer timerBasement = null
 var Timer timerBathroom = null
+var Timer sunsetTimer = null
 
 rule "motion detected in the bathroom" 
 	when
@@ -59,6 +60,24 @@ rule "motion detected in the bathroom"
 					}
 					]
 			}
+		}
+	}
+end
+
+rule "Motion in hall"
+when
+	Item hall_gf_motion changed
+then
+	switch (hall_gf_motion.state as OnOffType) {
+		case ON: {
+			if (justMorning.state == ON) {
+				sendCommand(scene_light_livingroom, 1)
+				sendCommand(justMorning, OFF)
+			}
+				
+		}
+		case OFF: {
+			// DO NOTHING
 		}
 	}
 end
@@ -377,3 +396,22 @@ rule "Remote in living room"
     if (scene_remote_livingroom.state != 0)
     	postUpdate(scene_remote_livingroom, 0)
 end
+
+rule "Sunset"
+	when
+		Item Sunset_Time changed
+ 	then
+ 		var DateTime sunset = new DateTime((Sunset_Time.state as DateTimeType).calendar.timeInMillis)
+ 		if (sunset.beforeNow) sunset = sunset.plusDays(1)
+ 		
+ 		if (sunsetTimer != null) {
+ 			sunsetTimer.cancel()
+ 			sunsetTimer = null
+ 		}
+ 		
+ 		sunsetTimer = createTimer(sunset.minusMinutes(20)) [|
+ 			if (mode.state == 1) { // IF HOME
+ 				sendCommand(scene_light_livingroom, 1)
+ 			}
+ 		]	
+ end

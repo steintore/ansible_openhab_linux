@@ -207,13 +207,13 @@ rule "Adjust basement floor heating"
 			sendCommand(tv_room_basement_floor_power_level, floor_night_power_level.state.toString)
 			sendCommand(laundry_basement_floor_power_level, floor_night_power_level.state.toString)
 			sendCommand(hall_basement_floor_power_level, floor_night_power_level.state.toString)
-			pushover("Basement floor heating switched to night mode")
+			//pushover("Basement floor heating switched to night mode")
 		}
 		case 2: { // DAY
 			sendCommand(tv_room_basement_floor_power_level, floor_day_power_level.state.toString)
 			sendCommand(laundry_basement_floor_power_level, floor_day_power_level.state.toString)
 			sendCommand(hall_basement_floor_power_level, floor_day_power_level.state.toString)
-			pushover("Basement floor heating switched to day mode")
+			//pushover("Basement floor heating switched to day mode")
 		}
 		case 3: { //HOLIDAY
 			sendCommand(tv_room_basement_floor_power_level, floor_holiday_power_level.state.toString)

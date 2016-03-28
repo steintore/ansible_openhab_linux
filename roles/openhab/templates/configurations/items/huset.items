@@ -320,3 +320,6 @@ Switch DenonInputBluray     "Input XBox"          {denon="denon#SIBD"}
 Switch DenonInputSATCBL     "Input TV"         {denon="denon#SISAT/CBL"}
 Switch DenonInputMplay      "Input Apple TV"     {denon="denon#SIMPLAY"}
 Switch DenonInputAux1       "Input PC"            {denon="denon#SIAUX1"}
+
+/* Virtual switch to make us turn on the living room lights when we first come down in the morning */
+Switch justMorning
