@@ -207,6 +207,12 @@
     src={{ openhab_install_dir }}/rrd4j
     dest={{ openhab_install_dir }}/runtime/{{openhab_version}}/etc/rrd4j
 
+- name: link panel folder
+  file: >
+    state=link
+    src={{ openhab_install_dir }}/panel
+    dest={{ openhab_install_dir}}/runtime{{openhab_version}}/webapps/panel
+
 - name: copy openhab file to folder
   template: src=../files/openhab dest=/etc/init.d/openhab
   sudo: yes
