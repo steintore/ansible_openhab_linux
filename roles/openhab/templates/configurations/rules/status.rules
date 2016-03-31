@@ -200,7 +200,7 @@ rule "Set Samsung TV to same state as LAN-checking, and set Air Conditioner to Q
 when
 	Item tv_power changed
 then
-	if (tv_power.state == ON && ac_mode.state != 1 && ac_power.state == ON) {
+	if (tv_power.state == ON && ac_mode.state != 1 && ac_power.state == ON && (mode.state == 0 || mode.state == 3)) {
 		var double tempOutdoor = new Double(OutdoorTemperature.state.toString())
 		var double quietThreshold = new Double(AC_quiet_temp_threshold.state.toString())
 		if (!(ac_scene.state == 1 && tempOutdoor < quietThreshold)) {
@@ -232,10 +232,18 @@ then
 		var double maxLastHour = new Double(power_dryer.maximumSince(now.minusHours(1)).state.toString())
 		var double maxLastTwoMinutes = new Double(power_dryer.maximumSince(now.minusMinutes(2)).state.toString())
 		if (w <= 5 && maxLastHour > 200 && (maxLastTwoMinutes <= (w*2) || w == 0)) {
+			if (timerDryer == null) {
 			postUpdate(push_message_text, "Tørketrommelen er ferdig!")
-			timerDryer = createTimer(now.plusSeconds(240)) [|
-				sendCommand(dryer, OFF)
-			]	
+				timerDryer = createTimer(now.plusSeconds(240)) [|
+					sendCommand(dryer, OFF)
+					if(timerDryer != null) {
+						if(timerDryer.running) {
+							timerDryer.cancel()
+						}
+						timerDryer= null
+					}
+				]
+			}
 		}
 	} else if(timerDryer != null) {
 		if(timerDryer.running) {
@@ -255,16 +263,6 @@ then
 		pushover("Fryseren drar plutselig mindre strøm enn vanlig, nå kun: " + w + " watt og maks siste time er: " + maxLastHour)
 	}
 end
-
-/* 
-rule "Last update for motion detector"
-when
-	Item livingroom_lu received update
-then
-  var v = new DateTime(new Long(livingroom_lu.state.toString) * 1000L)
-  postUpdate(livingroom_update, new DateTimeType(v.toGregorianCalendar))
-end
-*/
 
 rule "Send a status message at 22 if anything is NOT ok"
 	when
@@ -305,4 +303,19 @@ then
 		]	
 	} 
 end
+
+rule "Luminance Hall GF changed" 
+when 
+	Item hall_gf_luminance changed
+	then
+		postUpdate(hall_gf_lux_update, new DateTimeType(now.toGregorianCalendar))
+end
+
+rule "Luminance Bathroom 1st floor changed"
+when
+	Item bathroom_lux changed
+then
+	postUpdate(bathroom_lux_update, new DateTimeType(now.toGregorianCalendar))
+end
+	
 
