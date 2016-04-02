@@ -11,6 +11,8 @@ rule "Startup"
 	when
 		System started
 	then
+	
+	createTimer(now.plusSeconds(120)) [|
 		if (ac_night_temp.state == Uninitialized) {
 			sendCommand(ac_night_temp, 17)
 		}
@@ -75,7 +77,8 @@ rule "Startup"
 			postUpdate(floor_holiday_mode, 2)	
 		}
 			
-		postUpdate(holiday_mode, OFF)			
+		postUpdate(holiday_mode, OFF)	
+	]		
 end
 
 rule "Leaving home, we think"

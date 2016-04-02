@@ -89,9 +89,9 @@ then
 			if (ac_op_mode.state != 4)
 				sendCommand(ac_op_mode, 4)
 				
-			// set direction
-			if (ac_direction.state != 0)
-				sendCommand(ac_direction, 0)
+			// set direction to fixed
+			if (ac_direction.state != 3)
+				sendCommand(ac_direction, 3)
 			
 			// windlevel	
 			if (ac_windlevel.state != 0)
@@ -140,9 +140,9 @@ then
 			if (ac_op_mode.state != 1)
 				sendCommand(ac_op_mode, 1)
 				
-			// set direction
-			if (ac_direction.state != 0)
-				sendCommand(ac_direction, 0)
+			// set direction to fixed
+			if (ac_direction.state != 3)
+				sendCommand(ac_direction, 3)
 			
 			// windlevel	
 			if (ac_windlevel.state != 0)

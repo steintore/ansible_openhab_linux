@@ -204,6 +204,7 @@ rule "Return to day mode during weekend"
 	then
 		if (mode.state == 1) {
 			sendCommand(mode, 0)
+			sendCommand(justMorning, ON)
 		}
 end
 

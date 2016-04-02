@@ -232,7 +232,7 @@ Number AC_additional_degrees   "Ekstra grader [%.1f°C]" 	(AC)
 Group Motion <office>
 Number hall_gf_temp 		"Temp gang [%.1f °C]" 			<temperature> 	(Motion, gGF) 							{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B16%%5D.SensorMultilevel.data%%5B1%%5D:20000:JS(getValValue.js)]"}
 Number hall_gf_luminance 	"Lux gang [%.0f Lux]" 			<sun>			(Motion, gGF) 								{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B16%%5D.SensorMultilevel.data%%5B3%%5D:20000:JS(getValValue.js)]"}
-DateTime hall_gf_lux_update 								<clock>			(gGF)
+DateTime hall_gf_lux_update "Sist oppdatert [%1$ta %1$tR]"	<clock>			(gGF)
 Switch hall_gf_motion 		"Gang [MAP(motion.map):%s]" 	<present>		(Motion, gGF) 								{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B16%%5D.SensorBinary.data%%5B1%%5D:20000:JS(getLevelValue.js)]"}
 Number hall_gf_battery 		"Bev.sensor, gang [%s %%]"		<energy>		(Motion, gGF, gBattery, BatteryLevel_100)	{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B16%%5D.Battery.data:20000:JS(getLastValue.js)]"}
 Number hall_gf_lu 			"[%.0f]" 						<clock>		 	(gGF)										{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B16%%5D.SensorBinary.data%%5B1%%5D.level:20000:JS(getLastUpdate.js)]"}
@@ -248,7 +248,7 @@ Switch light_bathroom		 "Taklys"						<light>			(gLight, gFirstFloor) 				{http=
 Number light_bathroom_dimmer "Dimmer [%s]" 					<light> 		(gFirstFloor)										{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B14%%5D.commandClasses%%5B38%%5D.data:20000:JS(getLevelValue.js)]"}
 Number bathroom_temp 		 "Temp [%.1f °C]" 				<temperature> 	(Motion, gFirstFloor) 								{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B15%%5D.SensorMultilevel.data%%5B1%%5D:20000:JS(getValValue.js)]"}
 Number bathroom_lux 		 "Lys    [%.0f Lux]" 			<sun>				(Motion, gFirstFloor) 								{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B15%%5D.SensorMultilevel.data%%5B3%%5D:20000:JS(getValValue.js)]"}
-DateTime bathroom_lux_update								<clock>				(gFirstFloor)
+DateTime bathroom_lux_update "Sist oppdatert [%1$ta %1$tR]"	<clock>				(gFirstFloor)
 Switch bathroom_motion 		 "Bad [MAP(motion.map):%s]" 	<present>		(Motion, gFirstFloor) 								{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B15%%5D.SensorBinary.data%%5B1%%5D:20000:JS(getLevelValue.js)]"}
 Number bathroom_battery 	 "Bev.sensor, bad [%s %%]"		<battery>		(Motion, gBattery, BatteryLevel_100, gFirstFloor)	{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B15%%5D.Battery.data:20000:JS(getLastValue.js)]"}
 Switch light_bathroom_mirror "Speillys"						<light>			(gLight, gFirstFloor)					{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B19%%5D.SwitchBinary:10000:JS(getBasicOnOffState.js)] >[ON:GET:http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B19%%5D.SwitchBinary.Set(1)] >[OFF:GET:http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B19%%5D.SwitchBinary.Set(0)]"}
