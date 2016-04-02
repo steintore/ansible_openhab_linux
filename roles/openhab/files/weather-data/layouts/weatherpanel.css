@@ -3,7 +3,6 @@ body {
     margin: 0 auto;
     height: 99%;
     display: block;
-    background: rgb(46, 60, 86);
 }
 
 html {
@@ -11,7 +10,6 @@ html {
 }
 
 #main {
-  background: rgb(46, 60, 86);
     cursor: default;
     -webkit-user-select: none;
     width: 100%;
@@ -63,14 +61,14 @@ html {
 }
 
 #date {
-  top: 130px;
+  top: 30%;
 }
 
 #weather {
     zoom: 1;
     position: relative;
     margin: 0 auto;
-    width: 760px;
+    width: 98%;
 }
 
 #weather .now {
@@ -99,14 +97,14 @@ html {
 }
 
 #weather .now .label {
-    font-size: 1.8em;
+    font-size: 1.5em;
     margin-top: 10px;
     letter-spacing: 2px;
 }
 
 .condition {
     font: 'Helvetica Neue', 'Open-Reg', sans-serif;
-    font-size: 14px;
+    font-size: 1.1em;
     letter-spacing: 0px;
     margin-top: 0px;
     background: rgba(0, 0, 0, 0.55);
