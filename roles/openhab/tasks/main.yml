@@ -34,7 +34,6 @@
     - binding.denon
     - persistence.influxdb
     - persistence.rrd4j
-    - persistence.logging
     - action.pushover
     - binding.configadmin
     - binding.astro
