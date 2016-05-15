@@ -252,3 +252,19 @@
 - name: update timezone
   command: dpkg-reconfigure --frontend noninteractive tzdata
   sudo: yes
+
+- name: Install node packages
+  apt: name={{item}} state=installed
+  with_items:
+    - nodejs
+    - npm
+  sudo: yes
+
+description: Install "request" node.js package.
+- npm: name=request path={{openhab_install_dir}}/runtime/{{openhab_version}}/configurations/scripts
+
+description: Install "object-assign" node.js package.
+- npm: name=object-assign path={{openhab_install_dir}}/runtime/{{openhab_version}}/configurations/scripts
+
+description: Install "es6-promise" node.js package.
+- npm: name=es6-promise path={{openhab_install_dir}}/runtime/{{openhab_version}}/configurations/scripts
