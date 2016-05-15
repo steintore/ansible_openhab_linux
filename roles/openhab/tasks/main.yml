@@ -118,6 +118,8 @@
         - items/power.items
         - items/weather.items
         - items/floorHeating.items
+        - items/roomba.items
+        - items/alarm.items
         - persistence/rrd4j.persist
         - persistence/influxdb.persist
         - persistence/logging.persist
@@ -132,7 +134,12 @@
         - rules/power.rules
         - rules/plex.rules
         - rules/weather.rules
+        - rules/roomba.rules
+        - rules/alarm.rules
         - scripts/pushMessages.script
+        - scripts/alarm-api.js
+        - scripts/alarm-climate.js
+        - scripts/alarm.js
         - sitemaps/huset.sitemap
         - sitemaps/panel.sitemap
         - transform/en.map
@@ -145,6 +152,9 @@
         - transform/motion.map
         - transform/no.map
         - transform/floor.map
+        - transform/alarm.map
+        - transform/roomba.map
+        - transform/roombaStatus.map
 
 - name: create openHAB configurations/transform directory
   file: >

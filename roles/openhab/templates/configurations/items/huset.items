@@ -46,7 +46,8 @@ Switch time_capsule_lan 	"Time capsule"			<present>		(proximity) {nh="{{time_cap
 Switch router_wlan			"Router"				<present>		(proximity) {nh="{{router_ip}}"}
 Switch boss_lan				"Boss server"       	<present>       (proximity) {nh="{{boss_ip}}"}
 Switch nas_lan				"NAS"					<present>		(proximity) {nh="{{nas_ip}}"}
-Switch roomba_lan			"Z-Wave"				<present>		(proximity) {nh="{{zwave_ip}}"}
+Switch zwave_lan			"Z-Wave"				<present>		(proximity) {nh="{{zwave_ip}}"}
+Switch roomba_lan			"Roomba"				<present>		(proximity) {nh="{{roomba_ip}}"}
 Switch garage_pi			"GaragePi"				<present>		(proximity) {nh="{{garagepi_ip}}"}
 Switch xbox					"XBox"					<present>		(proximity) {nh="{{xbox_ip}}"}
 Switch appletv				"Apple Tv"				<present>		(proximity) {nh="{{appletv_ip}}"}
@@ -68,7 +69,7 @@ DateTime OutdoorTemperature_LastUpdate		"Last Update [%1$ta %1$tR]"			<clock>
 Number OfficeTemperature					"Temp kontor [%.1f °C]" 			<temperature> 	(Temperature,gFirstFloor) { rfxcom="<20481:Temperature" }
 Number OfficeHumidity 						"Luftfuktighet kontor [%.1f %%]"	<temperature> 	(gFirstFloor) { rfxcom="<20481:Humidity" }
 DateTime OfficeTemperature_LastUpdate		"Last Update [%1$ta %1$tR]"			<clock>
-Number BasementTemperature					"Kjeller [%.1f °C]"					<temperature>	(Temperature,gBasement) { rfxcom="<38402:Temperature" }
+Number BasementTemperature					"Kjellerstue [%.1f °C]"					<temperature>	(Temperature,gBasement) { rfxcom="<38402:Temperature" }
 Number BasementHumidity 					"Luftfuktighet kjeller [%.1f %%]"	<temperature>	(gBasement) { rfxcom="<38402:Humidity" }
 DateTime BasementTemperature_LastUpdate		"Last Update [%1$ta %1$tR]"			<clock>
 Number Temperature_Basement_Chart_Period 	"Periode"
@@ -258,8 +259,6 @@ Number scene_remote_livingroom //{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/
 
 Switch light_hall_ground_floor "Lys gang" <light> (gLight, gGF) {http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B20%%5D.SwitchBinary:10000:JS(getBasicOnOffState.js)] >[ON:GET:http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B20%%5D.SwitchBinary.Set(1)] >[OFF:GET:http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B20%%5D.SwitchBinary.Set(0)]"}
 Number scene_light_hall_gf "Lys gang" <light> (gLight, gGF)
-/* Roomba */
-//String roomba_test <sofa> {tcp="<[{{roomba_ip}}:9001:'REGEX((.*))']"} // for a String Item that captures some state of a remote device that connects to openHAB
 
 /* Smoke detector */
 String smoke_detector "Røykvarsler" {rfxcom="<16435200:Status"}

@@ -238,7 +238,12 @@ then
 			if (timerDryer == null) {
 			postUpdate(push_message_text, "Tørketrommelen er ferdig!")
 				timerDryer = createTimer(now.plusSeconds(240)) [|
-					sendCommand(dryer, OFF)
+					var double w2 = new Double(power_dryer.state.toString())
+					if (w2 > 0 && w2 < 1) w2 = 1
+					var double maxLastTwo = new Double(power_dryer.maximumSince(now.minusMinutes(2)).state.toString())
+					if (maxLastTwo <= (w2*2) || w2 == 0) {
+						sendCommand(dryer, OFF)
+					}
 					if(timerDryer != null) {
 						if(timerDryer.running) {
 							timerDryer.cancel()

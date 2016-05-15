@@ -119,6 +119,8 @@ rule "A change of mode"
 			}
 			sendCommand(screen_pi_screen, OFF)
 			sendCommand(justMorning, OFF)
+			
+			sendCommand(scene_roomba, 1) // Start vacuuming 
 		}
 		
 		case 3: { // EVENING MODE

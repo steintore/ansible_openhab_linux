@@ -74,10 +74,11 @@ then
 				sendCommand(scene_light_livingroom, 1)
 				sendCommand(justMorning, OFF)
 			}
-				
+			sendCommand(screen_pi_screen, ON)
+			sendCommand(light_hall_ground_floor, ON)				
 		}
 		case OFF: {
-			// DO NOTHING
+			sendCommand(light_hall_ground_floor, OFF)
 		}
 	}
 end
