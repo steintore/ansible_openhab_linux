@@ -37,10 +37,7 @@ rule "If the room is too cold and we are home, then heat it up, but only if it i
 					sendCommand(ac_scene, 1)
 				}
 					
-			} else if (tempOutdoor > 10 && tempOutdoor <= 15) {
-				if (tempLivingroom <= (new Double(ac_night_temp.state.toString()) -1))
-					sendCommand(ac_scene, 1)
-			}
+			} 
 		
 			if (tempOutdoor >= 19 && ac_scene.state == 1)
 				sendCommand(ac_scene , 0)

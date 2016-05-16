@@ -38,3 +38,12 @@ then
 	humidity = temp_string.split('%')
 	postUpdate(alarm_humidity_laundry, humidity.get(0).replace(',', '.'))
 end
+
+rule "Arming, disarming alarm"
+when Item alarm_alarm changed
+then
+	if (alarm_alarm.state == "unarmed" || alarm_alarm.state == "armedhome") // HOME
+		sendCommand(mode, 0)
+	else if (alarm_alarm.state == "armedaway") // AWAY
+		sendCommand(mode, 2) 
+end

@@ -4,7 +4,7 @@ import org.openhab.model.script.actions.*
 import java.util.Map
 import org.joda.time.DateTime
 
-var Timer timerRouterLAN = null
+//var Timer timerRouterLAN = null
 var Timer timerDryer = null
 
 rule "Startup"
@@ -81,6 +81,8 @@ rule "Startup"
 	]		
 end
 
+
+/*
 rule "Leaving home, we think"
 when
 	Item router_wlan changed from ON to OFF
@@ -124,6 +126,8 @@ rule "Alarm is being disarmed"
 		}
 		sendCommand(mode, 0)
 end
+
+*/
 
 rule "When text is changed, send a push message"
 	when
