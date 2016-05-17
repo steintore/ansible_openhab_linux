@@ -1,3 +1,9 @@
+import org.openhab.core.library.types.*
+import org.openhab.core.persistence.*
+import org.openhab.model.script.actions.*
+import java.util.Map
+import org.joda.time.DateTime
+
 rule "Set alarm climate items"
 when Item alarm_climate received update
 then
@@ -42,8 +48,22 @@ end
 rule "Arming, disarming alarm"
 when Item alarm_alarm changed
 then
-	if (alarm_alarm.state == "unarmed" || alarm_alarm.state == "armedhome") // HOME
-		sendCommand(mode, 0)
-	else if (alarm_alarm.state == "armedaway") // AWAY
+	if (alarm_alarm.state == "unarmed" || alarm_alarm.state == "armedhome") // HOME 
+	{
+		var DateTime eveningTime = now.withTime(21, 0, 0, 0)
+		var DateTime nightTime = now.withTime(2,0,0,0)
+		var DateTime dayTime = now.withTime(5,0,0,0)
+		
+		if(nightTime.afterNow && dayTime.beforeNow) {
+			sendCommand(mode, 0) // HOME
+		} else if (nightTime.beforeNow && dayTime.afterNow) {
+			sendCommand(mode, 1) // NIGHT
+		} else if (nightTime.afterNow || eveningTime.beforeNow) {
+			sendCommand(mode, 3) // EVENING 
+		} else {
+			sendCommand(mode, 0) // HOME
+		}
+		
+	} else if (alarm_alarm.state == "armedaway") // AWAY
 		sendCommand(mode, 2) 
 end

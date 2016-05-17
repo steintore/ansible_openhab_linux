@@ -130,8 +130,12 @@ rule "A change of mode"
 			sendCommand(kontor_panelovn, OFF)
 			
 			if (floor_night_power_level.state != Uninitialized) {
-				floorHeatingNight?.members.forEach [item | 
-					sendCommand(item, floor_night_power_level.state as DecimalType)
+				
+				floorHeatingNight?.members.forEach [item |
+					if (floor_night_power_level.state == 0 && item.state > 0) 
+						sendCommand(item, 1)
+					else
+						sendCommand(item, floor_night_power_level.state as DecimalType)
 				]
 			}
 			sendCommand(justMorning, OFF)

@@ -74,7 +74,7 @@ then
 				sendCommand(scene_light_livingroom, 1)
 				sendCommand(justMorning, OFF)
 				if (alarm_alarm.state == 'armedhome') {
-					pushover("Husk å skru av alarmen...")
+					postUpdate(push_message_text, "Husk å skru av alarmen!")
 				}
 			}
 			sendCommand(screen_pi_screen, ON)
