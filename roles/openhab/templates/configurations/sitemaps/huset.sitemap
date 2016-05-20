@@ -211,10 +211,6 @@ sitemap huset label="Huset"
     	}
     }
     
-    Frame label="Alarm" {
-    	Text item=alarm_alarm icon="alarm"
-    }
-    
     Frame label="Været" {
     	Text item=Condition icon="sun" {
         Frame {
@@ -257,7 +253,8 @@ sitemap huset label="Huset"
 	}
 
 	Frame label="Tilstedeværelse" {
-		Text label="Moduser" icon="present" {
+		Text item=alarm_alarm icon="alarm"
+    	Text label="Moduser" icon="present" {
 			Switch item=mode mappings=[0="Hjemme", 3="Kveld", 1="Natt", 2="Borte"]
 			
 			Group item=proximity label="Nettverkshelse [(%d)]" icon="present"

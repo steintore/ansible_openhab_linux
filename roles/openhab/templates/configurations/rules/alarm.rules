@@ -64,6 +64,6 @@ then
 			sendCommand(mode, 0) // HOME
 		}
 		
-	} else if (alarm_alarm.state == "armedaway") // AWAY
+	} else if (alarm_alarm.state == "armedaway" || alarm_alarm.state == "armed") // AWAY
 		sendCommand(mode, 2) 
 end

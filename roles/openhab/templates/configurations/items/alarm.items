@@ -8,4 +8,4 @@ Number alarm_humidity_laundry "Vaskerom luftfuktighet [%.1f %%]" <humidity> (gBa
 Number alarm_humidity_hall_gf "Gang luftfuktighet [%.1f %%]" <humidity> (gGF)
 Number alarm_humidity_hall_basement "Kjellergang luftfuktighet [%.1f %%]" <humidity> (gBasement)
 Number alarm_humidity_hall_1st "Gang 2. luftfuktighet [%.1f %%]" <humidity> (gFirstFloor)
-String alarm_alarm "Alarm status [MAP(alarm.map):%s]" <siren> (gGF) {exec="<[nodejs@@./configurations/scripts/alarm.js:30000:JSONPATH($.status)]"}
+String alarm_alarm "Alarmstatus [MAP(alarm.map):%s]" <siren> (gGF) {exec="<[nodejs@@./configurations/scripts/alarm.js:30000:JSONPATH($.status)]"}
