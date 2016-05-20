@@ -150,7 +150,7 @@ function fetchClimateData () {
 function parseAlarmData ( data ) {
 	"use strict";
 
-	data = filterByKeys( data[ 0 ], config.alarmFields );
+	data = filterByKeys( data[ 1 ], config.alarmFields );
 
 	setTimeout( pollAlarmStatus, alarmFetchTimeout );
 

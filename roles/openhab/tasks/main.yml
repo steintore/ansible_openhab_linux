@@ -32,7 +32,6 @@
     - binding.systeminfo
     - binding.plex
     - binding.denon
-    - persistence.influxdb
     - persistence.rrd4j
     - action.pushover
     - binding.configadmin
