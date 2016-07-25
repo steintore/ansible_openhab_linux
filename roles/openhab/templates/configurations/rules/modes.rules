@@ -114,6 +114,8 @@ rule "A change of mode"
 			sendCommand(color_11, OFF)
 			sendCommand(DenonPower, OFF)
 			sendCommand(scene_light_hall_gf, 2) // AUTO
+			sendCommand(gLight, OFF)
+			sendCommand(light_hall_ground_floor, OFF)
 			if (ac_scene.state > 1) {
 				sendCommand(ac_scene, 0)
 			}

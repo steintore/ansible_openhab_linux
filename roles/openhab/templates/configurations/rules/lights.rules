@@ -93,20 +93,13 @@ then
 	logInfo('org.openhab', 'scene_light_livingroom received state:' + scene_light_livingroom.state)
 	switch (receivedCommand) {
 		case 0: { // OFF
-			sendCommand(light_living_old, OFF)
-			sendCommand(light_living_room_corner, OFF)
-			sendCommand(light_living_room_window, OFF)
-			sendCommand(light_kitchen_bench, OFF)
-			sendCommand(light_dining_table, OFF)
+			sendCommand(Living_Room_Lights, OFF)
 			postUpdate(light_dining_table_dimmer, 0)
 			
 		}
 		case 1: { // ON
-			sendCommand(light_living_old, ON)
-			sendCommand(light_living_room_window, ON)
-			sendCommand(light_living_room_corner, ON)
-			sendCommand(light_kitchen_bench, ON)
-			sendCommand(light_dining_table_dimmer, 90)
+			sendCommand(Living_Room_Lights, ON)
+			sendCommand(light_dining_table_dimmer, 100)
 		}
 		case 2: { // ++ More light please
 			var Number percent = 0

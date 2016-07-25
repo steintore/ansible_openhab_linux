@@ -66,15 +66,15 @@ Number Outdoor_Humidex						"Humidex [SCALE(humidex.scale):%s]"					(Weather)
 Number OutdoorTemperature 					"Ute [%.1f °C]" 					<temperature> 	(Temperature,gOutdoor,Temperature_Chart) { rfxcom="<26628:Temperature" }
 Number OutdoorHumidity 						"Luftfuktighet ute [%.1f %%]" 		<temperature> 	(gOutdoor, Weather) { rfxcom="<26628:Humidity" }
 DateTime OutdoorTemperature_LastUpdate		"Last Update [%1$ta %1$tR]"			<clock>
-Number OfficeTemperature					"Temp kontor [%.1f °C]" 			<temperature> 	(Temperature,gFirstFloor) { rfxcom="<20481:Temperature" }
-Number OfficeHumidity 						"Luftfuktighet kontor [%.1f %%]"	<temperature> 	(gFirstFloor) { rfxcom="<20481:Humidity" }
+Number OfficeTemperature					"Temp kontor [%.1f °C]" 			<temperature> 	(Temperature,gFirstFloor) { rfxcom="<58881:Temperature" }
+Number OfficeHumidity 						"Luftfuktighet kontor [%.1f %%]"	<temperature> 	(gFirstFloor) { rfxcom="<58881:Humidity" }
 DateTime OfficeTemperature_LastUpdate		"Last Update [%1$ta %1$tR]"			<clock>
-Number BasementTemperature					"Kjellerstue [%.1f °C]"					<temperature>	(Temperature,gBasement) { rfxcom="<38402:Temperature" }
-Number BasementHumidity 					"Luftfuktighet kjeller [%.1f %%]"	<temperature>	(gBasement) { rfxcom="<38402:Humidity" }
+Number BasementTemperature					"Kjellerstue [%.1f °C]"					<temperature>	(Temperature,gBasement) { rfxcom="<46082:Temperature" }
+Number BasementHumidity 					"Luftfuktighet kjeller [%.1f %%]"	<temperature>	(gBasement) { rfxcom="<46082:Humidity" }
 DateTime BasementTemperature_LastUpdate		"Last Update [%1$ta %1$tR]"			<clock>
 Number Temperature_Basement_Chart_Period 	"Periode"
-Number LivingRoomTemperature    			"Temp stue [%.1f °C]"				<temperature>   (Temperature,gGF) { rfxcom="<48385:Temperature"}
-Number LivingRoomHumidity					"Luftfuktighet stue [%.1f %%]" 		<temperature>	(gGF) { rfxcom="<48385:Humidity" }
+Number LivingRoomTemperature    			"Temp stue [%.1f °C]"				<temperature>   (Temperature,gGF) { rfxcom="<65028:Temperature"}
+Number LivingRoomHumidity					"Luftfuktighet stue [%.1f %%]" 		<temperature>	(gGF) { rfxcom="<65028:Humidity" }
 DateTime LivingRoomTemperature_LastUpdate	"Last Update [%1$ta %1$tR]"			<clock>
 
 /* Home appliances */
@@ -324,3 +324,5 @@ Switch DenonInputAux1       "Input PC"            {denon="denon#SIAUX1"}
 
 /* Virtual switch to make us turn on the living room lights when we first come down in the morning */
 Switch justMorning
+
+String zWaveStatus "Z-Wave server: [%s]" {http="<[http://{{zwave_ip}}:8083/ZAutomation/api/v1/status:60000:JSONPATH($.message)]"}
