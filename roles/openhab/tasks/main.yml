@@ -5,18 +5,19 @@
 - name: install openHAB addons
   include: install_openhab_component.yml component=addons
 
-#- name: install openHAB snapshot addons
-#  include: install_openhab_snapshot_component.yml component=addons
+- name: install openHAB snapshot addons
+  include: install_openhab_snapshot_component.yml component=addons
 
 - name: remove everything from the addons-folder
   shell: "rm {{ openhab_install_dir }}/runtime/{{openhab_version}}/addons/*"
 
-#- name: link snapshot bindings into runtime
-#  file: >
-#    state=link
-#    src={{ openhab_install_dir }}/addons/{{openhab_snapshot_version}}/org.openhab.{{ item }}-{{openhab_snapshot_version}}.jar
-#    dest={{ openhab_install_dir }}/runtime/{{openhab_version}}/addons/org.openhab.{{ item }}-{{openhab_snapshot_version}}.jar
-#  with_items:
+- name: link snapshot bindings into runtime
+  file: >
+    state=link
+    src={{ openhab_install_dir }}/addons/{{openhab_snapshot_version}}/org.openhab.{{ item }}-{{openhab_snapshot_version}}.jar
+    dest={{ openhab_install_dir }}/runtime/{{openhab_version}}/addons/org.openhab.{{ item }}-{{openhab_snapshot_version}}.jar
+  with_items:
+    - binding.hue
 
 - name: link bindings into runtime
   file: >
@@ -36,7 +37,7 @@
     - action.pushover
     - binding.configadmin
     - binding.astro
-    - binding.hue
+    #- binding.hue
     - binding.systeminfo
     - binding.samsungac
     - binding.weather
