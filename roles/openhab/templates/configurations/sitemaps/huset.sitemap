@@ -329,6 +329,19 @@ sitemap huset label="Huset"
 				Text item=openhabUptimeFormatted
 				
 			}
+			Frame label="Resultater" {
+    			Text item=SpeedtestResultDown
+    			Text item=SpeedtestResultUp
+    			Text item=SpeedtestResultPing
+  			}
+  			Frame label="Kontroll" {
+    			Text item=SpeedtestResultDate
+    			Text item=SpeedtestRunning label="Speedtest [%s]" visibility=[SpeedtestRunning != "-"]
+    			Switch item=SpeedtestRerun mappings=[ON="Start"]
+  			}
+  			Frame label="Statistikk" {
+    			Text label="..." icon="analytics-8-icon"
+  			}
 		}
 	}
 	

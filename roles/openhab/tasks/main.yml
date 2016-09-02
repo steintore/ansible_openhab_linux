@@ -119,6 +119,7 @@
         - items/floorHeating.items
         - items/roomba.items
         - items/alarm.items
+        - items/speedtest.items
         - persistence/rrd4j.persist
         - persistence/myopenhab.persist
         - rules/garage.rules
@@ -133,6 +134,7 @@
         - rules/weather.rules
         - rules/roomba.rules
         - rules/alarm.rules
+        - rules/speedtest.rules
         - scripts/pushMessages.script
         - scripts/alarm-climate.js
         - scripts/alarm.js
@@ -250,12 +252,15 @@
   command: dpkg-reconfigure --frontend noninteractive tzdata
   sudo: yes
 
-- name: Install node packages
+- name: Install required packages
   apt: name={{item}} state=installed
   with_items:
     - nodejs
     - npm
+    - python-setuptools
   sudo: yes
+
+- easy_install: name=speedtest-cli state=latest
 
 - name: Install "request" node.js package.
   npm: name=request path={{openhab_install_dir}}/runtime/{{openhab_version}}/configurations/scripts
