@@ -33,6 +33,7 @@
     - binding.plex
     - binding.denon
     - persistence.rrd4j
+    - persistence.influxdb
     - action.pushover
     - binding.configadmin
     - binding.astro
@@ -122,6 +123,7 @@
         - items/speedtest.items
         - persistence/rrd4j.persist
         - persistence/myopenhab.persist
+        - persistence/influxdb.persist
         - rules/garage.rules
         - rules/heating.rules
         - rules/lights.rules
