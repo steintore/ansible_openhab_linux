@@ -376,14 +376,20 @@ rule "Remote in living room"
             case 1:  { // LIGHTS ON
 	            sendCommand(scene_light_livingroom, 1)
             }
-            case 2: { // ++ More light if possible please
-                sendCommand(scene_light_livingroom, 2)
+            case 2: { // ++ Heat up if not heating, otherwise turn AC off
+            	if (ac_scene.state != 1)
+            		sendCommand(ac_scene, 1)
+            	else
+            		sendCommand(ac_scene, 0)
             }
             case 3: { // LIGHTS OFF
                 sendCommand(scene_light_livingroom, 0)
             }
-            case 4: { // -- Less light if possible please
-                sendCommand(scene_light_livingroom, 3)
+            case 4: { // -- Let it be colder please
+            	if (ac_scene.state != 2)
+                	sendCommand(ac_scene, 2)
+                else
+                	sendCommand(ac_scene, 0)
             } 
             default: {
             	pushover('Fikk en rar update fra fjernkontrollen: ' + scene_remote_livingroom.state.toString)
