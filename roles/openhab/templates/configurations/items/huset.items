@@ -43,6 +43,7 @@ Group:Switch:OR(ON, OFF) proximity (All)
 Switch Mobile_Stein_Wlan 	"Steins iPhone Wlan" 	<present>		(proximity) {nh="{{stt_ip}}"}
 Switch Mobile_Anette_Wlan	"Anettes iPhone Wlan" 	<present> 		(proximity) {nh="{{anette_ip}}"}
 Switch time_capsule_lan 	"Time capsule"			<present>		(proximity) {nh="{{time_capsule_ip}}"}
+Switch home_away_lan		"Hjemme/borte"			<present>		(proximity) {nh="{{home_away_ip}}"}
 Switch router_wlan			"Router"				<present>		(proximity) {nh="{{router_ip}}"}
 Switch boss_lan				"Boss server"       	<present>       (proximity) {nh="{{boss_ip}}"}
 Switch nas_lan				"NAS"					<present>		(proximity) {nh="{{nas_ip}}"}
