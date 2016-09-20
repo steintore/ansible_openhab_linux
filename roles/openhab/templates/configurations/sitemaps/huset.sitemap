@@ -20,7 +20,7 @@ sitemap huset label="Huset"
 			}
 			Frame label="Lys" {
 				Switch item=scene_light_hall_gf icon="light" mappings=[0="Av", 1="På", 2="Auto"]
-				Switch item=scene_light_livingroom mappings=[0="Av", 1="På", 2="Film", 3="Kjøkken"]
+				Switch item=scene_light_livingroom mappings=[0="Av", 1="På"]
 				Slider item=light_dining_table_dimmer icon="slider"
 			}
 			Frame label="Varmepumpe"{

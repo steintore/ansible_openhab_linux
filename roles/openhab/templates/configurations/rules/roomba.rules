@@ -9,16 +9,16 @@ rule "Got command to send to Roomba"
 	then
 		switch(receivedCommand) {
 			case 0: { // DOCK THIS THING
-				if (roombaCurrentState.state == 1)
-					sendHttpGetRequest('{{roomba_url}}roomba.cgi?button=DOCK')	
-				sendHttpGetRequest('{{roomba_url}}roomba.cgi?button=DOCK')
+				if (roombaCurrentState.state == 1 || roombaCurrentState.state == 4)
+					sendHttpGetRequest('{{roomba_url}}/roomba.cgi?button=DOCK')	
+				sendHttpGetRequest('{{roomba_url}}/roomba.cgi?button=DOCK')
 				postUpdate(roombaCurrentState, 2)
 			}
 			case 1: { // CLEAN PLEASE
 			    if (roombaBatteryPercentage.state > 50) {
 					if (roombaCurrentState.state > 1)
-						sendHttpGetRequest('{{roomba_url}}roomba.cgi?button=CLEAN')
-					sendHttpGetRequest('{{roomba_url}}roomba.cgi?button=CLEAN')
+						sendHttpGetRequest('{{roomba_url}}/roomba.cgi?button=CLEAN')
+					sendHttpGetRequest('{{roomba_url}}/roomba.cgi?button=CLEAN')
 					postUpdate(roombaCurrentState, 4)
 				} else {
 					pushover("Kan ikke starte støvsuging, det er for lite batteri: " + roombaBatteryPercentage.state + "%")
@@ -26,8 +26,8 @@ rule "Got command to send to Roomba"
 			}
 			case 2: { // SPOT CLEANING
 				if (roombaCurrentState.state > 0)
-					sendHttpGetRequest('{{roomba_url}}roomba.cgi?button=SPOT')
-				sendHttpGetRequest('{{roomba_url}}roomba.cgi?button=SPOT')
+					sendHttpGetRequest('{{roomba_url}}/roomba.cgi?button=SPOT')
+				sendHttpGetRequest('{{roomba_url}}/roomba.cgi?button=SPOT')
 				postUpdate(roombaCurrentState, 4)
 			}
 		}

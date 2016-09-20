@@ -95,7 +95,7 @@ then
 				sendCommand(ac_windlevel, 0)
 
 			// correct temperature
-			if (mode.state == 0) { //HOME
+			if (mode.state == 0 || mode.state == 3) { //HOME
 				if (ac_set_temp.state != ac_heat_temp.state && tempOutdoor > lowerTempThreshold)
 					sendCommand(ac_set_temp, ac_heat_temp.state.toString)
 				else if (tempOutdoor <= lowerTempThreshold )
