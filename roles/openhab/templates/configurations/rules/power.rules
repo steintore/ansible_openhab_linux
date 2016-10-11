@@ -20,6 +20,11 @@ rule "Updated power"
 	var Double total = (one + two + three) 
 
 	postUpdate(smappee_power, total)
+	if(smappee_power != null) {
+		val startOfDay = now.toDateMidnight
+        postUpdate(smappee_power_max, smappee_power.maximumSince(startOfDay).state)
+        postUpdate(smappee_power_min, smappee_power.minimumSince(startOfDay).state)
+    }
 end
 
 rule "Updated ampere"

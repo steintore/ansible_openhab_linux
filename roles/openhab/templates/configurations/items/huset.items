@@ -8,6 +8,8 @@ Group gBattery 		(All)
 Group gLight		(All)
 Group night_group	(All)
 Group away_group	(All)
+Group gTemperature  (All)
+Group gPower 		(All)
 
 /* NTP binding demo item */
 DateTime Date	"[%1$tA, %1$td.%1$tm.%1$tY]"	<calendar>	{ ntp="Europe/Berlin:de_DE" }
@@ -22,12 +24,12 @@ Switch kontor_panelovn  "Panelovn kontor"	<heating>   (gFirstFloor, Heating, awa
 Switch gang_panelovn 	"Panelovn gang" 	<heating> 	(gFirstFloor, Heating, away_group)	{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B10%%5D.commandClasses%%5B37%%5D:10000:JS(getBasicOnOffState.js)] >[ON:GET:http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B10%%5D.commandClasses%%5B37%%5D.Set(1)] >[OFF:GET:http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B10%%5D.commandClasses%%5B37%%5D.Set(0)]"}
 
 /* Energy/Power measuring */
-Group:Number:SUM					Power			"Nå: [%.1f W]"			<energy>				(All)
+Group:Number:SUM					Power			"Nå: [%.1f W]"			<energy>				(All, gPower)
 Group:Number:SUM					PowerHeating	"Varme: [%.1f W]"		<energy>				(All)
 Group:Number:SUM					Energy			"Totalt: [%.1f KWh]"	<energy>				(All)
 Number panelovn_kontor_energy 	"Panelovn totalforbruk: [%.2f KWh]"			<energy> (Energy) 				{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B5%%5D.commandClasses%%5B50%%5D.data%%5B0%%5D:20000:JS(getPowerValue.js)]"}
-Number power_panelovn_kontor  	"Strøm panelovn kontor	[%.1f W]" 			<energy> (Power, PowerHeating, Power_Chart) 	{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B5%%5D.commandClasses%%5B49%%5D.data%%5B4%%5D:20000:JS(getPowerValue.js)]"}
-Number power_panelovn_gang  	"Strøm panelovn gang	[%.1f W]" 			<energy> (Power, PowerHeating, Power_Chart) 	{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B10%%5D.Meter.data%%5B2%%5D:20000:JS(getPowerValue.js)]"}
+Number power_panelovn_kontor  	"Strøm panelovn kontor	[%.1f W]" 			<energy> (gPower, Power, PowerHeating, Power_Chart) 	{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B5%%5D.commandClasses%%5B49%%5D.data%%5B4%%5D:20000:JS(getPowerValue.js)]"}
+Number power_panelovn_gang  	"Strøm panelovn gang	[%.1f W]" 			<energy> (gPower, Power, PowerHeating, Power_Chart) 	{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B10%%5D.Meter.data%%5B2%%5D:20000:JS(getPowerValue.js)]"}
 Number panelovn_gang_energy 	"Panelovn gang totalforbruk: [%.2f KWh]"	<energy> (Energy) 				{http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B10%%5D.Meter.data%%5B0%%5D:20000:JS(getPowerValue.js)]"}
 
 Group Power_Chart (Power)
@@ -64,17 +66,17 @@ Number Temperature_Livingroom_Chart_Period  "Periode"
 Number Outdoor_Temp_Max 					"Temp max [%.1f °C]"				<temperature> 	(Temperature_Chart)
 Number Outdoor_Temp_Min 					"Temp min [%.1f °C]"				<temperature> 	(Temperature_Chart)
 Number Outdoor_Humidex						"Humidex [SCALE(humidex.scale):%s]"					(Weather)
-Number OutdoorTemperature 					"Ute [%.1f °C]" 					<temperature> 	(Temperature,gOutdoor,Temperature_Chart) { rfxcom="<26628:Temperature" }
+Number OutdoorTemperature 					"Ute [%.1f °C]" 					<temperature> 	(gTemperature, Temperature,gOutdoor,Temperature_Chart) { rfxcom="<26628:Temperature" }
 Number OutdoorHumidity 						"Luftfuktighet ute [%.1f %%]" 		<temperature> 	(gOutdoor, Weather) { rfxcom="<26628:Humidity" }
 DateTime OutdoorTemperature_LastUpdate		"Last Update [%1$ta %1$tR]"			<clock>
-Number OfficeTemperature					"Temp kontor [%.1f °C]" 			<temperature> 	(Temperature,gFirstFloor) { rfxcom="<58881:Temperature" }
+Number OfficeTemperature					"Temp kontor [%.1f °C]" 			<temperature> 	(gTemperature, Temperature,gFirstFloor) { rfxcom="<58881:Temperature" }
 Number OfficeHumidity 						"Luftfuktighet kontor [%.1f %%]"	<temperature> 	(gFirstFloor) { rfxcom="<58881:Humidity" }
 DateTime OfficeTemperature_LastUpdate		"Last Update [%1$ta %1$tR]"			<clock>
-Number BasementTemperature					"Kjellerstue [%.1f °C]"					<temperature>	(Temperature,gBasement) { rfxcom="<46082:Temperature" }
+Number BasementTemperature					"Kjellerstue [%.1f °C]"					<temperature>	(gTemperature, Temperature,gBasement) { rfxcom="<46082:Temperature" }
 Number BasementHumidity 					"Luftfuktighet kjeller [%.1f %%]"	<temperature>	(gBasement) { rfxcom="<46082:Humidity" }
 DateTime BasementTemperature_LastUpdate		"Last Update [%1$ta %1$tR]"			<clock>
 Number Temperature_Basement_Chart_Period 	"Periode"
-Number LivingRoomTemperature    			"Temp stue [%.1f °C]"				<temperature>   (Temperature,gGF) { rfxcom="<65028:Temperature"}
+Number LivingRoomTemperature    			"Temp stue [%.1f °C]"				<temperature>   (gTemperature, Temperature,gGF) { rfxcom="<65028:Temperature"}
 Number LivingRoomHumidity					"Luftfuktighet stue [%.1f %%]" 		<temperature>	(gGF) { rfxcom="<65028:Humidity" }
 DateTime LivingRoomTemperature_LastUpdate	"Last Update [%1$ta %1$tR]"			<clock>
 

@@ -6,6 +6,8 @@ sitemap huset label="Huset"
 		Switch item=ac_scene mappings=[0="Av", 1="Varm", 2="Kjøl", 3="Luft"]
 		Setpoint item=ac_set_temp minValue=16 maxValue=28 step=1 icon="temperature" visibility=[ac_power==ON]
 		Switch item=ac_mode mappings=[0="Off", 1="Quiet", 5="TurboMode"] visibility=[tv_power==ON, ac_power==ON]
+		Switch item=scene_light_livingroom mappings=[0="Av", 1="På"]
+		Slider item=light_dining_table_dimmer icon="slider" visibility=[scene_light_livingroom==1]
 		Switch item=scene_garage_1 mappings=[0="Lukk", 1="Åpne"] icon="garagedoor"
 		Switch item=scene_garage_2 mappings=[0="Lukk", 1="Åpne"] icon="garagedoor"
 		Image url="{{garagepi_screenshot_url}}" refresh=10000 visibility=[garage_door_1==ON, garage_door_2==ON]
@@ -86,7 +88,7 @@ sitemap huset label="Huset"
 			}
 		
     	}
-    	Text item=OfficeTemperature label="Andre etasje [%.1f °C]" icon="firstfloor" valuecolor=[OfficeTemperature_LastUpdate=="Uninitialized"="lightgray",OfficeTemperature_LastUpdate>90="lightgray",>25="orange",>15="green",>5="orange",<=5="blue"]  {
+    	Text item=alarm_temperature_hall_1st label="Andre etasje [%.1f °C]" icon="firstfloor" valuecolor=[alarm_temperature_hall_1st_LastUpdate=="Uninitialized"="lightgray",alarm_temperature_hall_1st_LastUpdate>90="lightgray",>25="orange",>15="green",>5="orange",<=5="blue"]  {
     		Frame label="Gang" {
     			Text item=alarm_temperature_hall_1st
     			Text item=alarm_humidity_hall_1st

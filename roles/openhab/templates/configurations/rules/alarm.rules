@@ -67,3 +67,11 @@ then
 	} else if (alarm_alarm.state == "armedaway" || alarm_alarm.state == "armed") // AWAY
 		sendCommand(mode, 2) 
 end
+
+// Creates an item that stores the last update time of this item
+rule "Records last temperature update time"
+when
+  Item alarm_temperature_hall_1st received update
+then
+  postUpdate(alarm_temperature_hall_1st_LastUpdate, new DateTimeType())
+end
