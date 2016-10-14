@@ -129,7 +129,7 @@ Switch light_living_old "Gamlelyset" 				<light> (gGF, gLight, Living_Room_Light
 Number scene_light_livingroom "Lys stue"			<sofa>  (gGF, gLight, Living_Room_Lights)
 Switch light_kitchen_bench 			"Kjøkkenbenk"	<light> (gGF, gLight, Living_Room_Lights) {http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B21%%5D.SwitchBinary:10000:JS(getBasicOnOffState.js)] >[ON:GET:http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B21%%5D.SwitchBinary.Set(1)] >[OFF:GET:http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B21%%5D.SwitchBinary.Set(0)]"}
 Switch light_dining_table			"Taklys" 		<light> (gGF, gLight, Living_Room_Lights) {http=">[ON:GET:http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B22%%5D.SwitchBinary.Set(1)] >[OFF:GET:http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B22%%5D.SwitchMultilevel.Set(0)]"}
-Number light_dining_table_dimmer 	"Taklys [%s]"	<light> (gGF, gLight, Living_Room_Lights) {http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B22%%5D.SwitchMultilevel.data:20000:JS(getLevelValue.js)]"}
+Number light_dining_table_dimmer 	"Taklys [%s]"	<light> (gGF, gLight) {http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B22%%5D.SwitchMultilevel.data:20000:JS(getLevelValue.js)]"}
 
 Switch light_basement_power 		"Av/På"						<light> (gBasement, gLight) 	{rfxcom=">12339014.0:LIGHTING2.AC:Command"}
 Switch remote_light_basement_power 																{rfxcom="<12339014.0:Command"}
