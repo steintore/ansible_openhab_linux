@@ -411,7 +411,7 @@ rule "Sunset"
  			sunsetTimer.cancel()
  			sunsetTimer = null
  		}
- 		
+ 		logInfo("org.openhab", 'Creating timer to turn on living room lights at: ' + sunset.minusMinutes(20).toString);
  		sunsetTimer = createTimer(sunset.minusMinutes(20)) [|
  			if (mode.state == 1) { // IF HOME
  				sendCommand(scene_light_livingroom, 1)
