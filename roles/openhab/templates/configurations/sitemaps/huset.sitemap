@@ -1,8 +1,10 @@
 sitemap huset label="Huset"
 {
 	Frame label="Quick" {
+		Image url="{{garagepi_screenshot_url}}" refresh=10000 visibility=[garage_door_1==ON, garage_door_2==ON]
 		Switch item=mode mappings=[0="Hjemme", 3="Kveld", 1="Natt", 2="Borte"]
 		Switch item=holiday_mode visibility=[mode==2]
+		Switch item=scene_light_livingroom mappings=[0="Av", 1="På"]
 		Switch item=ac_scene mappings=[0="Av", 1="Varm", 2="Kjøl", 3="Luft"]
 		Setpoint item=ac_set_temp minValue=16 maxValue=28 step=1 icon="temperature" visibility=[ac_power==ON]
 		Switch item=ac_mode mappings=[0="Off", 1="Quiet", 5="TurboMode"] visibility=[tv_power==ON, ac_power==ON]
@@ -11,6 +13,7 @@ sitemap huset label="Huset"
 		Switch item=scene_garage_1 mappings=[0="Lukk", 1="Åpne"] icon="garagedoor"
 		Switch item=scene_garage_2 mappings=[0="Lukk", 1="Åpne"] icon="garagedoor"
 		Image url="{{garagepi_screenshot_url}}" refresh=10000 visibility=[garage_door_1==ON, garage_door_2==ON]
+		Switch item=message_received mappings=[ON="Ja"] icon="network" visibility=[garage_door_1==ON, garage_door_2==ON]
 	}
 	
     Frame label="Huset" {
@@ -51,11 +54,7 @@ sitemap huset label="Huset"
 				}
 			}
 			Frame label="Tempdetaljer" {
-				Switch item=Temperature_Livingroom_Chart_Period label="Periode" mappings=[0="Timer", 1="Dag", 2="Uke", 3="2 uker"]
-                Image url="http://localhost:8080/rrdchart.png?items=LivingRoomTemperature,ac_set_temp&period=12h" refresh=60000 visibility=[Temperature_Livingroom_Chart_Period==0, Temperature_Livingroom_Chart_Period=="Uninitialized"]
-                Image url="http://localhost:8080/rrdchart.png?items=LivingRoomTemperature,ac_set_temp&period=D" refresh=60000 visibility=[Temperature_Livingroom_Chart_Period==1]
-                Image url="http://localhost:8080/rrdchart.png?items=LivingRoomTemperature,ac_set_temp&period=W" refresh=60000 visibility=[Temperature_Livingroom_Chart_Period==2]
-                Image url="http://localhost:8080/rrdchart.png?items=LivingRoomTemperature,ac_set_temp&period=2W" refresh=60000 visibility=[Temperature_Livingroom_Chart_Period==3]
+				Image refresh=120000 url="{{grafana_base_url}}?from=now-48h&to=now&panelId=3&theme=light&width=700&height=350"
 			}
 			Frame label="TV" visibility=[tv_power==ON] {
 				Group item=TV icon="television"
@@ -195,6 +194,8 @@ sitemap huset label="Huset"
 				Switch item=message_received mappings=[ON="Ja"] icon="network" visibility=[garage_door_1==ON, garage_door_2==ON]
 				Text label="Livestream" icon="camera" {
 					Image url="{{garagepi_screenshot_url}}" refresh=5000
+					Switch item=scene_garage_1 mappings=[0="Lukk", 1="Åpne", 2="10"] icon="garagedoor"
+					Switch item=scene_garage_2 mappings=[0="Lukk", 1="Åpne", 2="10"] icon="garagedoor"
 				}
 			}
 			Frame label="Ute" icon="garden" {
@@ -202,10 +203,7 @@ sitemap huset label="Huset"
 				Text item=Outdoor_Temp_Min valuecolor=[>25="orange",>15="green",>5="orange",<=5="blue"]
 			}
 			Frame label="Tempdetaljer" {
-				Switch item=Temperature_Chart_Period label="Periode" mappings=[0="Time", 1="Dag", 2="Uke"]
-                Image url="http://localhost:8080/rrdchart.png?items=OutdoorTemperature,Outdoor_Temp_Max,Outdoor_Temp_Min&period=h" refresh=30000 visibility=[Temperature_Chart_Period==0, Temperature_Chart_Period=="Uninitialized"]
-                Image url="http://localhost:8080/rrdchart.png?items=OutdoorTemperature,Outdoor_Temp_Max,Outdoor_Temp_Min&period=D" refresh=30000 visibility=[Temperature_Chart_Period==1]
-                Image url="http://localhost:8080/rrdchart.png?items=OutdoorTemperature,Outdoor_Temp_Max,Outdoor_Temp_Min&period=W" refresh=30000 visibility=[Temperature_Chart_Period==2]
+				Image refresh=120000 url="{{grafana_base_url}}?from=now-48h&to=now&panelId=1&theme=light&width=700&height=350"
 			}
 			Frame label="Alt" {
 				Group item=gOutdoor
