@@ -76,8 +76,8 @@ Number BasementTemperature					"Kjellerstue [%.1f °C]"					<temperature>	(gTemp
 Number BasementHumidity 					"Luftfuktighet kjeller [%.1f %%]"	<temperature>	(gBasement) { rfxcom="<46082:Humidity" }
 DateTime BasementTemperature_LastUpdate		"Last Update [%1$ta %1$tR]"			<clock>
 Number Temperature_Basement_Chart_Period 	"Periode"
-Number LivingRoomTemperature    			"Temp stue [%.1f °C]"				<temperature>   (gTemperature, Temperature,gGF) { rfxcom="<65028:Temperature"}
-Number LivingRoomHumidity					"Luftfuktighet stue [%.1f %%]" 		<temperature>	(gGF) { rfxcom="<65028:Humidity" }
+Number LivingRoomTemperature    			"Temp stue [%.1f °C]"				<temperature>   (gTemperature, Temperature,gGF) { rfxcom="<29954:Temperature"}
+Number LivingRoomHumidity					"Luftfuktighet stue [%.1f %%]" 		<temperature>	(gGF) { rfxcom="<29954:Humidity" }
 DateTime LivingRoomTemperature_LastUpdate	"Last Update [%1$ta %1$tR]"			<clock>
 
 /* Home appliances */
