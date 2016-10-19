@@ -46,17 +46,17 @@
 - name: install sigar
   include: install_sigar.yml
 
-- name: download my.openhab jar
-  get_url: >
-    url=https://bintray.com/artifact/download/openhab/mvn/org/openhab/io/org.openhab.io.myopenhab/{{openhab_version}}/org.openhab.io.myopenhab-{{openhab_version}}.jar
-    dest={{ openhab_install_dir }}/addons/{{openhab_version}}/
-    validate_certs=no
+#- name: download my.openhab jar
+#  get_url: >
+#    url=https://bintray.com/artifact/download/openhab/mvn/org/openhab/io/org.openhab.io.myopenhab/{{openhab_version}}/org.openhab.io.myopenhab-{{openhab_version}}.jar
+#    dest={{ openhab_install_dir }}/addons/{{openhab_version}}/
+#    validate_certs=no
 
-- name: link to my.openhab jar
-  file: >
-    state=link
-    src={{ openhab_install_dir }}/addons/{{openhab_version}}/org.openhab.io.myopenhab-{{openhab_version}}.jar
-    dest={{ openhab_install_dir }}/runtime/{{openhab_version}}/addons/org.openhab.io.myopenhab-{{openhab_version}}.jar
+#- name: link to my.openhab jar
+#  file: >
+#    state=link
+#    src={{ openhab_install_dir }}/addons/{{openhab_version}}/org.openhab.io.myopenhab-{{openhab_version}}.jar
+#    dest={{ openhab_install_dir }}/runtime/{{openhab_version}}/addons/org.openhab.io.myopenhab-{{openhab_version}}.jar
 
 - name: See if configurations is a directory (then we nuke it next)
   shell: "[ -d {{ openhab_install_dir }}/runtime/{{openhab_version}}/configurations ] && echo 'Directory' || echo ''"
@@ -122,7 +122,7 @@
         - items/alarm.items
         - items/speedtest.items
         - persistence/rrd4j.persist
-        - persistence/myopenhab.persist
+        #- persistence/myopenhab.persist
         - persistence/influxdb.persist
         - rules/garage.rules
         - rules/heating.rules
