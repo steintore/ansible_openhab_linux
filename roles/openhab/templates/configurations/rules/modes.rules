@@ -109,9 +109,9 @@ rule "A change of mode"
 			sendCommand(scene_light_hall, 0)
 			sendCommand(scene_light_basement, 0)
 			sendCommand(light_bathroom, OFF)
-			sendCommand(color_9, OFF)
-			sendCommand(color_10, OFF)
-			sendCommand(color_11, OFF)
+			sendCommand(color_bedroom, OFF)
+			sendCommand(color_kid_room_1, OFF)
+			sendCommand(color_kid_room_2, OFF)
 			sendCommand(DenonPower, OFF)
 			sendCommand(scene_light_hall_gf, 2) // AUTO
 			sendCommand(gLight, OFF)
