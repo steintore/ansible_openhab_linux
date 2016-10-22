@@ -364,6 +364,21 @@ rule "Motion detector in basement wants to turn on the lights"
         }
 end
 
+rule "Motion detector in living room wants to turn on the lights"
+        when
+                Item motion_living_room received command
+        then
+                switch (motion_living_room.state as OnOffType) {
+                case ON: {
+                        sendCommand(scene_light_livingroom, 1)
+                }
+                case OFF: {
+                	if(mode.state == 1) // NIGHT MODE
+                		sendCommand(scene_light_livingroom, 0)
+                }
+        }
+end
+
 rule "Remote in living room"
 	when
         Item scene_remote_livingroom changed or

@@ -56,6 +56,7 @@ rule "If the room is too cold and we are home, then heat it up, but only if it i
 				sendCommand(kontor_panelovn, OFF)
 			}
 		}
+		
 end
 
 rule "When the error code from the AC changes, please let me know"
@@ -307,6 +308,7 @@ then
 			
 			sendCommand(screen_pi_screen, OFF)
 			sendCommand(screen_pi, OFF)
+			sendCommand(roombaDock, OFF)
 		}
 		case OFF: {
 			if (scene_basement_floor_heating.state > 0)
@@ -324,10 +326,29 @@ then
 			if (screen_pi.state == ON) 
 				sendCommand(screen_pi_screen, ON)
 			else 
-				pushover('ScreenPi is switched off...')				
+				pushover('ScreenPi is switched off...')	
+			sendCommand(roombaDock, ON)			
 		}
 	}
 end	
+
+rule "Make sure the z-wave-api has the configuration values"
+	when
+		Time cron "0 0/40 * * * ?" 
+	then
+	var String htp = "http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%5B23%5D.Configuration.Get(12)"
+	sendHttpGetRequest(htp)
+	htp = "http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%5B24%5D.Configuration.Get(12)"
+	sendHttpGetRequest(htp)
+	htp = "http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%5B25%5D.Configuration.Get(12)"
+	sendHttpGetRequest(htp)
+	htp = "http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%5B26%5D.Configuration.Get(12)"
+	sendHttpGetRequest(htp)
+	htp = "http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%5B27%5D.Configuration.Get(12)"
+	sendHttpGetRequest(htp)
+	htp = "http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%5B28%5D.Configuration.Get(12)"
+	sendHttpGetRequest(htp)
+end
 	
 rule "Changing floor mode on 1st floor bathroom"
 when

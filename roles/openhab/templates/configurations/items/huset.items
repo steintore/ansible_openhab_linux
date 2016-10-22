@@ -111,9 +111,9 @@ Switch right_double_switch 	"Høyre knapp" 	<network> (gGF) { rfxcom="<11971074.
 
 /* Battery */
 Number battery_outdoor_temp		"Utetemp [%f]" 		<battery>	(gBattery, gOutdoor, BatteryLevel_10) 	{rfxcom="<26628:BatteryLevel"}
-Number battery_basement_temp	"Kjellertemp [%f]"	<battery>	(gBattery, gBasement, BatteryLevel_10) 	{rfxcom="<38402:BatteryLevel"}
+Number battery_basement_temp	"Kjellertemp [%f]"	<battery>	(gBattery, gBasement, BatteryLevel_10) 	{rfxcom="<46082:BatteryLevel"}
 Number battery_office_temp		"Kontortemp [%f]"	<battery>	(gBattery, gFirstFloor, BatteryLevel_10) {rfxcom="<20481:BatteryLevel"}
-Number battery_living_room_temp	"Stuetemp [%f]"		<battery> (gBattery, gGF, BatteryLevel_10)			{rfxcom="<48385:BatteryLevel"}
+Number battery_living_room_temp	"Stuetemp [%f]"		<battery> (gBattery, gGF, BatteryLevel_10)			{rfxcom="<29954:BatteryLevel"}
 
 /* Text values */
 String push_message_text "Default message"
@@ -131,11 +131,15 @@ Switch light_kitchen_bench 			"Kjøkkenbenk"	<light> (gGF, gLight, Living_Room_L
 Switch light_dining_table			"Taklys" 		<light> (gGF, gLight, Living_Room_Lights) {http=">[ON:GET:http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B22%%5D.SwitchBinary.Set(1)] >[OFF:GET:http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B22%%5D.SwitchMultilevel.Set(0)]"}
 Number light_dining_table_dimmer 	"Taklys [%s]"	<light> (gGF, gLight) {http="<[http://{{zwave_ip}}:8083/ZWaveAPI/Run/devices%%5B22%%5D.SwitchMultilevel.data:20000:JS(getLevelValue.js)]"}
 
+Switch motion_living_room 		"Bevegelse stue" 		<switch> (gGF, Motion) 		 {rfxcom="<18220938.10:Command"}
+
 Switch light_basement_power 		"Av/På"						<light> (gBasement, gLight) 	{rfxcom=">12339014.0:LIGHTING2.AC:Command"}
 Switch remote_light_basement_power 																{rfxcom="<12339014.0:Command"}
 Dimmer light_basement_dimmer 		"Tak kjellerstue [%d %%]"			(gBasement, gLight) 	{rfxcom=">12339014.0:LIGHTING2.AC:DimmingLevel"}
 Switch light_basement_window 		"Av/På"						<light> (gBasement, gLight) 	{rfxcom=">12339014.1:LIGHTING2.AC:Command"}
 Switch remote_light_basement_window 															{rfxcom="<12339014.1:Command"}
+
+
 
 /* Philips HUE */
 Group:Switch:AND(ON, OFF) 		gHallLights	"Lys [(%d)]"  <light>
@@ -167,7 +171,6 @@ Dimmer ct_kid_room_1 	  	"Ivers rom"		  	<hue> (gLight, gFirstFloor) {hue="11;co
 
 /* Motion detector */
 Switch motion_detector_basement "Bevegelse gang nede" 	<switch> (gBasement, Motion) {rfxcom="<13734590.10:Command"}
-/*Switch motion_bathroom_gf 		"Bevegelse bad 1." 		<switch> (gGF, Motion) 		 {rfxcom="<18220938.10:Command"}*/
 
 Group:Switch:AND(ON, OFF) 		gBasementLights	"Lys [(%d)]"	 <light>		
 Number scene_light_basement "Lys kjellergang" <light> (gLight, gBasementLights, gBasement)

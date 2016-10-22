@@ -53,6 +53,7 @@ rule "A change of mode"
 					postUpdate(push_message_text, t)
 			}
 			sendCommand(screen_pi_screen, ON)
+			sendCommand(roombaDock, ON)
 		}
 		
 		case 1: { // NIGHT
@@ -80,6 +81,7 @@ rule "A change of mode"
 			
 			sendCommand(screen_pi_screen, OFF)
 			sendCommand(justMorning, OFF)
+			sendCommand(roombaDock, OFF)
 		}
 		
 		case 2: { //AWAY
