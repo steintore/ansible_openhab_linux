@@ -13,3 +13,5 @@ Number roombaVoltage "Roomba spenning [%d mV]" (gGF, roomba)
 Number roombaCurrent "Roomba strøm [%d mA]" (gGF, roomba)
 Number roombaCharge "Roomba ladet [%d mAh]" (gGF, roomba)
 Number roombaCapacity "Roomba kapasitet [%d mAh]" (gGF, roomba)
+
+DateTime roombaLastUpdate		"Roomba last update [%1$ta %1$tR]"			<clock> (gGF, roomba)
