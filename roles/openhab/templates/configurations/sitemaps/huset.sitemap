@@ -263,7 +263,7 @@ sitemap huset label="Huset"
 	}
 	
 	Frame label="Status" {
-		Text item=Power icon="energy" {
+		Text item=smappee_power icon="energy" {
 			Frame {
 				Group item=Energy
 				Group item=Smappee
@@ -277,11 +277,7 @@ sitemap huset label="Huset"
 				Text item=power_fridge
 			}
 			Frame {
-				Switch item=Power_Chart_Period label="Periode" mappings=[0="Time", 1="Dag", 2="Uke", 3="2 uker"] icon="energy"
-				Chart item=Power_Chart period=h refresh=30000 visibility=[Power_Chart_Period==0, Power_Chart_Period=="Uninitialized"]
-				Chart item=Power_Chart period=D refresh=18000 visibility=[Power_Chart_Period==1]
-				Chart item=Power_Chart period=W refresh=36000 visibility=[Power_Chart_Period==2]
-				Chart item=Power_Chart period=2W refresh=36000 visibility=[Power_Chart_Period==3]
+				Image refresh=120000 url="{{grafana_base_url}}?to=now&theme=light&width=700&height=350&panelId=2&from=now-48h"
 			}
 			
 		}
