@@ -16,4 +16,3 @@ Number roombaCapacity "Roomba kapasitet [%d mAh]" (gGF, roomba)
 
 DateTime roombaLastUpdate		"Roomba last update [%1$ta %1$tR]"			<clock> (gGF, roomba)
 Switch roombaDock "Dock av/på" (gGF, roomba) 										{rfxcom=">12339014.13:LIGHTING2.AC:Command"}
-Switch roombaDockBtn "Avlest" (gGF, roomba) { rfxcom="<12339014.13:Command" }
