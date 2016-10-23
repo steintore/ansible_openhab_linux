@@ -66,6 +66,8 @@ then
 		
 	} else if (alarm_alarm.state == "armedaway" || alarm_alarm.state == "armed") // AWAY
 		sendCommand(mode, 2) 
+	else
+		pushover("Ukjent alarmstatus: {}", alarm_alarm.state.toString)
 end
 
 // Creates an item that stores the last update time of this item
