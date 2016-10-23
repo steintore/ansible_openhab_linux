@@ -36,7 +36,7 @@ then
 	logInfo("org.openhab.rules","steinwlan off. starting timer.")
 	if( timerSteinMobileWlan==null ) {
 		timerSteinMobileWlan = createTimer(now.plusSeconds(2400)) [|
-			logInfo("org.openhab.rules", "Timer has timed out. Executing proximity off")
+			logInfo("org.openhab.rules", "Stein mobile timer has timed out. Executing proximity off")
 			sendCommand(stein_home, OFF)
 			if(timerSteinMobileWlan!=null) {
 				if(timerSteinMobileWlan.running) {
@@ -57,7 +57,7 @@ then
 	logInfo("org.openhab.rules","anettewlan off. starting timer.")
 	if( timerAnetteMobileWlan==null ) {
 		timerAnetteMobileWlan = createTimer(now.plusSeconds(2400)) [|
-			logInfo("org.openhab.rules", "Timer has timed out. Executing proximity off")
+			logInfo("org.openhab.rules", "Anette timer has timed out. Executing proximity off")
 			sendCommand(anette_home, OFF)
 			if(timerAnetteMobileWlan!=null) {
 				if(timerAnetteMobileWlan.running) {

@@ -49,9 +49,8 @@ sitemap huset label="Huset"
 			}
 			Frame label="Rengjøring" {
 				Switch item=scene_roomba mappings=[0='Dock', 1='Clean', 2='Spot'] icon="sofa"
-				Text label="Roomba status: [MAP(roombaStatus.map):%s]" item=roombaCurrentState icon="sofa" { 
-					Group item=roomba label="Roomba"
-				}
+				Text item=roombaCurrentState label="Roomba status: [MAP(roombaStatus.map):%s]"  icon="sofa"
+				Group item=roomba label="Roomba" icon="sofa"
 			}
 			Frame label="Tempdetaljer" {
 				Image refresh=120000 url="{{grafana_base_url}}?from=now-48h&to=now&panelId=3&theme=light&width=700&height=350"

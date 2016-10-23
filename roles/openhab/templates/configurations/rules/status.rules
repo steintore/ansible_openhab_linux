@@ -90,30 +90,21 @@ rule "Leaving home, we think"
 when
 	Item home_away_lan changed from ON to OFF
 then
-	logInfo("org.openhab.rules","Router disconnected, started timer.")
+	logInfo("org.openhab.rules","Arduino disconnected, started timer.")
 	if( timerRouterLAN == null ) {
 		timerRouterLAN = createTimer(now.plusSeconds(30)) [|
-				if (home_away_lan.state == ON) {
-					logInfo("org.openhab.rules", "Arduino is back up and running, so no one left!")
-					if(timerRouterLAN!=null) {
-						if(timerRouterLAN.running) {
-							timerRouterLAN.cancel()
-						}
-						timerRouterLAN= null
-					}
-				} else if (time_capsule_lan.state == OFF || boss_lan.state == OFF) {
-					logInfo("org.openhab.rules", "Seems like we lost network connection, let's wait a bit more")
-					timerRouterLAN.reschedule(now.plusSeconds(240))
-				} else {
-					logInfo("org.openhab.rules", "Timer has timed out. Executing proximity off")
-					sendCommand(mode, 2)
-					if(timerRouterLAN!=null) {
-						if(timerRouterLAN.running) {
-							timerRouterLAN.cancel()
-						}
-						timerRouterLAN= null
-					}
-				}]
+			logInfo("org.openhab.rules", "Timer has timed out. Checking status from Alarm")
+			var String json = executeCommandLine("nodejs@@./configurations/scripts/alarm.js", 2000)
+			var String alarmstate =  transform("JSONPATH", "$.status", json)
+			logInfo("org.openhab.rules", "JSON is {}, and alarmstate is then {}", json, alarmstate)
+			sendCommand(alarm_alarm, alarmstate)
+			if(timerRouterLAN!=null) {
+				if(timerRouterLAN.running) {
+					timerRouterLAN.cancel()
+				}
+				timerRouterLAN= null
+			}
+		]
 	} else {
 		timerRouterLAN.reschedule(now.plusSeconds(30))
 	}

@@ -205,7 +205,7 @@ DateTime Moon_New     	"Neste nymåne [%1$td.%1$tm.%1$tY %1$tH:%1$tM]"  <moon>	(
 
 /* Samsung AC */
 Group AC
-Number ac_scene "Varmepumpe"										(AC, away_group, night_group)
+Number ac_scene "Varmepumpe"										(AC, night_group)
 Number ac_current_temp "Målt temperatur [%.1f °C]" 	<temperature> 	(AC) 							{samsungac="[Livingroom|AC_FUN_TEMPNOW]"}
 Switch ac_power "Varmepumpe"						<power> 		(AC) 							{samsungac="[Livingroom|AC_FUN_POWER]"}
 Number ac_mode "Convenient mode [%s]" 				<sofa> 			(AC)						 	{samsungac="[Livingroom|AC_FUN_COMODE]"}
