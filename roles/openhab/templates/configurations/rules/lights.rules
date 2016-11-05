@@ -78,7 +78,13 @@ then
 				}
 			}
 			sendCommand(screen_pi_screen, ON)
-			sendCommand(light_hall_ground_floor, ON)				
+			sendCommand(light_hall_ground_floor, ON)
+			if (mode.state == 2) {
+				// Checking if the alarm has been switched off now.
+				var String json = executeCommandLine("nodejs@@./configurations/scripts/alarm.js", 2000)
+				var String alarmstate =  transform("JSONPATH", "$.status", json)
+				sendCommand(alarm_alarm, alarmstate)
+			}				
 		}
 		case OFF: {
 			sendCommand(light_hall_ground_floor, OFF)
@@ -366,14 +372,15 @@ end
 
 rule "Motion detector in living room wants to turn on the lights"
         when
-                Item motion_living_room received command
+                Item motion_living_room received command or
+                Item motion_living_room changed
         then
                 switch (motion_living_room.state as OnOffType) {
                 case ON: {
                         sendCommand(scene_light_livingroom, 1)
                 }
                 case OFF: {
-                	if(mode.state == 1) // NIGHT MODE
+                	if(mode.state == 1 || mode.state == 2) // NIGHT MODE
                 		sendCommand(scene_light_livingroom, 0)
                 }
         }
